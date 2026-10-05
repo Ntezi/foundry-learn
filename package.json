@@ -1,0 +1,21 @@
+{
+  "name": "foundry-learn",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "A reading app on top of the Foundry study notes in Learn/",
+  "scripts": {
+    "sync": "node scripts/sync.mjs",
+    "build:data": "node scripts/build.mjs",
+    "build:app": "node scripts/bundle.mjs",
+    "build": "npm run build:data && npm run build:app",
+    "dev": "npm run build && node scripts/serve.mjs",
+    "check": "node scripts/check-links.mjs"
+  },
+  "devDependencies": {
+    "esbuild": "^0.24.0",
+    "markdown-it": "^14.1.0",
+    "mermaid": "^11.4.0",
+    "minisearch": "^7.1.0"
+  }
+}
