@@ -1,6 +1,6 @@
 // Bundles src/app.js (with Mermaid as a lazy chunk) and copies site/ into dist/.
 import { build } from 'esbuild';
-import { cpSync, mkdirSync, writeFileSync } from 'node:fs';
+import { readFileSync, readdirSync, mkdirSync, writeFileSync } from 'node:fs';
 import { join, resolve } from 'node:path';
 
 const root = resolve(import.meta.dirname, '..');
@@ -19,6 +19,6 @@ await build({
   chunkNames: 'chunks/[name]-[hash]',
   logLevel: 'info',
 });
-cpSync(join(root, 'site'), dist, { recursive: true });
+for (const f of readdirSync(join(root, 'site'))) writeFileSync(join(dist, f), readFileSync(join(root, 'site', f)));
 writeFileSync(join(dist, '.nojekyll'), '');
 console.log('bundled → dist/');
