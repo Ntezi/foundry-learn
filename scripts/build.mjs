@@ -59,11 +59,15 @@ function walk(dir) {
   return out;
 }
 
+// URL-safe path segment: "Your First AIP Workflow" → "your-first-aip-workflow". Already-kebab names are unchanged.
+function seg(name) {
+  return name.toLowerCase().replace(/&/g, 'and').replace(/[^a-z0-9._-]+/g, '-').replace(/-+/g, '-').replace(/^-|-$/g, '');
+}
 function noteIdFor(collection, rel) {
   // rel is posix path inside the collection dir
   if (rel === 'README.md') return collection.id;
-  if (rel.endsWith('/README.md')) return `${collection.id}/${rel.slice(0, -'/README.md'.length)}`;
-  return `${collection.id}/${rel.replace(/\.md$/, '')}`;
+  const parts = (rel.endsWith('/README.md') ? rel.slice(0, -'/README.md'.length) : rel.replace(/\.md$/, '')).split('/');
+  return `${collection.id}/${parts.map(seg).join('/')}`;
 }
 
 for (const c of collections) {
@@ -76,7 +80,9 @@ for (const c of collections) {
     const rel = posix.normalize(file.slice(base.length + 1).split('\\').join('/'));
     const top = rel.split('/')[0];
     if ((c.skipDirs || []).includes(top)) continue;
+    if (rel.includes('/') && c.only && !c.only.includes(top)) continue;
     if (!rel.includes('/') && (c.skip || []).includes(rel)) continue;
+    if (!rel.includes('/') && c.pages && rel !== 'README.md' && !c.pages.includes(rel)) continue;
     const id = noteIdFor(c, rel);
     const isModuleReadme = rel.endsWith('/README.md') && rel.split('/').length === 2;
     const special = !rel.includes('/') ? c.special?.[rel] : undefined;
@@ -239,7 +245,7 @@ function parseNote(n) {
   const tm = src.match(/^#\s+(.+)$/m);
   const rawTitle = tm ? tm[1].trim() : n.rel;
   if (tm) src = src.replace(tm[0], '');
-  const numM = rawTitle.match(/^(\d{2})\s+[—–-]\s+(.+)$/);
+  const numM = rawTitle.match(/^(?:Lesson\s+)?(\d{1,2}[a-z]?)\s+[—–-]\s+(.+)$/i);
   const number = numM ? numM[1] : null;
   const title = stripMd(numM ? numM[2] : rawTitle);
 
@@ -343,28 +349,38 @@ for (const n of notes.values()) parsed.set(n.id, parseNote(n));
 function moduleTitleFromReadme(p) {
   return p.title;
 }
+// First prose paragraph of a page, as a short description for module cards.
+function firstParagraph(p) {
+  const m = p.html.match(/<p>([\s\S]*?)<\/p>/);
+  if (!m) return null;
+  const text = m[1].replace(/<[^>]+>/g, '').replace(/\s+/g, ' ').trim();
+  return text.length > 220 ? text.slice(0, 217).replace(/\s+\S*$/, '') + '…' : text;
+}
 
 const index = { builtAt: new Date().toISOString(), collections: [] };
 const searchDocs = [];
 
 for (const c of collections) {
-  const col = parsed.get(c.id);
-  if (!col) continue;
-  // modules = numbered folders, in folder order
-  const moduleDirs = [...new Set([...parsed.values()].filter((p) => p.collection === c.id && p.module).map((p) => p.module))].sort();
+  const col = parsed.get(c.id) || null;
+  if (![...parsed.values()].some((p) => p.collection === c.id)) continue;
+  // modules = subfolders, in config order when `only` is given, else folder order
+  let moduleDirs = [...new Set([...parsed.values()].filter((p) => p.collection === c.id && p.module).map((p) => p.module))].sort();
+  if (c.only) moduleDirs = c.only.filter((d) => moduleDirs.includes(d));
   const modules = [];
+  const numbered = (p) => /^\d/.test(p.rel.split('/').pop());
   for (const dir of moduleDirs) {
-    const readme = parsed.get(`${c.id}/${dir}`);
+    const readme = parsed.get(`${c.id}/${seg(dir)}`);
     const moduleNotes = [...parsed.values()]
       .filter((p) => p.collection === c.id && p.module === dir && p.kind === 'note')
-      .sort((a, b) => a.rel.localeCompare(b.rel));
+      .sort((a, b) => (numbered(b) - numbered(a)) || a.rel.localeCompare(b.rel, undefined, { numeric: true }));
     const number = dir.match(/^(\d+)/)?.[1] || null;
+    const humanDir = dir.replace(/^\d+[-_]/, '').replace(/[-_]+/g, ' ').replace(/^\w/, (ch) => ch.toUpperCase());
     modules.push({
-      id: `${c.id}/${dir}`,
+      id: `${c.id}/${seg(dir)}`,
       dir,
       number,
-      title: readme ? moduleTitleFromReadme(readme) : dir,
-      purpose: readme?.meta.Purpose ? stripMd(readme.meta.Purpose) : null,
+      title: c.moduleTitles?.[dir] || (readme ? moduleTitleFromReadme(readme) : humanDir),
+      purpose: readme?.meta.Purpose ? stripMd(readme.meta.Purpose) : readme ? firstParagraph(readme) : null,
       status: readme?.status || null,
       prerequisites: readme?.meta.Prerequisites || null,
       hasReadme: !!readme,
@@ -382,7 +398,7 @@ for (const c of collections) {
   // Learning path: the first mermaid flowchart in the collection README, with node → module mapping.
   let learningPath = null;
   const fm = col && notes.get(c.id).src.match(/```mermaid\n(flowchart[\s\S]*?)```/);
-  if (fm) {
+  if (fm && /\[\d{2}\b/.test(fm[1])) {
     const graph = fm[1];
     const nodeMap = {};
     for (const m of graph.matchAll(/(\w+)\[([^\]]+)\]/g)) {
@@ -390,7 +406,7 @@ for (const c of collections) {
       const mod = modules.find((x) => x.number === num);
       if (mod) nodeMap[m[1]] = mod.id;
     }
-    learningPath = { graph, nodeMap };
+    if (Object.keys(nodeMap).length) learningPath = { graph, nodeMap };
   }
 
   // Prev/next across the collection in reading order: module readme, then its notes.
@@ -410,6 +426,8 @@ for (const c of collections) {
     title: c.title,
     tagline: c.tagline,
     selfCheck: c.selfCheck ? noteIdFor(c, c.selfCheck) : null,
+    hasReadme: !!col,
+    kind: c.kind || 'area',
     modules,
     pages,
     learningPath,

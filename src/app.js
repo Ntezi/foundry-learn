@@ -61,15 +61,17 @@ function findNoteMeta(id) {
   for (const c of state.index.collections) {
     if (c.id === id) return { kind: 'collection', collection: c, title: c.title };
     for (const m of c.modules) {
-      if (m.id === id) return { kind: 'module', collection: c, module: m, title: `${m.number} — ${m.title}` };
+      if (m.id === id) return { kind: 'module', collection: c, module: m, title: m.number ? `${m.number} — ${m.title}` : m.title };
       const n = m.notes.find((x) => x.id === id);
-      if (n) return { kind: 'note', collection: c, module: m, note: n, title: `${n.number} — ${n.title}` };
+      if (n) return { kind: 'note', collection: c, module: m, note: n, title: n.number ? `${n.number} — ${n.title}` : n.title };
     }
     const p = c.pages.find((x) => x.id === id);
     if (p) return { kind: 'page', collection: c, page: p, title: p.title };
   }
   return null;
 }
+// Id of a collection's special page (map / glossary), or null when it has none.
+function pageId(c, special) { return c.pages.find((p) => p.special === special)?.id || null; }
 function moduleProgress(m) {
   const done = m.notes.filter((n) => state.read.has(n.id)).length;
   return { done, total: m.notes.length, pct: m.notes.length ? Math.round((100 * done) / m.notes.length) : 0 };
@@ -132,28 +134,29 @@ function renderSidebar() {
   };
   const link = (id, label, svg) => `<a class="side-link ${cur === id ? 'active' : ''}" href="#/${id}">${svg}<span>${esc(label)}</span></a>`;
   const prog = collectionProgress(c);
-  let html = `${cs.length > 1 ? `<div class="col-switch" role="tablist">${cs.map((x) => `<a role="tab" class="${x.id === c.id ? 'active' : ''}" href="#/${x.id}">${esc(x.title)}</a>`).join('')}</div>` : ''}
+  const areaRow = (x) => { const pp = collectionProgress(x); return `<a class="area-link ${x.id === c.id ? 'active' : ''}" href="#/${x.id}"><span>${esc(x.title)}</span><span class="mod-prog ${pp.done === pp.total && pp.total ? 'done' : ''}">${pp.done}/${pp.total}</span></a>`; };
+  let html = `${cs.length > 1 ? `<div class="side-section areas-nav"><div class="side-title"><a href="#/">All areas</a></div>${cs.filter((x) => x.kind !== 'courses').map(areaRow).join('')}${cs.some((x) => x.kind === 'courses') ? `<div class="side-title sub">Course notes</div>${cs.filter((x) => x.kind === 'courses').map(areaRow).join('')}` : ''}</div>` : ''}
   <div class="side-section">
     ${link(c.id, c.title + ' home', ic.home)}
-    ${link(c.id + '/MAP', 'Topic map · I need to…', ic.map)}
-    ${link(c.id + '/GLOSSARY', 'Glossary', ic.book)}
+    ${pageId(c, 'map') ? link(pageId(c, 'map'), 'Topic map · I need to…', ic.map) : ''}
+    ${pageId(c, 'glossary') ? link(pageId(c, 'glossary'), 'Glossary', ic.book) : ''}
     ${c.selfCheck ? link(c.selfCheck, 'Self-check by module', ic.check) : ''}
     ${c.pages.filter((p) => !p.special).map((p) => link(p.id, p.title, ic.src)).join('')}
   </div>
   <div class="side-section">
-    <div class="side-title">Learning path · ${prog.done}/${prog.total} read</div>`;
+    <div class="side-title">${c.kind === 'courses' ? 'Courses' : 'Learning path'} · ${prog.done}/${prog.total} read</div>`;
   for (const m of c.modules) {
     const p = moduleProgress(m);
     const open = state.openModules.has(m.id) || curModule === m.id;
     html += `<div class="mod ${open ? 'open' : ''} ${curModule === m.id ? 'active' : ''}" data-mod="${m.id}">
       <button class="mod-head" aria-expanded="${open}">
         <svg class="chev" width="12" height="12" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M7 4l6 6-6 6"/></svg>
-        <span class="mod-num">${esc(m.number)}</span><span class="mod-name">${esc(m.title)}</span>
+        ${m.number ? `<span class="mod-num">${esc(m.number)}</span>` : ''}<span class="mod-name">${esc(m.title)}</span>
         <span class="mod-prog ${p.done === p.total && p.total ? 'done' : ''}">${p.done}/${p.total}</span>
       </button>
       <div class="mod-notes">
-        ${m.hasReadme ? `<a class="side-link readme ${cur === m.id ? 'active' : ''}" href="#/${m.id}">Module overview</a>` : ''}
-        ${m.notes.map((n) => `<a class="note-link ${state.read.has(n.id) ? 'read' : ''} ${cur === n.id ? 'active' : ''}" href="#/${n.id}" title="${esc(n.title)}"><i class="dot"></i><span class="nn">${esc(n.number)}</span><span>${esc(n.title)}</span></a>`).join('')}
+        ${m.hasReadme ? `<a class="side-link readme ${cur === m.id ? 'active' : ''}" href="#/${m.id}">${c.kind === 'courses' ? 'Course overview' : 'Module overview'}</a>` : ''}
+        ${m.notes.map((n) => `<a class="note-link ${state.read.has(n.id) ? 'read' : ''} ${cur === n.id ? 'active' : ''}" href="#/${n.id}" title="${esc(n.title)}"><i class="dot"></i>${n.number ? `<span class="nn">${esc(n.number)}</span>` : ''}<span>${esc(n.title)}</span></a>`).join('')}
       </div>
     </div>`;
   }
@@ -183,8 +186,8 @@ function renderTopnav() {
   const items = [
     ...(state.index.collections.length > 1 ? [['', 'All areas']] : []),
     [c.id, c.title],
-    [c.id + '/MAP', 'Topic map'],
-    [c.id + '/GLOSSARY', 'Glossary'],
+    ...(pageId(c, 'map') ? [[pageId(c, 'map'), 'Topic map']] : []),
+    ...(pageId(c, 'glossary') ? [[pageId(c, 'glossary'), 'Glossary']] : []),
     ...(c.selfCheck ? [[c.selfCheck, 'Self-check']] : []),
   ];
   $('#topnav').innerHTML = items.map(([id, l]) => `<a href="#/${id}" class="${cur === id ? 'active' : ''}">${l}</a>`).join('');
@@ -242,7 +245,7 @@ async function viewLanding() {
         <p class="lead">Your Foundry study notes as a site: ${cs.length} areas, ${total} notes, about ${Math.round(cs.reduce((a, c) => a + c.totals.minutes, 0) / 60)} hours of reading. Search spans every area.</p>
         <div class="quick">
           <button class="btn primary" id="home-search">Search all notes <kbd style="margin-left:4px">⌘K</kbd></button>
-          ${cs.map((c) => `<a class="btn" href="#/${c.id}/MAP?tab=tasks">${esc(c.title)}: I need to…</a>`).join('')}
+          ${cs.filter((c) => c.map?.tasks).map((c) => `<a class="btn" href="#/${pageId(c, 'map')}?tab=tasks">${esc(c.title)}: I need to…</a>`).join('')}
         </div>
       </div>
       <div class="card">
@@ -253,18 +256,19 @@ async function viewLanding() {
         <p class="small muted" style="margin:12px 0 0">Progress is saved in this browser only.</p>
       </div>
     </div>
-    <div class="section-h"><h2>Areas</h2><span class="small muted">in the order the notes recommend</span></div>
+    ${[['Areas', cs.filter((c) => c.kind !== 'courses'), 'structured courses built from the official docs'], ['Course notes', cs.filter((c) => c.kind === 'courses'), 'what each Palantir Learn course taught, lesson by lesson']].filter(([, l]) => l.length).map(([h, list, sub]) => `
+    <div class="section-h"><h2>${h}</h2><span class="small muted">${sub}</span></div>
     <div class="areas">
-      ${cs.map((c) => {
+      ${list.map((c) => {
         const p = collectionProgress(c);
         return `<a class="acard" href="#/${c.id}">
           <div class="top"><span class="ttl">${esc(c.title)}</span>${p.done === p.total && p.total ? '<span class="chip ok">done</span>' : ''}</div>
           <div class="desc">${esc(c.tagline)}.</div>
-          <div class="foot"><span>${c.modules.length} modules · ${c.totals.notes} notes · ${Math.round(c.totals.minutes / 60 * 10) / 10} h</span><div class="progress"><i style="width:${p.pct}%"></i></div><span>${p.done}/${p.total}</span></div>
-          <div class="links"><span class="chipl">Topic map</span><span class="chipl">Glossary</span>${c.selfCheck ? '<span class="chipl">Self-check</span>' : ''}</div>
+          <div class="foot"><span>${c.modules.length} ${c.kind === 'courses' ? (c.modules.length === 1 ? 'course' : 'courses') : 'modules'} · ${c.totals.notes} notes · ${Math.round(c.totals.minutes / 60 * 10) / 10} h</span><div class="progress"><i style="width:${p.pct}%"></i></div><span>${p.done}/${p.total}</span></div>
+          ${pageId(c, 'map') || pageId(c, 'glossary') || c.selfCheck ? `<div class="links">${pageId(c, 'map') ? '<span class="chipl">Topic map</span>' : ''}${pageId(c, 'glossary') ? '<span class="chipl">Glossary</span>' : ''}${c.selfCheck ? '<span class="chipl">Self-check</span>' : ''}</div>` : ''}
         </a>`;
       }).join('')}
-    </div>
+    </div>`).join('')}
   </div>`;
   $('#home-search').addEventListener('click', openSearch);
 }
@@ -286,13 +290,13 @@ async function viewHome(c) {
       <div>
         ${state.index.collections.length > 1 ? `<div class="crumbs"><a href="#/">All areas</a><span class="sep">/</span><span>${esc(c.title)}</span></div>` : ''}
         <h1>${esc(c.title)}</h1>
-        <p class="lead">${esc(c.tagline)}. ${c.totals.notes} notes in ${c.modules.length} modules, about ${Math.round(c.totals.minutes / 60)} hours of reading.</p>
+        <p class="lead">${esc(c.tagline)}. ${c.totals.notes} notes in ${c.modules.length} ${c.kind === 'courses' ? (c.modules.length === 1 ? 'course' : 'courses') : 'modules'}, about ${Math.round(c.totals.minutes / 60)} hour${Math.round(c.totals.minutes / 60) === 1 ? '' : 's'} of reading.</p>
         <div class="quick">
           <button class="btn primary" id="home-search">Search the notes <kbd style="margin-left:4px">⌘K</kbd></button>
-          ${c.map?.tasks ? `<a class="btn" href="#/${c.id}/MAP?tab=tasks">I need to…</a>` : ''}
-          ${c.map?.questions ? `<a class="btn" href="#/${c.id}/MAP?tab=questions">Design questions</a>` : ''}
-          ${c.map?.concepts ? `<a class="btn" href="#/${c.id}/MAP?tab=concepts">By concept</a>` : ''}
-          <a class="btn" href="#/${c.id}/GLOSSARY">Glossary</a>
+          ${c.map?.tasks ? `<a class="btn" href="#/${pageId(c, 'map')}?tab=tasks">I need to…</a>` : ''}
+          ${c.map?.questions ? `<a class="btn" href="#/${pageId(c, 'map')}?tab=questions">Design questions</a>` : ''}
+          ${c.map?.concepts ? `<a class="btn" href="#/${pageId(c, 'map')}?tab=concepts">By concept</a>` : ''}
+          ${pageId(c, 'glossary') ? `<a class="btn" href="#/${pageId(c, 'glossary')}">Glossary</a>` : ''}
         </div>
       </div>
       <div class="card">
@@ -304,12 +308,12 @@ async function viewHome(c) {
       </div>
     </div>
 
-    <div class="section-h"><h2>Modules</h2><span class="small muted">in reading order</span></div>
+    <div class="section-h"><h2>${c.kind === 'courses' ? 'Courses' : 'Modules'}</h2><span class="small muted">in reading order</span></div>
     <div class="modules">
       ${c.modules.map((m) => {
         const p = moduleProgress(m);
         return `<a class="mcard" href="#/${m.id}">
-          <div class="top"><span class="num">${esc(m.number)}</span><span class="ttl">${esc(m.title)}</span>${p.done === p.total && p.total ? '<span class="chip ok">done</span>' : ''}</div>
+          <div class="top">${m.number ? `<span class="num">${esc(m.number)}</span>` : ''}<span class="ttl">${esc(m.title)}</span>${p.done === p.total && p.total ? '<span class="chip ok">done</span>' : ''}</div>
           <div class="desc">${esc(m.purpose || '')}</div>
           <div class="foot"><span>${m.notes.length} notes · ${m.minutes} min</span><div class="progress"><i style="width:${p.pct}%"></i></div><span>${p.done}/${p.total}</span></div>
         </a>`;
@@ -322,8 +326,8 @@ async function viewHome(c) {
       <div class="legend-row"><span><i style="background:var(--ok-2);border-color:var(--ok)"></i>finished</span><span><i style="background:var(--accent-2);border-color:var(--accent)"></i>in progress</span><span><i></i>not started</span></div>
     </div>
 
-    <div class="section-h"><h2>About these notes</h2><span class="small"><a href="#/${c.id}/SOURCES">Sources and open questions</a></span></div>
-    <div class="intro" id="intro"></div>
+    ${c.hasReadme ? `<div class="section-h"><h2>About these notes</h2>${c.pages.some((p) => p.id === c.id + '/sources') ? `<span class="small"><a href="#/${c.id}/sources">Sources and open questions</a></span>` : ''}</div>
+    <div class="intro" id="intro"></div>` : ''}
   </div>`;
   $('#home-search').addEventListener('click', openSearch);
   // Learning path diagram, coloured by progress
@@ -373,6 +377,7 @@ async function viewHome(c) {
     $('#path').remove();
   }
   // Collection README (intro) below
+  if (!c.hasReadme) return;
   const col = await getNote(c.id);
   $('#intro').innerHTML = `<article class="article">${col.html}</article>`;
   // The README's own "Learning path" section is already shown above, interactively; drop the copy.
@@ -393,8 +398,8 @@ async function viewModule(meta) {
   const readme = m.hasReadme ? await getNote(m.id) : null;
   const selfCheckAnchor = c.selfCheck ? `${m.number}--${m.title.toLowerCase().replace(/[^\p{L}\p{N}\s-]/gu, '').trim().replace(/\s+/g, '-')}` : null;
   main.innerHTML = `<div class="page">
-    <div class="crumbs"><a href="#/${c.id}">${esc(c.title)}</a><span class="sep">/</span><span>Module ${esc(m.number)}</span></div>
-    <h1 class="title"><span class="num">${esc(m.number)}</span>${esc(m.title)}</h1>
+    <div class="crumbs"><a href="#/${c.id}">${esc(c.title)}</a><span class="sep">/</span><span>${m.number ? `Module ${esc(m.number)}` : c.kind === 'courses' ? 'Course' : 'Module'}</span></div>
+    <h1 class="title">${m.number ? `<span class="num">${esc(m.number)}</span>` : ''}${esc(m.title)}</h1>
     <div class="meta-row">
       ${statusChip(m.status)}
       <span>${m.notes.length} notes · ${m.minutes} min</span>
@@ -403,7 +408,7 @@ async function viewModule(meta) {
     </div>
     ${m.purpose ? `<p class="lead" style="font-size:17px;color:var(--fg-2)">${esc(m.purpose)}</p>` : ''}
     <div class="note-list">
-      ${m.notes.map((n) => `<a class="nrow ${state.read.has(n.id) ? 'read' : ''}" href="#/${n.id}"><i class="st"></i><span class="num">${esc(n.number)}</span><span class="ttl">${esc(n.title)}</span><span class="tags">${n.minutes} min${n.diagrams ? ` · ${n.diagrams} diagram${n.diagrams > 1 ? 's' : ''}` : ''}${n.tasks ? ` · checklist` : ''}</span></a>`).join('')}
+      ${m.notes.map((n) => `<a class="nrow ${state.read.has(n.id) ? 'read' : ''}" href="#/${n.id}"><i class="st"></i>${n.number ? `<span class="num">${esc(n.number)}</span>` : ''}<span class="ttl">${esc(n.title)}</span><span class="tags">${n.minutes} min${n.diagrams ? ` · ${n.diagrams} diagram${n.diagrams > 1 ? 's' : ''}` : ''}${n.tasks ? ` · checklist` : ''}</span></a>`).join('')}
     </div>
     ${readme ? `<article class="article" id="article">${readme.html}</article>` : ''}
     ${pager(readme)}
@@ -435,7 +440,7 @@ async function viewNote(meta, r) {
   const labels = Object.entries(n.labels || {}).sort((a, b) => b[1] - a[1]);
   main.innerHTML = `<div class="page with-toc">
     <div>
-      <div class="crumbs"><a href="#/${c.id}">${esc(c.title)}</a>${m ? `<span class="sep">/</span><a href="#/${m.id}">${esc(m.number)} — ${esc(m.title)}</a>` : ''}</div>
+      <div class="crumbs"><a href="#/${c.id}">${esc(c.title)}</a>${m ? `<span class="sep">/</span><a href="#/${m.id}">${m.number ? esc(m.number) + ' — ' : ''}${esc(m.title)}</a>` : ''}</div>
       <h1 class="title">${n.number ? `<span class="num">${esc(n.number)}</span>` : ''}${esc(n.title)}</h1>
       <div class="meta-row">
         ${statusChip(n.status)}
@@ -443,7 +448,7 @@ async function viewNote(meta, r) {
         <span>${n.minutes} min read</span>
         ${n.checked ? `<span>checked against the docs ${esc(n.checked)}</span>` : ''}
         ${n.sourcesNote ? `<span>${esc(n.sourcesNote)}</span>` : ''}
-        ${n.openQuestions?.length ? `<a href="#/${c.id}/SOURCES#open-research-questions" class="chip warn">${n.openQuestions.length} open question${n.openQuestions.length > 1 ? 's' : ''}</a>` : ''}
+        ${n.openQuestions?.length ? `<a href="#/${c.id}/sources#open-research-questions" class="chip warn">${n.openQuestions.length} open question${n.openQuestions.length > 1 ? 's' : ''}</a>` : ''}
       </div>
       ${n.sources?.length ? `<details class="sources"><summary>Sources · ${n.sources.length} official page${n.sources.length > 1 ? 's' : ''}</summary><ul>${n.sources.map((s) => `<li><a class="ext" href="${esc(s.url)}" target="_blank" rel="noopener">${esc(s.title)}</a>${s.note ? ` <span class="muted">${esc(s.note)}</span>` : ''}</li>`).join('')}</ul></details>` : ''}
       ${labels.length ? `<div class="legend" id="legend"><span class="lt">Claims:</span>${labels.map(([l, k]) => `<button data-label="${l}" title="Highlight ${l} paragraphs"><span class="lbl lbl-${l.toLowerCase()}">${l}</span><span class="cnt">${k}</span></button>`).join('')}<span class="hint">click a label to focus on that kind of claim</span></div>` : ''}
@@ -673,7 +678,7 @@ async function viewMap(meta, r) {
     list.innerHTML = html || `<div class="empty">Nothing matches "${esc(input.value)}".</div>`;
     cnt.textContent = `${rows.length} shown`;
     $('#tabs').querySelectorAll('button').forEach((b) => b.classList.toggle('active', b.dataset.tab === tab));
-    history.replaceState(null, '', `#/${c.id}/MAP?tab=${tab}${qq ? '&q=' + encodeURIComponent(input.value.trim()) : ''}`);
+    history.replaceState(null, '', `#/${meta.page.id}?tab=${tab}${qq ? '&q=' + encodeURIComponent(input.value.trim()) : ''}`);
   };
   $('#tabs').addEventListener('click', (e) => { const b = e.target.closest('button'); if (b) { tab = b.dataset.tab; draw(); } });
   input.addEventListener('input', draw);
@@ -709,7 +714,7 @@ async function viewGlossary(meta, r) {
     }
     list.innerHTML = html || `<div class="empty">No term matches "${esc(input.value)}".</div>`;
     cnt.textContent = `${rows.length} of ${g.terms.length}`;
-    history.replaceState(null, '', `#/${c.id}/GLOSSARY${qq ? '?q=' + encodeURIComponent(input.value.trim()) : ''}`);
+    history.replaceState(null, '', `#/${meta.page.id}${qq ? '?q=' + encodeURIComponent(input.value.trim()) : ''}`);
   };
   input.addEventListener('input', draw);
   $('.alpha').addEventListener('click', (e) => {
@@ -726,10 +731,10 @@ const modal = $('#search-modal'), sInput = $('#search-input'), sResults = $('#se
 let sel = 0, lastResults = [];
 async function ensureSearch() {
   if (state.search) return state.search;
-  const cs = state.index.collections;
+  const cs = state.index.collections.filter((c) => pageId(c, 'glossary'));
   const [docs, ...gls] = await Promise.all([getJSON('search.json'), ...cs.map((c) => getGlossary(c.id))]);
   const all = docs.map((d) => ({ ...d, kind: 'note' }));
-  cs.forEach((c, ci) => gls[ci].terms.forEach((t, i) => all.push({ id: `term-${c.id}-${i}`, kind: 'term', note: `${c.id}/GLOSSARY`, anchor: `t-${t.term.toLowerCase().replace(/[^a-z0-9]+/g, '-')}`, title: t.term, heading: '', module: `${c.title} glossary`, text: t.plain })));
+  cs.forEach((c, ci) => gls[ci].terms.forEach((t, i) => all.push({ id: `term-${c.id}-${i}`, kind: 'term', note: pageId(c, 'glossary'), anchor: `t-${t.term.toLowerCase().replace(/[^a-z0-9]+/g, '-')}`, title: t.term, heading: '', module: `${c.title} glossary`, text: t.plain })));
   const ms = new MiniSearch({
     fields: ['title', 'heading', 'text'],
     storeFields: ['kind', 'note', 'anchor', 'title', 'heading', 'module', 'text'],

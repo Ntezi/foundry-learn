@@ -11,7 +11,7 @@ Learn/Ontology/**.md   --npm run sync-->   content/Ontology/**.md   --npm run bu
    (your notes)                              (copy, committed)                        (static site)
 ```
 
-- `scripts/config.mjs` lists which note folders are included. Today: `Ontology` and `AIP`. Add a row to include `Courses`, `Speedrun`, … later.
+- `scripts/config.mjs` lists which note folders are included: the three areas (`Ontology`, `AIP`, `Apps`) and the course-note folders they link to (`Courses`, `Speedrun`, `Deep Dive`, `Application Developer`), each keeping its own folder structure. `only` limits a folder to the listed courses; `pages` limits its root files.
 - `scripts/sync.mjs` copies those folders from `../Learn` (or `$LEARN_DIR`) into `content/`.
 - `scripts/build.mjs` renders the markdown into JSON (`dist/data/`): one file per note, a navigation index, a search index, and the parsed topic map and glossary.
 - `scripts/bundle.mjs` bundles the app (`src/app.js`) with esbuild; Mermaid loads on demand.

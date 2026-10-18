@@ -27,9 +27,15 @@ for (const c of collections) {
     recursive: true,
     filter: (src) => {
       const name = src.split('/').pop();
+      const rel = src.slice(from.length + 1);
       if (name === '.DS_Store') return false;
-      if (statSync(src).isDirectory()) return !(c.skipDirs || []).includes(name);
-      return name.endsWith('.md') || name.endsWith('.json');
+      if (statSync(src).isDirectory()) {
+        if ((c.skipDirs || []).includes(name)) return false;
+        if (c.only && !rel.includes('/') && rel && !c.only.includes(name)) return false;
+        return true;
+      }
+      if (c.pages && !rel.includes('/') && name !== 'README.md' && !c.pages.includes(name)) return false;
+      return name.endsWith('.md');
     },
   });
   console.log(`synced ${c.dir} → content/${c.dir}`);
