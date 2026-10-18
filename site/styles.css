@@ -113,6 +113,20 @@ kbd { font-family: var(--mono); font-size: 11px; padding: 1px 5px; border: 1px s
 .backdrop { display: none; }
 
 /* Sidebar */
+.col-switch { display: flex; gap: 3px; padding: 3px; margin: 0 6px 12px; background: var(--bg-3); border-radius: 9px; }
+.col-switch a { flex: 1; text-align: center; padding: 5px 8px; border-radius: 7px; color: var(--fg-2); font-weight: 500; font-size: 13.5px; }
+.col-switch a:hover { text-decoration: none; color: var(--fg); }
+.col-switch a.active { background: var(--bg); color: var(--fg); box-shadow: 0 1px 2px rgba(0,0,0,.08); font-weight: 600; }
+.areas { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 14px; }
+.acard { display: flex; flex-direction: column; gap: 8px; padding: 18px 20px; border: 1px solid var(--line); border-radius: var(--radius); color: var(--fg); background: var(--bg); }
+.acard:hover { border-color: var(--accent); text-decoration: none; background: var(--bg-2); }
+.acard .top { display: flex; align-items: center; gap: 8px; }
+.acard .ttl { font-weight: 700; font-size: 20px; letter-spacing: -.01em; flex: 1; }
+.acard .desc { font-size: 14px; color: var(--fg-2); flex: 1; }
+.acard .foot { display: flex; align-items: center; gap: 10px; font-size: 12.5px; color: var(--fg-3); }
+.acard .foot .progress { flex: 1; height: 6px; }
+.acard .links { margin-top: 2px; }
+.acard .links .chipl { font-size: 12px; padding: 2px 9px; border-radius: 999px; background: var(--accent-2); color: var(--accent); }
 .side-section { margin: 4px 0 14px; }
 .side-title { font-size: 11px; text-transform: uppercase; letter-spacing: .08em; color: var(--fg-3); padding: 8px 10px 4px; font-weight: 600; }
 .side-link { display: flex; align-items: center; gap: 8px; padding: 6px 10px; border-radius: 7px; color: var(--fg-2); }

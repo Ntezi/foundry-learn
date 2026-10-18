@@ -2,7 +2,7 @@
 
 *Sources: [Chatbot Studio: tools](https://www.palantir.com/docs/foundry/chatbot-studio/tools/) · [Chatbot Studio: application state](https://www.palantir.com/docs/foundry/chatbot-studio/application-state/) · [Chatbot Studio overview](https://www.palantir.com/docs/foundry/chatbot-studio/overview/) · [AIP Logic](https://www.palantir.com/docs/foundry/logic/overview/) · [Ontology MCP](https://www.palantir.com/docs/foundry/ontology-mcp/overview/) · checked October 3, 2026 · Ready for Review*
 
-How each tool type works, and when it asks for confirmation, is covered in detail in the [AIP reference on Chatbot Studio](../../AIP/applications/09-aip-chatbot-studio.md). This note treats the tools as what they are from the Ontology's side: **an API surface onto your Ontology, whose caller is a language model.** It's laid out as the **tool sheet** for the Delivery Desk agent, then the rules Kestrel drew from it.
+This note is where the tools themselves are covered: each tool type, what it can touch, and when it asks for confirmation. Building the chatbot in the studio is in [AIP 05-01](../../AIP/05-chatbot-studio/01-chatbot-concepts.md), and command tools that act in the user's open app are in [AIP 05-02](../../AIP/05-chatbot-studio/02-commands-as-tools.md). This note treats the tools as what they are from the Ontology's side: **an API surface onto your Ontology, whose caller is a language model.** It's laid out as the **tool sheet** for the Delivery Desk agent, then the rules Kestrel drew from it.
 
 ## The surface, by channel
 
@@ -15,7 +15,7 @@ How each tool type works, and when it asks for confirmation, is covered in detai
 | **Ontology MCP (OMCP)** | Developers, in Developer Console | An application's object types, action types and query functions as **MCP tools** for **external** agents | Yes, limited by the application's **restrictions** |
 | **Palantir MCP** | Developers | 70+ tools for **building** the Ontology (types, links, actions), OSDK apps, datasets, transforms | **No data writes**; it changes structure, not objects |
 
-**[Docs]** The OMCP page draws the line plainly: OMCP "enables controlled writes to ontology data, while Palantir MCP enables modifications to ontology structure". **[Explanation]** For this course: Palantir MCP is a builder's tool ([AIP reference](../../AIP/applications/05-palantir-mcp.md)); OMCP and Chatbot tools are the agent's runtime surface, and the ones that need governing.
+**[Docs]** The OMCP page draws the line plainly: OMCP "enables controlled writes to ontology data, while Palantir MCP enables modifications to ontology structure". **[Explanation]** For this course: Palantir MCP is a builder's tool ([archived AIP reference](../../study-backups/2026-10-07/aip-from-scratch/AIP-old/applications/05-palantir-mcp.md)); OMCP and Chatbot tools are the agent's runtime surface, and the ones that need governing.
 
 **[Docs]** OMCP comes with a warning: enabling it with LLMs hosted outside AIP makes your data available to an external MCP client, so check your organization's policies first, and use application restrictions and permissions to limit what's exposed ([10-04](../10-applications/04-osdk-and-apis.md#q2--who-is-the-user-and-what-token-do-they-get)).
 
@@ -55,7 +55,7 @@ What is **not** on the sheet, on purpose:
 
 ## Who the agent "is"
 
-**[Docs]** Chatbots are built on "the same rigorous security model" as the rest of the platform, granting the LLM "access only to what is necessary". **[Explanation]** In an interactive chatbot the tools act **as the user**: reads are filtered by the user's access ([01](01-ontology-as-ai-context.md#security-read-time-only)), and actions check criteria against the user ([AIP reference](../../AIP/applications/09-aip-chatbot-studio.md)). So T5 succeeds for Ama only if Ama could send the update herself. Headless runs are different: an automation runs **as its owner** ([10-06](../10-applications/06-automate-and-ontology-events.md#why-each-choice)), and an OMCP client is limited by its application's restrictions. Decide "who is acting" before deciding what the agent may do.
+**[Docs]** Chatbots are built on "the same rigorous security model" as the rest of the platform, granting the LLM "access only to what is necessary". **[Explanation]** In an interactive chatbot the tools act **as the user**: reads are filtered by the user's access ([01](01-ontology-as-ai-context.md#security-read-time-only)), and actions check criteria against the user ([archived AIP reference](../../study-backups/2026-10-07/aip-from-scratch/AIP-old/applications/09-aip-chatbot-studio.md)). So T5 succeeds for Ama only if Ama could send the update herself. Headless runs are different: an automation runs **as its owner** ([10-06](../10-applications/06-automate-and-ontology-events.md#why-each-choice)), and an OMCP client is limited by its application's restrictions. Decide "who is acting" before deciding what the agent may do.
 
 ---
 [Module index](README.md) · Previous: [02 — Semantic search and embeddings](02-semantic-search-and-embeddings.md) · Next: [04 — Human-in-the-loop and staged writes](04-human-in-the-loop-and-staged-writes.md)

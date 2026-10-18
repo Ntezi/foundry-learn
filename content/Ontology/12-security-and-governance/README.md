@@ -21,7 +21,7 @@ All notes in this module are written. Read them in order, or jump in through the
 ## Seen in our courses
 
 - [Intro course 18 — Security and governance](../../Courses/Introduction%20to%20Foundry%20%26%20AIP%20for%20Enterprise%20Organizations/18-security-and-governance.md)
-- [AIP 04 — Security, privacy and ethics](../../AIP/04-security-privacy-and-ethics.md)
+- [AIP 08 — Security, governance and administration](../../AIP/08-security-governance-and-admin/README.md)
 
 ---
 ← [11 — Ontology design](../11-design/README.md) · [13 — Backend architecture](../13-backend-architecture/README.md) → · [Ontology home](../README.md) · [Topic map](../MAP.md) · [Glossary](../GLOSSARY.md)

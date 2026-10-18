@@ -83,9 +83,9 @@ Treat these as design questions for [16](../16-ai-and-agents/01-ontology-as-ai-c
 - Implementations may use custom types if they're *compatible*.
 - Input names must match by position.
 - The docs now point to **registered models** as the current way to bring an LLM. The function-interface method is marked **Legacy**.
-- The feature table lists bring-your-own-model for **AIP Logic and TSv1 only**.
+- The feature table lists bring-your-own-model for **AIP Logic and TSv1 only**. That describes the legacy function-interface method; registered models reach more apps, including Chatbot Studio, AI FDE, AIP Analyst and TypeScript functions ([AIP 02-01](../../AIP/02-bring-your-own-model/01-choosing-a-byom-path.md#where-a-registered-model-works)).
 
-**[Explanation]** For Kestrel Pay, start with **registered models**, which aren't covered in these notes yet. Only fall back to a TSv1 `@ChatCompletion()` implementation if registration isn't available on the enrollment.
+**[Explanation]** For Kestrel Pay, start with **registered models**, covered in [AIP 02 — Bring your own model](../../AIP/02-bring-your-own-model/01-choosing-a-byom-path.md). Only fall back to a TSv1 `@ChatCompletion()` implementation if registration isn't available on the enrollment.
 
 ## Which pattern, when
 

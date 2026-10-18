@@ -22,7 +22,7 @@ All notes in this module are written. Read them in order, or jump in through the
 ## Seen in our courses
 
 - [Intro course 19 — Branching](../../Courses/Introduction%20to%20Foundry%20%26%20AIP%20for%20Enterprise%20Organizations/19-branching.md)
-- [AIP — Observability](../../AIP/applications/14-aip-observability.md)
+- [AIP 09 — Cost and observability](../../AIP/09-cost-and-observability/README.md)
 
 ---
 ← [13 — Backend architecture](../13-backend-architecture/README.md) · [15 — Advanced patterns](../15-advanced-patterns/README.md) → · [Ontology home](../README.md) · [Topic map](../MAP.md) · [Glossary](../GLOSSARY.md)

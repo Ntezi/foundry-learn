@@ -7,7 +7,7 @@ A structured course and working reference for the **Palantir Foundry Ontology**.
 | Structure | Created October 2, 2026 (Phase 2). Modules 00–05 written October 2, 2026 (Phases 3–4). Replaces the former `Ontology Design/` folder: see [MIGRATION](MIGRATION.md) |
 | Notes written | 94 of 94: modules [00](00-orientation/README.md)–[16](16-ai-and-agents/README.md) (81 notes, Phases 3–6), the four design notes ([11](11-design/README.md)), two case studies including the [Kestrel reference model](17-case-studies/02-kestrel-reference-model.md) ([17](17-case-studies/README.md)), three practice pages ([18](18-practice/README.md)) and four reference pages ([99](99-reference/README.md)) |
 | Quality | Phase 8 review done October 4, 2026: quotes re-matched against the live docs, links, anchors, diagrams and navigation checked. See [QUALITY-REVIEW](QUALITY-REVIEW.md) |
-| Next | Optional: coverage checks of the OSDK, Workshop, Automate and AIP docs sidebars; hands-on checks of the *Untested* items |
+| Next | Optional: a coverage check of the OSDK docs sidebar (the AIP sidebar is mapped page by page in the [AIP area](../AIP/README.md); Workshop, Slate and Automate are being mapped in the [Apps area](../Apps/README.md), started October 18, 2026); hands-on checks of the *Untested* items |
 | Sources | Official Palantir documentation first. Register and corrections: [SOURCES](SOURCES.md) |
 | Why it matters | The Ontology is the centre of Foundry. It underpins the Application Developer Associate exam, Workshop/Slate/OSDK work, and every AIP workflow |
 

@@ -36,7 +36,7 @@ These are disagreements **between official pages**, not errors in the notes. Eac
 ## Known limitations
 
 - **Untested in a live enrollment.** Nothing here was clicked through in Foundry for this area; claims rest on the docs. Rows marked *Untested* in notes (for example interface implementations in Marketplace, RQ-28) need a hands-on check.
-- **Other sidebars not coverage-checked.** Workshop, OSDK, Automate and AIP pages are cited where needed, but not mapped page by page. Known gap: the TSv2, Python and OSDK search-filter APIs ([10-07](10-applications/07-searching-the-ontology.md#functions)).
+- **Other sidebars not coverage-checked.** Workshop, OSDK and Automate pages are cited where needed, but not mapped page by page. (The AIP sidebar is mapped in the [AIP area](../AIP/README.md), added October 2026.) Known gap: the TSv2, Python and OSDK search-filter APIs ([10-07](10-applications/07-searching-the-ontology.md#functions)).
 - **Fictional example.** Kestrel's numbers (match rates, eval scores, cost estimates) are illustrations, labelled **[Example]**.
 - **Paraphrased facts.** The October 4 re-check covered quoted wording and the numbers in *Limits and thresholds*. Other paraphrased statements were checked when written (October 2–3), not re-matched.
 - **Dates.** Most pages were checked October 2–3, 2026. The docs change; re-run the quote check before relying on a note months from now.

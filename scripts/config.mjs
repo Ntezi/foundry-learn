@@ -17,6 +17,16 @@ export const collections = [
     // The note that holds the self-check questions, if any.
     selfCheck: '18-practice/03-review-questions-by-module.md',
   },
+  {
+    id: 'aip',
+    dir: 'AIP',
+    title: 'AIP',
+    tagline: 'Palantir AIP: the AI Platform products, from models and Logic to Evals, chatbots and end-user apps',
+    special: { 'MAP.md': 'map', 'GLOSSARY.md': 'glossary' },
+    skip: ['MIGRATION.md', 'QUALITY-REVIEW.md'],
+    skipDirs: ['_templates'],
+    selfCheck: '11-practice/01-review-questions-by-module.md',
+  },
 ];
 
 // Folder in Learn/ to sync from. Override with LEARN_DIR=/path/to/Learn.

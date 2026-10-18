@@ -19,8 +19,8 @@ const state = {
   last: store.get('last', null),      // { id, title, at }
   search: null,                       // MiniSearch
   searchDocs: null,
-  glossary: null,
-  map: null,
+  glossary: {},                       // collection id → glossary json
+  map: {},                            // collection id → map json
   route: null,
 };
 const saveRead = () => store.set('read', [...state.read]);
@@ -43,6 +43,10 @@ async function getJSON(path) {
   const r = await fetch(`${DATA}/${path}`);
   if (!r.ok) throw new Error(`${path}: ${r.status}`);
   return r.json();
+}
+async function getGlossary(cid) {
+  if (!state.glossary[cid]) state.glossary[cid] = await getJSON(`${cid}.glossary.json`);
+  return state.glossary[cid];
 }
 async function getNote(id) {
   if (state.noteCache.has(id)) return state.noteCache.get(id);
@@ -100,9 +104,19 @@ window.addEventListener('hashchange', () => {
   render(r);
 });
 
+// The collection (note area) the current route belongs to; falls back to the last one used.
+function currentCollection() {
+  const cs = state.index.collections;
+  const first = (state.route?.path || '').split('/')[0];
+  const byRoute = cs.find((c) => c.id === first);
+  if (byRoute) { store.set('col', byRoute.id); return byRoute; }
+  return cs.find((c) => c.id === store.get('col', null)) || cs[0];
+}
+
 // ---------- sidebar ----------
 function renderSidebar() {
-  const c = state.index.collections[0];
+  const c = currentCollection();
+  const cs = state.index.collections;
   const cur = state.route?.path || '';
   const curModule = cur.split('/').slice(0, 2).join('/');
   const icon = (d) => `<svg width="15" height="15" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">${d}</svg>`;
@@ -115,7 +129,8 @@ function renderSidebar() {
   };
   const link = (id, label, svg) => `<a class="side-link ${cur === id ? 'active' : ''}" href="#/${id}">${svg}<span>${esc(label)}</span></a>`;
   const prog = collectionProgress(c);
-  let html = `<div class="side-section">
+  let html = `${cs.length > 1 ? `<div class="col-switch" role="tablist">${cs.map((x) => `<a role="tab" class="${x.id === c.id ? 'active' : ''}" href="#/${x.id}">${esc(x.title)}</a>`).join('')}</div>` : ''}
+  <div class="side-section">
     ${link(c.id, c.title + ' home', ic.home)}
     ${link(c.id + '/MAP', 'Topic map · I need to…', ic.map)}
     ${link(c.id + '/GLOSSARY', 'Glossary', ic.book)}
@@ -160,10 +175,11 @@ $('#menu-btn').addEventListener('click', () => (document.body.classList.contains
 $('#backdrop').addEventListener('click', closeNav);
 
 function renderTopnav() {
-  const c = state.index.collections[0];
+  const c = currentCollection();
   const cur = state.route?.path || '';
   const items = [
-    [c.id, 'Home'],
+    ...(state.index.collections.length > 1 ? [['', 'All areas']] : []),
+    [c.id, c.title],
     [c.id + '/MAP', 'Topic map'],
     [c.id + '/GLOSSARY', 'Glossary'],
     ...(c.selfCheck ? [[c.selfCheck, 'Self-check']] : []),
@@ -183,7 +199,9 @@ async function render(r) {
   renderTopnav();
   const path = r.path;
   try {
-    if (!path || path === state.index.collections[0].id) await viewHome(state.index.collections[0]);
+    const col = state.index.collections.find((c) => c.id === path);
+    if (!path) await (state.index.collections.length > 1 ? viewLanding() : viewHome(state.index.collections[0]));
+    else if (col) await viewHome(col);
     else {
       const meta = findNoteMeta(path);
       if (!meta) return viewNotFound(path);
@@ -204,6 +222,47 @@ async function render(r) {
   window.scrollTo(0, 0);
 }
 
+// ----- Landing: all note areas -----
+async function viewLanding() {
+  setTitle(null);
+  const cs = state.index.collections;
+  const last = state.last && findNoteMeta(state.last.id) ? state.last : null;
+  const total = cs.reduce((a, c) => a + c.totals.notes, 0);
+  const done = cs.reduce((a, c) => a + collectionProgress(c).done, 0);
+  main.innerHTML = `<div class="page wide">
+    <div class="hero">
+      <div>
+        <h1>Foundry Learn</h1>
+        <p class="lead">Your Foundry study notes as a site: ${cs.length} areas, ${total} notes, about ${Math.round(cs.reduce((a, c) => a + c.totals.minutes, 0) / 60)} hours of reading. Search spans every area.</p>
+        <div class="quick">
+          <button class="btn primary" id="home-search">Search all notes <kbd style="margin-left:4px">⌘K</kbd></button>
+          ${cs.map((c) => `<a class="btn" href="#/${c.id}/MAP?tab=tasks">${esc(c.title)}: I need to…</a>`).join('')}
+        </div>
+      </div>
+      <div class="card">
+        <h3>Your progress</h3>
+        <div class="progress-row"><span class="big">${total ? Math.round((100 * done) / total) : 0}%</span><span class="muted small">${done} of ${total} notes read</span></div>
+        <div class="progress"><i style="width:${total ? Math.round((100 * done) / total) : 0}%"></i></div>
+        ${last ? `<a class="continue" href="#/${last.id}"><span class="k">Continue where you left off</span><span class="t">${esc(last.title)}</span></a>` : ''}
+        <p class="small muted" style="margin:12px 0 0">Progress is saved in this browser only.</p>
+      </div>
+    </div>
+    <div class="section-h"><h2>Areas</h2><span class="small muted">in the order the notes recommend</span></div>
+    <div class="areas">
+      ${cs.map((c) => {
+        const p = collectionProgress(c);
+        return `<a class="acard" href="#/${c.id}">
+          <div class="top"><span class="ttl">${esc(c.title)}</span>${p.done === p.total && p.total ? '<span class="chip ok">done</span>' : ''}</div>
+          <div class="desc">${esc(c.tagline)}.</div>
+          <div class="foot"><span>${c.modules.length} modules · ${c.totals.notes} notes · ${Math.round(c.totals.minutes / 60 * 10) / 10} h</span><div class="progress"><i style="width:${p.pct}%"></i></div><span>${p.done}/${p.total}</span></div>
+          <div class="links"><span class="chipl">Topic map</span><span class="chipl">Glossary</span>${c.selfCheck ? '<span class="chipl">Self-check</span>' : ''}</div>
+        </a>`;
+      }).join('')}
+    </div>
+  </div>`;
+  $('#home-search').addEventListener('click', openSearch);
+}
+
 function viewNotFound(path) {
   setTitle('Not found');
   main.innerHTML = `<div class="page"><h1 class="title">Not found</h1><p class="muted">No note at <code>${esc(path)}</code>.</p><p><a href="#/">Back to the start</a></p></div>`;
@@ -219,12 +278,14 @@ async function viewHome(c) {
   main.innerHTML = `<div class="page wide">
     <div class="hero">
       <div>
+        ${state.index.collections.length > 1 ? `<div class="crumbs"><a href="#/">All areas</a><span class="sep">/</span><span>${esc(c.title)}</span></div>` : ''}
         <h1>${esc(c.title)}</h1>
         <p class="lead">${esc(c.tagline)}. ${c.totals.notes} notes in ${c.modules.length} modules, about ${Math.round(c.totals.minutes / 60)} hours of reading.</p>
         <div class="quick">
           <button class="btn primary" id="home-search">Search the notes <kbd style="margin-left:4px">⌘K</kbd></button>
-          <a class="btn" href="#/${c.id}/MAP?tab=tasks">I need to…</a>
-          <a class="btn" href="#/${c.id}/MAP?tab=questions">Design questions</a>
+          ${c.map?.tasks ? `<a class="btn" href="#/${c.id}/MAP?tab=tasks">I need to…</a>` : ''}
+          ${c.map?.questions ? `<a class="btn" href="#/${c.id}/MAP?tab=questions">Design questions</a>` : ''}
+          ${c.map?.concepts ? `<a class="btn" href="#/${c.id}/MAP?tab=concepts">By concept</a>` : ''}
           <a class="btn" href="#/${c.id}/GLOSSARY">Glossary</a>
         </div>
       </div>
@@ -546,18 +607,20 @@ function linksHtml(links) {
 async function viewMap(meta, r) {
   const c = meta.collection;
   setTitle('Topic map');
-  state.map = state.map || (await getJSON(`${c.id}.map.json`));
-  const map = state.map;
-  let tab = r.query.get('tab') || 'concepts';
+  state.map[c.id] = state.map[c.id] || (await getJSON(`${c.id}.map.json`));
+  const map = state.map[c.id];
+  const tabsAvail = ['concepts', 'tasks', 'questions'].filter((t) => map[t].length);
+  let tab = r.query.get('tab') || tabsAvail[0];
+  if (!tabsAvail.includes(tab)) tab = tabsAvail[0];
   let q = r.query.get('q') || '';
   main.innerHTML = `<div class="page">
     <div class="crumbs"><a href="#/${c.id}">${esc(c.title)}</a><span class="sep">/</span><span>Topic map</span></div>
-    <h1 class="title">Topic map</h1>
+    <h1 class="title">${esc(c.title)} topic map</h1>
     <p class="muted" style="margin:0 0 6px">${esc(map.intro)}</p>
     <div class="tabs" id="tabs">
-      <button data-tab="concepts">By concept <span class="muted">${map.concepts.length}</span></button>
-      <button data-tab="tasks">I need to… <span class="muted">${map.tasks.length}</span></button>
-      <button data-tab="questions">Design questions <span class="muted">${map.questions.length}</span></button>
+      ${map.concepts.length ? `<button data-tab="concepts">By concept <span class="muted">${map.concepts.length}</span></button>` : ''}
+      ${map.tasks.length ? `<button data-tab="tasks">I need to… <span class="muted">${map.tasks.length}</span></button>` : ''}
+      ${map.questions.length ? `<button data-tab="questions">Design questions <span class="muted">${map.questions.length}</span></button>` : ''}
     </div>
     <div class="filter"><svg width="16" height="16" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="9" cy="9" r="6"/><path d="M14 14l4 4"/></svg><input id="mf" placeholder="Type to filter…" value="${esc(q)}" autofocus><span class="cnt" id="mcnt"></span></div>
     <div id="mlist"></div>
@@ -592,14 +655,13 @@ async function viewMap(meta, r) {
 async function viewGlossary(meta, r) {
   const c = meta.collection;
   setTitle('Glossary');
-  state.glossary = state.glossary || (await getJSON(`${c.id}.glossary.json`));
-  const g = state.glossary;
+  const g = await getGlossary(c.id);
   const q0 = r.query.get('q') || '';
   const letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
   const present = new Set(g.terms.map((t) => t.term[0].toUpperCase()));
   main.innerHTML = `<div class="page">
     <div class="crumbs"><a href="#/${c.id}">${esc(c.title)}</a><span class="sep">/</span><span>Glossary</span></div>
-    <h1 class="title">Glossary</h1>
+    <h1 class="title">${esc(c.title)} glossary</h1>
     <p class="muted" style="margin:0 0 12px">${esc(g.intro)}</p>
     <div class="filter"><svg width="16" height="16" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="9" cy="9" r="6"/><path d="M14 14l4 4"/></svg><input id="gf" placeholder="Filter terms and definitions…" value="${esc(q0)}"><span class="cnt" id="gcnt"></span></div>
     <div class="alpha">${letters.map((L) => `<a href="#g-${L}" class="${present.has(L) ? '' : 'off'}">${L}</a>`).join('')}</div>
@@ -634,11 +696,10 @@ const modal = $('#search-modal'), sInput = $('#search-input'), sResults = $('#se
 let sel = 0, lastResults = [];
 async function ensureSearch() {
   if (state.search) return state.search;
-  const c = state.index.collections[0];
-  const [docs, gl] = await Promise.all([getJSON('search.json'), state.glossary || getJSON(`${c.id}.glossary.json`)]);
-  state.glossary = gl;
+  const cs = state.index.collections;
+  const [docs, ...gls] = await Promise.all([getJSON('search.json'), ...cs.map((c) => getGlossary(c.id))]);
   const all = docs.map((d) => ({ ...d, kind: 'note' }));
-  gl.terms.forEach((t, i) => all.push({ id: `term-${i}`, kind: 'term', note: `${c.id}/GLOSSARY`, anchor: `t-${t.term.toLowerCase().replace(/[^a-z0-9]+/g, '-')}`, title: t.term, heading: '', module: 'Glossary', text: t.plain }));
+  cs.forEach((c, ci) => gls[ci].terms.forEach((t, i) => all.push({ id: `term-${c.id}-${i}`, kind: 'term', note: `${c.id}/GLOSSARY`, anchor: `t-${t.term.toLowerCase().replace(/[^a-z0-9]+/g, '-')}`, title: t.term, heading: '', module: `${c.title} glossary`, text: t.plain })));
   const ms = new MiniSearch({
     fields: ['title', 'heading', 'text'],
     storeFields: ['kind', 'note', 'anchor', 'title', 'heading', 'module', 'text'],

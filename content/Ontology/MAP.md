@@ -81,7 +81,7 @@ Last updated October 2, 2026 (modules 00–10, 12, 13). Rows are added as notes 
 | Writing, deploying and releasing functions | [09 — Writing functions in practice](09-functions/05-writing-functions-in-practice.md) | [09 — Function lifecycle](09-functions/03-function-lifecycle.md) |
 | Semantic search, embeddings, chunking | [16 — Semantic search and embeddings](16-ai-and-agents/02-semantic-search-and-embeddings.md) | [05 — Vector properties](05-properties/08-time-series-media-geo-and-vectors.md) |
 | AI context, OAG, citations | [16 — The Ontology as AI context](16-ai-and-agents/01-ontology-as-ai-context.md) | [12 — Security across actions, functions and APIs](12-security-and-governance/04-security-across-actions-functions-and-apis.md) |
-| Agent tools, MCP | [16 — Ontology tools for agents](16-ai-and-agents/03-ontology-tools-for-agents.md) | [AIP reference](../AIP/applications/09-aip-chatbot-studio.md) |
+| Agent tools, MCP | [16 — Ontology tools for agents](16-ai-and-agents/03-ontology-tools-for-agents.md) | [AIP 05 — Chatbot Studio](../AIP/05-chatbot-studio/README.md) |
 | Scenarios (what-if sandboxes) | [15 — Scenarios](15-advanced-patterns/02-scenarios.md) | — |
 | Models and predictions in the Ontology | [15 — Models in the Ontology](15-advanced-patterns/03-models-in-the-ontology.md) | [09 — Functions on models](09-functions/04-functions-on-models-and-llms.md) |
 | Entity resolution, master data | [15 — Entity resolution](15-advanced-patterns/04-entity-resolution-across-sources.md) | [01 — Keys and identity](01-foundations/02-keys-and-identity.md) |
@@ -146,7 +146,7 @@ Last updated October 2, 2026 (modules 00–10, 12, 13). Rows are added as notes 
 | find out why a search doesn't match | [10 — The search lab](10-applications/07-searching-the-ontology.md#the-lab) |
 | link to an object or exploration from another system | [10 — Stop 6: URLs](10-applications/02-object-views-and-object-explorer.md#stop-6--linking-in-from-elsewhere) |
 | call an external API from a function | [09 — Calling outside the function](09-functions/05-writing-functions-in-practice.md#4-calling-outside-the-function) |
-| let an agent read or edit objects safely | [16 — Tool sheet](16-ai-and-agents/03-ontology-tools-for-agents.md) · [16 — Control ladder](16-ai-and-agents/04-human-in-the-loop-and-staged-writes.md) · [AIP compiled reference](../AIP/README.md) |
+| let an agent read or edit objects safely | [16 — Tool sheet](16-ai-and-agents/03-ontology-tools-for-agents.md) · [16 — Control ladder](16-ai-and-agents/04-human-in-the-loop-and-staged-writes.md) · [AIP area](../AIP/README.md) |
 | test a plan before changing live data | [15 — Scenarios](15-advanced-patterns/02-scenarios.md) |
 | merge customers from several systems | [15 — Entity resolution](15-advanced-patterns/04-entity-resolution-across-sources.md) |
 | make an object type understandable to an agent | [16 — Checklist](16-ai-and-agents/05-designing-the-ontology-for-agents.md#the-checklist) |

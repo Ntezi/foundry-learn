@@ -430,7 +430,7 @@ for (const c of collections) {
         id: `${p.id}#${s.id || i}`,
         note: p.id,
         title: p.number ? `${p.number} — ${p.title}` : p.title,
-        module: mod ? `${mod.number} ${mod.title}` : c.title,
+        module: mod ? `${c.title} · ${mod.number} ${mod.title}` : c.title,
         heading: s.heading,
         anchor: s.id,
         text: s.text.slice(0, 4000),
@@ -440,7 +440,11 @@ for (const c of collections) {
 
   // ----- MAP.md → finder data -----
   const mapNote = [...notes.values()].find((n) => n.collection === c.id && n.special === 'map');
-  if (mapNote) writeFileSync(join(outDir, `${c.id}.map.json`), JSON.stringify(parseMap(mapNote)));
+  if (mapNote) {
+    const map = parseMap(mapNote);
+    writeFileSync(join(outDir, `${c.id}.map.json`), JSON.stringify(map));
+    index.collections.at(-1).map = { concepts: map.concepts.length, tasks: map.tasks.length, questions: map.questions.length };
+  }
   const glossNote = [...notes.values()].find((n) => n.collection === c.id && n.special === 'glossary');
   if (glossNote) writeFileSync(join(outDir, `${c.id}.glossary.json`), JSON.stringify(parseGlossary(glossNote)));
 }
@@ -468,25 +472,23 @@ function cellLinks(note, cell) {
 }
 
 function parseMap(n) {
+  // Tables are classified by their first header cell, so a map with only an
+  // "I need to…" table (AIP) parses as well as one with three sections (Ontology).
   const src = n.src;
-  const section = (title) => {
-    const m = src.match(new RegExp(`^## ${title}[^\\n]*\\n([\\s\\S]*?)(?=^## |\\n---\\n|$(?![\\s\\S]))`, 'm'));
-    return m ? m[1] : '';
-  };
-  const concepts = tableRows(section('By concept')).slice(1).map((r) => ({
-    concept: stripMd(r[0]),
-    canonical: cellLinks(n, r[1]),
-    also: r[2] === '—' ? [] : cellLinks(n, r[2] || ''),
-  }));
-  const tasks = tableRows(section('By task')).slice(1).map((r) => ({
-    task: stripMd(r[0]),
-    links: cellLinks(n, r[1] || ''),
-  }));
-  const questions = tableRows(section('By design question')).slice(1).map((r) => ({
-    question: stripMd(r[0]),
-    answer: cellHtml(n, r[1] || ''),
-    links: cellLinks(n, r[2] || ''),
-  }));
+  const concepts = [], tasks = [], questions = [];
+  const blocks = src.split(/\n(?=\|)/).join('\n').match(/(?:^\|[^\n]*\n?)+/gm) || [];
+  for (const block of blocks) {
+    const rows = tableRows(block);
+    if (rows.length < 2) continue;
+    const head = stripMd(rows[0][0]).toLowerCase();
+    if (/i need to/.test(head)) {
+      for (const r of rows.slice(1)) tasks.push({ task: stripMd(r[0]), links: cellLinks(n, r[1] || '') });
+    } else if (/question/.test(head)) {
+      for (const r of rows.slice(1)) questions.push({ question: stripMd(r[0]), answer: cellHtml(n, r[1] || ''), links: cellLinks(n, r[2] || '') });
+    } else if (/concept/.test(head)) {
+      for (const r of rows.slice(1)) concepts.push({ concept: stripMd(r[0]), canonical: cellLinks(n, r[1] || ''), also: r[2] === '—' ? [] : cellLinks(n, r[2] || '') });
+    }
+  }
   const intro = src.match(/^# [^\n]+\n\n([^\n]+)/)?.[1] || '';
   return { intro: stripMd(intro), concepts, tasks, questions };
 }

@@ -20,12 +20,15 @@
 
 All notes in this module are written. Read them in order, or jump in through the [topic map](../MAP.md).
 
+## Related in other areas
+
+- The builders page by page, in the [Apps area](../../Apps/README.md): [Workshop](../../Apps/01-workshop-foundations/README.md) (modules 01–04), [Slate](../../Apps/05-slate/README.md), [Automate](../../Apps/08-automate/README.md)
+
 ## Seen in our courses
 
 - [Application deep dive — Building Your First Application](../../Application%20Developer/03-deep-dive-building-your-first-application/README.md)
 - [Workshop legacy summary](../../Application%20Developer/03_Workshop.md)
 - [Slate legacy summary](../../Application%20Developer/04_Slate.md)
-- [AIP — Automate](../../AIP/applications/08-automate.md)
 - [Intro course 14 — Products and SDKs](../../Courses/Introduction%20to%20Foundry%20%26%20AIP%20for%20Enterprise%20Organizations/14-products-and-sdks.md)
 
 ---

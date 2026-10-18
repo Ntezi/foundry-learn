@@ -127,6 +127,7 @@ The diagram shows the core. Later notes add these supporting types, each introdu
 | `CustomerSourceRecord`, `MatchCandidate` | One customer's source records; borderline matches for review | [15-04](../15-advanced-patterns/04-entity-resolution-across-sources.md) |
 | `PolicyDocument`, `PolicyChunk` | Returns and carrier policies, chunked and embedded | [16-02](../16-ai-and-agents/02-semantic-search-and-embeddings.md) |
 | `RerouteProposal` | A re-route proposed by the Delivery Desk, for a lead to accept | [16-03](../16-ai-and-agents/03-ontology-tools-for-agents.md) |
+| `CarrierInvoice`, `CarrierInvoiceLine` | Carrier invoices extracted from PDFs, each line matched to a shipment | [AIP 06-01](../../AIP/06-document-intelligence/01-extraction-strategies.md#where-the-data-goes) |
 | `Payment.riskTier` | Numeric risk tier (1–5) replacing `riskAssessment.band` | [14-03](../14-lifecycle-and-operations/03-schema-evolution-and-breaking-changes.md#part-2--a-deprecation-playbook-worked-once) |
 
 **Environments (from module 14).** Kestrel later adds `kestrel-dev` and `kestrel-test` spaces alongside production `kestrel`, and ships the Delivery Desk between them as a Marketplace product ([14-04](../14-lifecycle-and-operations/04-marketplace-packaging.md#which-environment-changes-what)).

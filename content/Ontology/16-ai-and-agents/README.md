@@ -22,9 +22,9 @@ All notes in this module are written. Read them in order, or jump in through the
 
 - [Speedrun — Your First AIP Workflow](../../Speedrun/Your%20First%20AIP%20Workflow/README.md)
 - [Speedrun — Your First Agentic AIP Workflow](../../Speedrun/Your%20First%20Agentic%20AIP%20Workflow/README.md)
-- [AIP compiled reference](../../AIP/README.md)
-- [AIP — Chatbot Studio](../../AIP/applications/09-aip-chatbot-studio.md)
-- [AIP — Palantir MCP](../../AIP/applications/05-palantir-mcp.md)
+- [AIP area](../../AIP/README.md)
+- [AIP 05 — Chatbot Studio](../../AIP/05-chatbot-studio/README.md)
+- [Palantir MCP (archived AIP reference; outside the new AIP area)](../../study-backups/2026-10-07/aip-from-scratch/AIP-old/applications/05-palantir-mcp.md)
 
 ---
 ← [15 — Advanced patterns](../15-advanced-patterns/README.md) · [17 — Case studies](../17-case-studies/README.md) → · [Ontology home](../README.md) · [Topic map](../MAP.md) · [Glossary](../GLOSSARY.md)

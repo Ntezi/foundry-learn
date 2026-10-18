@@ -95,7 +95,7 @@ Four ways, from no-code to full control. **[Docs]**
 
 **[Docs]** For diagrams and tables, text-only LLMs don't help. The docs suggest extracting text **just to have something to search**, then running a **multimodal** model on the original page image. They mention GPT-4o and GPT-4o mini, and open-source options such as Pix2Struct and Microsoft UDOP.
 
-**[Docs]** Two language notes from the page: for English, MS MARCO search models; for German corpora, the page reports GPT as the only LLM that "performs decently" and suggests trying Ada. **[Explanation]** This page reads as older advice; check the current model list in the [AIP reference](../../AIP/applications/12-aip-model-catalog.md) before choosing.
+**[Docs]** Two language notes from the page: for English, MS MARCO search models; for German corpora, the page reports GPT as the only LLM that "performs decently" and suggests trying Ada. **[Explanation]** This page reads as older advice; check the current model list in [AIP 01 — Models and LLMs](../../AIP/01-models-and-llms/README.md) before choosing.
 
 ---
 [Module index](README.md) · Previous: [01 — The Ontology as AI context](01-ontology-as-ai-context.md) · Next: [03 — Ontology tools for agents](03-ontology-tools-for-agents.md)

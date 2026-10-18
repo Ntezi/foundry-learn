@@ -1,8 +1,8 @@
 # 02 — Kestrel Commerce reference model
 
-*Sources: the notes linked in each row (no new doc pages) · assembled October 3, 2026 · Ready for Review*
+*Sources: the notes linked in each row (no new doc pages) · assembled October 3, 2026; carrier-invoice types added October 8 from the AIP area · Ready for Review*
 
-The running example was built up across 16 modules, one decision at a time. This page puts it in one place: **every type, link, interface, action, function, automation, security rule and environment**, with the note where it was decided. Use it to check consistency when writing new material, or to revise the whole design in one sitting. Everything here is **[Example]**: a fictional company, designed with the docs' rules.
+The running example was built up across 16 modules (and, for carrier invoices, the [AIP area](../../AIP/README.md)), one decision at a time. This page puts it in one place: **every type, link, interface, action, function, automation, security rule and environment**, with the note where it was decided. Use it to check consistency when writing new material, or to revise the whole design in one sitting. Everything here is **[Example]**: a fictional company, designed with the docs' rules.
 
 ## 1. The model on one page
 
@@ -54,6 +54,8 @@ erDiagram
 | `Planning Scenario` | scenario reference | — | implements *Ontology Scenario*; Draft → In review → Approved/Rejected | [15-02](../15-advanced-patterns/02-scenarios.md) |
 | `CustomerSourceRecord`, `MatchCandidate` | — | — | entity-resolution provenance and review | [15-04](../15-advanced-patterns/04-entity-resolution-across-sources.md#6-what-the-ontology-gets) |
 | `PolicyDocument`, `PolicyChunk` | `documentId`, `chunkId` | — | chunk text, vector embedding | [16-02](../16-ai-and-agents/02-semantic-search-and-embeddings.md#4-model-it) |
+| `CarrierInvoice` | `invoiceId`, e.g. `DHL-INV-2026-09` | — | `invoiceDate`, `totalAmount`, `currency`, `sourceDocument` (media reference); extracted with AIP Document Intelligence | [AIP 06-01](../../AIP/06-document-intelligence/01-extraction-strategies.md#where-the-data-goes) |
+| `CarrierInvoiceLine` | `invoiceLineId` | — | `trackingNumber` as printed, `chargeType`, `amount`, `matchStatus` | [AIP 06-01](../../AIP/06-document-intelligence/01-extraction-strategies.md#where-the-data-goes) |
 | `DeliveryException`, `SharedShipment` | — | Shared ontology with Northwind Freight | the narrow types the partner sees | [12-05](../12-security-and-governance/05-shared-ontologies-and-cross-org.md) |
 | `[Log] …` | generated | — | action-log types | [08-07](../08-actions/07-consistency-reverts-and-logs.md) |
 
@@ -71,6 +73,9 @@ erDiagram
 | Order ↔ Product | many-to-many | through `OrderLine` objects | [06-02](../06-links/02-many-to-many-and-object-backed-links.md#what-kestrel-chose) |
 | Order ↔ Promotion | many-to-many | join table | [09-02](../09-functions/02-query-functions-and-ontology-edits.md) |
 | Shipment → ShipmentEvent | one-to-many | FK on the event | [15-01](../15-advanced-patterns/01-events-history-and-time.md#q2--event-objects) |
+| CarrierInvoice → Carrier | many-to-one | FK `CarrierInvoice.carrierCode` | [AIP 06-01](../../AIP/06-document-intelligence/01-extraction-strategies.md#where-the-data-goes) |
+| CarrierInvoiceLine → CarrierInvoice | many-to-one | FK on the line | [AIP 06-01](../../AIP/06-document-intelligence/01-extraction-strategies.md#where-the-data-goes) |
+| CarrierInvoiceLine → Shipment | many-to-one, set only when matched | FK `CarrierInvoiceLine.shipmentId` (empty until matched) | [AIP 06-01](../../AIP/06-document-intelligence/01-extraction-strategies.md#where-the-data-goes) |
 | Customer → source records, orders, tickets | one-to-many | built through the crosswalk; never on email or name | [15-04](../15-advanced-patterns/04-entity-resolution-across-sources.md) |
 
 **Rejected:** Order ↔ Warehouse (derivable through Shipment) and Customer ↔ Carrier (no real relationship), [06-01](../06-links/01-link-types-and-cardinality.md).
@@ -114,6 +119,21 @@ erDiagram
 | *High-risk payment hold* | Automation, owned by a service user | [10-06](../10-applications/06-automate-and-ontology-events.md) |
 | Delivery Desk | AIP Chatbot; tools T1–T7; prompted tool calling | [16-03](../16-ai-and-agents/03-ontology-tools-for-agents.md) |
 
+### Added in the AIP area
+
+| Item | Kind | Defined in |
+|---|---|---|
+| `shipmentFacts(order)` | TSv2 helper: shipment, local ETA date, plain-text delay reason | [AIP 03-02](../../AIP/03-aip-logic/02-building-a-logic-function.md) |
+| *Draft delay message (Logic)* | Logic function in `Delivery Desk [Workflow]`; wording sandbox, not the shipped tool T4 | [AIP 03-02](../../AIP/03-aip-logic/02-building-a-logic-function.md#logic-version-vs-typescript-version) |
+| `lateDeliveryChargebacksByCarrier(quarter)` | Function called by AIP Analyst through a skill | [AIP 07-04](../../AIP/07-end-user-apps/04-aip-analyst.md#what-it-costs) |
+| *Delivery Desk drafts — suite* | AIP Evals suite (49 cases, 3 iterations); results dataset `delivery-desk-eval-runs` | [AIP 04-01](../../AIP/04-aip-evals/01-evals-concepts-and-suites.md), [04-04](../../AIP/04-aip-evals/04-reading-results.md) |
+| `delivery-desk-session-logs` | Exported chatbot session logs; restricted; 30-day retention | [AIP 05-04](../../AIP/05-chatbot-studio/04-session-logging.md) |
+| Kofi's reviewer chatbot | AIP Chatbot with map commands (view only) next to the re-route review page | [AIP 05-02](../../AIP/05-chatbot-studio/02-commands-as-tools.md#kestrel-a-map-command-for-kofi) |
+| *Invoice disputes* | Source-backed AIP Chatbot in AIP Assist | [AIP 07-03](../../AIP/07-end-user-apps/03-assist-custom-content-sources.md#kestrels-choice) |
+| *Peak season readiness* | Boardroom; Commerce context only; marked `Customer PII` | [AIP 07-06](../../AIP/07-end-user-apps/06-boardroom.md) |
+| Invoice extraction | Document Intelligence transform (VLM + preprocessing, incremental) and a per-document function for disputes | [AIP 06-02](../../AIP/06-document-intelligence/02-deploying-extraction.md) |
+| Kestrel Pay model | Self-hosted registered model in compute module `kestrel-pay-llm`; fallback design `kestrel-pay-redacting-proxy` | [AIP 02-01](../../AIP/02-bring-your-own-model/01-choosing-a-byom-path.md#kestrel-pays-decision), [02-03](../../AIP/02-bring-your-own-model/03-self-hosting-and-proxy-layers.md) |
+
 ## 7. Security, environments and governance
 
 - **Projects:** `Commerce [Ontology]`, `Payments [Ontology]` (datasets marked `Kestrel Pay – Financial`), `Delivery Desk [Workflow]` ([02-04](../02-foundry-data-foundations/04-projects-spaces-and-markings.md)).
@@ -123,6 +143,8 @@ erDiagram
 - **Environments:** `kestrel-dev`, `kestrel-test`, `kestrel`; product outputs ship as versions, core types change per environment ([14-04](../14-lifecycle-and-operations/04-marketplace-packaging.md#which-environment-changes-what)).
 - **Change policy:** tiers A/B/C; protected ontology projects with a two-approval policy ([14-01](../14-lifecycle-and-operations/01-saving-reviewing-and-restoring.md)).
 - **Agent controls:** the control ladder ([16-04](../16-ai-and-agents/04-human-in-the-loop-and-staged-writes.md#where-kestrel-puts-each-operation)).
+- **LLM data access (AIP):** enrollment allowlist `Customer PII`; the Kestrel Pay model's own policy allows `Customer PII` and `Kestrel Pay – Financial`; users with the Kestrel Pay marking use scoped sessions for other models ([AIP 08-03](../../AIP/08-security-governance-and-admin/03-llm-data-access-with-markings.md)).
+- **LLM capacity (AIP):** project limits Production 100%, Batch 40%, Sandbox 15% with a model allowlist; reserved capacity for `Delivery Desk [Workflow]`; AIP Analyst action execution limited to operations leads ([AIP 08-04](../../AIP/08-security-governance-and-admin/04-capacity-and-rate-limits.md#kestrels-design), [07-04](../../AIP/07-end-user-apps/04-aip-analyst.md#admin-switches)).
 
 ## 8. Known gaps in the example
 

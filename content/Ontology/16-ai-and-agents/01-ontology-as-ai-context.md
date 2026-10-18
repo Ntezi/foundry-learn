@@ -2,7 +2,7 @@
 
 *Sources: [Ontology-augmented generation](https://www.palantir.com/docs/foundry/ontology/ontology-augmented-generation/) · [Chatbot Studio: retrieval context](https://www.palantir.com/docs/foundry/chatbot-studio/retrieval-context/) · [Chatbot Studio: citations](https://www.palantir.com/docs/foundry/chatbot-studio/citations/) · [Chatbot Studio: application state](https://www.palantir.com/docs/foundry/chatbot-studio/application-state/) · [AIP Logic](https://www.palantir.com/docs/foundry/logic/overview/) · checked October 3, 2026 · Ready for Review*
 
-Product mechanics for AIP Chatbot Studio, Logic and Threads are in the [AIP compiled reference](../../AIP/README.md). This module asks the Ontology-side question: **what does the model actually see, and why is an Ontology a better thing to show it than a pile of documents?**
+Product mechanics for AIP Chatbot Studio, Logic and Threads are in the [AIP area](../../AIP/README.md). This module asks the Ontology-side question: **what does the model actually see, and why is an Ontology a better thing to show it than a pile of documents?**
 
 ## An LLM only knows what's in its prompt
 
@@ -59,7 +59,7 @@ Retrieval over **documents** returns passages. Retrieval over the **Ontology** r
 
 **[Docs]** AIP Logic's page states the rule for all LLM use: row and column controls (restricted views, object and property security policies) "filter what the model can read on a user's behalf". The model "can never see data the user is not authorized to read". But "these controls do not extend to the model's output or any Ontology edits it composes". Pair them with **markings** to protect data downstream ([12-04](../12-security-and-governance/04-security-across-actions-functions-and-apis.md)).
 
-**[Docs]** Administrators can also restrict which **mandatory markings** may reach a model at all: an enrollment allowlist in *Control Panel → AIP settings → Data access*. A request is rejected if the user's session token carries any mandatory marking outside the allowlist, even if the data in the request doesn't. Users can switch to a **scoped session** with fewer markings.
+**[Docs]** Administrators can also restrict which **mandatory markings** may reach a model at all: an enrollment allowlist in *Control Panel → AIP settings → Data access*. A request is rejected if the user's session token carries any mandatory marking outside the allowlist, even if the data in the request doesn't. Users can switch to a **scoped session** with fewer markings. Worked cases and registered-model overrides: [AIP 08-03](../../AIP/08-security-governance-and-admin/03-llm-data-access-with-markings.md).
 
 **[Explanation]** So the Ontology gives an agent **no more** than the user could see, which is what makes Ontology-grounded agents safe to deploy broadly. It doesn't stop the agent from **repeating** what it saw to someone else, for example by drafting a message. That's an output problem, handled by markings, review and tool design ([04](04-human-in-the-loop-and-staged-writes.md)).
 

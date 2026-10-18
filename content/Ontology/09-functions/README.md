@@ -21,7 +21,7 @@ All notes in this module are written. Read them in order, or jump in through the
 ## Seen in our courses
 
 - [Speedrun — Your First Ontology Function](../../Speedrun/Your%20First%20Ontology%20Function/README.md)
-- [AIP — AIP Logic](../../AIP/applications/06-aip-logic.md)
+- [AIP 03 — AIP Logic](../../AIP/03-aip-logic/README.md)
 
 ---
 ← [08 — Actions](../08-actions/README.md) · [10 — Applications on the Ontology](../10-applications/README.md) → · [Ontology home](../README.md) · [Topic map](../MAP.md) · [Glossary](../GLOSSARY.md)

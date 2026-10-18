@@ -61,7 +61,7 @@ Several rungs need an agent's function to **edit, then read its own edits, then 
 
 ## Gaps to know about
 
-- **[Docs]** The action tool can run automatically or after confirmation; the docs don't say which is the default. The [AIP reference](../../AIP/applications/09-aip-chatbot-studio.md) also notes that nothing documents what a confirm-first action tool does when the chatbot runs **headless**, for example as a function inside Automate. **[Recommendation]** Never rely on confirm-first for an agent that might run unattended; put the control on a lower rung instead.
+- **[Docs]** The action tool can run automatically or after confirmation; the docs don't say which is the default. The [archived AIP reference](../../study-backups/2026-10-07/aip-from-scratch/AIP-old/applications/09-aip-chatbot-studio.md) also notes that nothing documents what a confirm-first action tool does when the chatbot runs **headless**, for example as a function inside Automate. **[Recommendation]** Never rely on confirm-first for an agent that might run unattended; put the control on a lower rung instead.
 - **[Docs]** Read-time security doesn't follow the model's output ([01](01-ontology-as-ai-context.md#security-read-time-only)). A drafted message (rung 1) can contain anything the user could see. Rung 3 on *Send delay update* is what stops it leaving.
 
 ---
