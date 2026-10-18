@@ -476,7 +476,7 @@ function parseMap(n) {
   // "I need to…" table (AIP) parses as well as one with three sections (Ontology).
   const src = n.src;
   const concepts = [], tasks = [], questions = [];
-  const blocks = src.split(/\n(?=\|)/).join('\n').match(/(?:^\|[^\n]*\n?)+/gm) || [];
+  const blocks = src.match(/(?:^\|[^\n]*\n?)+/gm) || [];
   for (const block of blocks) {
     const rows = tableRows(block);
     if (rows.length < 2) continue;

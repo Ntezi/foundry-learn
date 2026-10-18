@@ -22,7 +22,10 @@ const state = {
   glossary: {},                       // collection id → glossary json
   map: {},                            // collection id → map json
   route: null,
+  cleanup: [],                        // functions to run before the next page renders
+  onTheme: null,                      // re-render hook for theme changes (home page learning path)
 };
+function onLeave(fn) { state.cleanup.push(fn); }
 const saveRead = () => store.set('read', [...state.read]);
 
 // ---------- theme ----------
@@ -193,7 +196,10 @@ const main = $('#main');
 function setTitle(t) { document.title = t ? `${t} · Foundry Learn` : 'Foundry Learn'; }
 
 async function render(r) {
+  for (const fn of state.cleanup.splice(0)) { try { fn(); } catch {} }
+  state.onTheme = null;
   state.route = r;
+  userScrolled = false;
   closeNav();
   renderSidebar();
   renderTopnav();
@@ -293,7 +299,7 @@ async function viewHome(c) {
         <h3>Your progress</h3>
         <div class="progress-row"><span class="big">${prog.pct}%</span><span class="muted small">${prog.done} of ${prog.total} notes read</span></div>
         <div class="progress"><i style="width:${prog.pct}%"></i></div>
-        ${cont ? `<a class="continue" href="#/${cont.id}"><span class="k">${last ? 'Continue where you left off' : 'Start here'}</span><span class="t">${esc(cont.title)}</span></a>` : `<p class="small muted" style="margin:12px 0 0">Everything is read. Try the <a href="#/${c.selfCheck}">self-check</a>.</p>`}
+        ${cont ? `<a class="continue" href="#/${cont.id}"><span class="k">${last ? 'Continue where you left off' : 'Start here'}</span><span class="t">${esc(cont.title)}</span></a>` : `<p class="small muted" style="margin:12px 0 0">Everything is read.${c.selfCheck ? ` Try the <a href="#/${c.selfCheck}">self-check</a>.` : ''}</p>`}
         <p class="small muted" style="margin:12px 0 0">Progress is saved in this browser only.</p>
       </div>
     </div>
@@ -321,7 +327,7 @@ async function viewHome(c) {
   </div>`;
   $('#home-search').addEventListener('click', openSearch);
   // Learning path diagram, coloured by progress
-  if (c.learningPath) {
+  const drawPath = async () => {
     const done = [], started = [];
     for (const [node, modId] of Object.entries(c.learningPath.nodeMap)) {
       const m = c.modules.find((x) => x.id === modId);
@@ -339,25 +345,32 @@ async function viewHome(c) {
     ].filter(Boolean).join('\n');
     const el = $('#path .diagram');
     el.dataset.diagram = c.learningPath.graph.trim() + '\n' + extra;
-    await renderDiagrams(main, () => {
+    await renderDiagrams($('#path'), () => {
       // Mermaid scales the SVG to the container; cap it so the map stays readable rather than huge.
       const svg = el.querySelector('svg');
       const vb = svg?.getAttribute('viewBox')?.split(/\s+/).map(Number);
       if (svg && vb) { svg.style.width = Math.min(Math.round(vb[2] * 0.9), el.clientWidth) + 'px'; }
       // attach clicks: mermaid gives nodes ids like "flowchart-O-12"
       el.querySelectorAll('g.node').forEach((g) => {
-        const m = g.id.match(/^flowchart-([A-Za-z0-9_]+)-\d+$/);
+        const m = g.id.match(/flowchart-([A-Za-z0-9_]+)-\d+$/);
         const target = m && c.learningPath.nodeMap[m[1]];
         if (!target) return;
         g.classList.add('node');
         g.addEventListener('click', () => navigate(target));
       });
     }, { compact: true });
+  };
+  if (c.learningPath) {
+    state.onTheme = drawPath;
     $('#path-toggle').addEventListener('click', (e) => {
       const box = $('#path');
       box.classList.toggle('expanded');
       e.target.textContent = box.classList.contains('expanded') ? 'Collapse map' : 'Show the whole map';
     });
+    await drawPath();
+  } else {
+    $('#path').closest('.page').querySelector('.section-h:has(#path-toggle)')?.remove();
+    $('#path').remove();
   }
   // Collection README (intro) below
   const col = await getNote(c.id);
@@ -473,16 +486,26 @@ async function viewNote(meta, r) {
   // auto mark as read when the reader reaches the end of a note (not for reference pages)
   if (meta.kind === 'note' && !isRead) {
     const end = $('.read-bar');
+    const opened = Date.now();
+    const dwellMs = Math.min(45, Math.max(12, n.minutes * 60 * 0.3)) * 1000; // 12–45 s depending on length
+    let timer = null, atEnd = false;
+    const markRead = () => {
+      if (state.read.has(n.id) || !document.body.contains(end)) return;
+      state.read.add(n.id); saveRead();
+      $('#read-btn').textContent = '✓ Read · mark unread'; $('#read-btn').className = 'btn ok';
+      $('#read-txt').textContent = 'Marked as read because you reached the end.';
+      renderSidebar();
+      io.disconnect();
+    };
     const io = new IntersectionObserver((es) => {
-      if (es.some((e) => e.isIntersecting) && !state.read.has(n.id)) {
-        state.read.add(n.id); saveRead();
-        $('#read-btn').textContent = '✓ Read · mark unread'; $('#read-btn').className = 'btn ok';
-        $('#read-txt').textContent = 'Marked as read because you reached the end.';
-        renderSidebar();
-        io.disconnect();
-      }
+      atEnd = es.some((e) => e.isIntersecting);
+      clearTimeout(timer);
+      if (!atEnd) return;
+      const left = dwellMs - (Date.now() - opened);
+      if (left <= 0) markRead(); else timer = setTimeout(() => { if (atEnd) markRead(); }, left);
     }, { threshold: 0.5 });
     io.observe(end);
+    onLeave(() => { clearTimeout(timer); io.disconnect(); });
   }
   // remember position
   if (meta.kind === 'note') { state.last = { id: n.id, title: meta.title, at: Date.now() }; store.set('last', state.last); }
@@ -491,7 +514,7 @@ async function viewNote(meta, r) {
 }
 
 function tocHtml(n) {
-  const items = (n.toc || []).filter((t) => t.text && !/^related$/i.test(t.text) || true);
+  const items = (n.toc || []).filter((t) => t.text);
   const isRead = state.read.has(n.id);
   return `${items.length ? `<div class="toc-title">On this page</div>${items.map((t) => `<a class="l${t.level}" href="#${t.id}">${esc(t.text)}</a>`).join('')}` : ''}
   <div class="toc-actions">
@@ -513,6 +536,7 @@ function spy(article, toc) {
     links.forEach((a) => a.classList.toggle('active', cur && a.getAttribute('href') === '#' + cur.id));
   };
   window.addEventListener('scroll', onScroll, { passive: true });
+  onLeave(() => window.removeEventListener('scroll', onScroll));
   onScroll();
 }
 
@@ -562,7 +586,7 @@ function loadMermaid() {
 }
 let diagramSeq = 0;
 async function renderDiagrams(root, after, opts = {}) {
-  const els = [...root.querySelectorAll('.diagram[data-diagram]')].filter((e) => e.dataset.diagram);
+  const els = [...root.querySelectorAll('.diagram[data-diagram]')].filter((e) => e.dataset.diagram && !(opts.skipPath && e.closest('.path')));
   if (!els.length) return;
   const mermaid = await loadMermaid();
   mermaid.initialize({ startOnLoad: false, theme: isDark() ? 'dark' : 'neutral', securityLevel: 'strict', fontFamily: 'inherit', flowchart: { htmlLabels: true, curve: 'basis', ...(opts.compact ? { nodeSpacing: 22, rankSpacing: 26, padding: 6 } : {}) } });
@@ -578,11 +602,17 @@ async function renderDiagrams(root, after, opts = {}) {
     }
   }
   after?.();
+  if (!opts.compact && state.route?.anchor && !userScrolled) document.getElementById(state.route.anchor)?.scrollIntoView({ block: 'start' });
 }
+let userScrolled = false;
+window.addEventListener('wheel', () => (userScrolled = true), { passive: true });
+window.addEventListener('touchmove', () => (userScrolled = true), { passive: true });
+window.addEventListener('keydown', (e) => { if (['ArrowDown', 'ArrowUp', 'PageDown', 'PageUp', ' ', 'End', 'Home'].includes(e.key)) userScrolled = true; });
 function rerenderDiagrams() {
-  // Re-render the current page's diagrams in the new theme (keeping the home-page node clicks).
-  const r = state.route;
-  if (r) render(r);
+  // Re-render the current page's diagrams in the new theme without rebuilding the page
+  // (so scroll position, filter text and timers survive). The home page re-draws its path itself.
+  if (state.onTheme) state.onTheme();
+  renderDiagrams(main, null, { skipPath: true });
 }
 
 // ---------- toast ----------

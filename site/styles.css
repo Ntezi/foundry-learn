@@ -185,9 +185,9 @@ h1.title .num { font-family: var(--mono); font-size: 15px; color: var(--fg-3); f
 /* Article */
 .article { font-size: 16.5px; line-height: 1.7; max-width: 76ch; }
 .article > :first-child { margin-top: 0; }
-.article h2 { font-size: 22px; margin: 2.2em 0 .7em; letter-spacing: -.01em; line-height: 1.3; scroll-margin-top: calc(var(--topbar-h) + 18px); }
-.article h3 { font-size: 18px; margin: 1.8em 0 .6em; scroll-margin-top: calc(var(--topbar-h) + 18px); }
-.article h4 { font-size: 16px; margin: 1.5em 0 .5em; scroll-margin-top: calc(var(--topbar-h) + 18px); }
+.article h2 { font-size: 22px; margin: 2.2em 0 .7em; letter-spacing: -.01em; line-height: 1.3; }
+.article h3 { font-size: 18px; margin: 1.8em 0 .6em; }
+.article h4 { font-size: 16px; margin: 1.5em 0 .5em; }
 .article h2:target, .article h3:target { animation: flash 1.6s ease-out; }
 @keyframes flash { from { background: var(--mark); } to { background: transparent; } }
 .article .hlink { opacity: 0; margin-left: 6px; font-weight: 400; color: var(--fg-3); font-size: .85em; }
@@ -337,11 +337,11 @@ h1.title .num { font-family: var(--mono); font-size: 15px; color: var(--fg-3); f
 .alpha a { font-family: var(--mono); font-size: 12px; padding: 3px 7px; border-radius: 5px; background: var(--bg-2); color: var(--fg-2); }
 .alpha a:hover { background: var(--accent-2); color: var(--accent); text-decoration: none; }
 .alpha a.off { opacity: .35; pointer-events: none; }
-.gterm { padding: 12px 4px; border-bottom: 1px solid var(--line); scroll-margin-top: calc(var(--topbar-h) + 16px); }
+.gterm { padding: 12px 4px; border-bottom: 1px solid var(--line); }
 .gterm .t { font-weight: 650; font-size: 15.5px; }
 .gterm .d { color: var(--fg-2); margin: 2px 0 4px; }
 .gterm .l { font-size: 13px; display: flex; gap: 14px; flex-wrap: wrap; }
-.gletter { font-family: var(--mono); font-size: 13px; color: var(--fg-3); margin: 22px 0 2px; scroll-margin-top: calc(var(--topbar-h) + 16px); }
+.gletter { font-family: var(--mono); font-size: 13px; color: var(--fg-3); margin: 22px 0 2px; }
 .empty { padding: 30px 0; color: var(--fg-3); }
 
 /* Search modal */
