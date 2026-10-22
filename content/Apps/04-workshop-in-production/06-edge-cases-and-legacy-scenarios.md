@@ -20,7 +20,7 @@ Three topics that sit at the edges of everyday Workshop: **time series** propert
 
 **Summarizers** turn a series into one number: **Single value** (one aggregation over a time range) or **Value change** (the difference between two). Aggregations: average, count, difference, first, integral, last, min, max, product, relative difference, standard deviation, sum, time-weighted average (for irregular sampling).
 
-**Time ranges** are **exact** or **relative**. A relative range's "now" is fixed when first needed and stays until the page reloads, so all widgets agree with each other.
+**Time ranges** are **exact** or **relative**. A relative range's *now* is fixed when first needed and stays until the page reloads, so all widgets agree with each other.
 
 **Baselines** (Object Table, Metric Card sparklines) are a static value, a numeric property, or a time series summarizer.
 
@@ -34,7 +34,7 @@ Three topics that sit at the edges of everyday Workshop: **time series** propert
 
 **[Docs]** Workshop scenarios are **legacy**: fully supported, no new development, and the docs recommend **Ontology scenarios** for new modules. The design using Ontology scenarios for Kestrel (Kofi's dock-closure plan) is in [Ontology 15-02](../../Ontology/15-advanced-patterns/02-scenarios.md). What follows is enough to recognise and maintain an existing legacy module.
 
-**[Docs]** A scenario is an immutable **fork** of Ontology data made by applying actions and evaluating **models** (wrapped in functions, used in function-backed actions). A model is evaluated over a **domain**, a set of objects whose results must be independent of each other. To "change" a scenario, create a new one (or duplicate it).
+**[Docs]** A scenario is an immutable **fork** of Ontology data made by applying actions and evaluating **models** (wrapped in functions, used in function-backed actions). A model is evaluated over a **domain**, a set of objects whose results must be independent of each other. To *change* a scenario, create a new one (or duplicate it).
 
 | Piece | Role |
 |---|---|

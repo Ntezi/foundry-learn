@@ -18,7 +18,7 @@ Three ways a module reaches beyond its own widgets: **AI** widgets that put an L
 
 **[Docs]** The legacy mode (prompt and tools defined in the widget) lacks versioning, metrics and session history; the widget offers *Upgrade to an AIP Chatbot*.
 
-**[Example]** Ama's team gets Delivery Desk ([AIP 05-01](../../AIP/05-chatbot-studio/01-chatbot-concepts.md)) in a drawer on the queue. The chatbot's application variable for the selected order is mapped to `selectedOrder`, so "draft an update for this one" means the row Ama is on. A *Draft update* button sets the textbox variable to "Draft a delay update for this order", which sends it. The widget pins the published version, so a new chatbot version reaches the queue only when someone moves the pin, after it passes the evals suite ([AIP 04-01](../../AIP/04-aip-evals/01-evals-concepts-and-suites.md)).
+**[Example]** Ama's team gets Delivery Desk ([AIP 05-01](../../AIP/05-chatbot-studio/01-chatbot-concepts.md)) in a drawer on the queue. The chatbot's application variable for the selected order is mapped to `selectedOrder`, so *draft an update for this one* means the row Ama is on. A *Draft update* button sets the textbox variable to *Draft a delay update for this order*, which sends it. The widget pins the published version, so a new chatbot version reaches the queue only when someone moves the pin, after it passes the evals suite ([AIP 04-01](../../AIP/04-aip-evals/01-evals-concepts-and-suites.md)).
 
 ### AIP Generated Content
 

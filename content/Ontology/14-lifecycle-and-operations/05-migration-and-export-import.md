@@ -19,7 +19,7 @@ There are four ways to get Ontology definitions from one place to another. They 
 
 - **Migrate** is in Ontology Manager: open the owning ontology, choose *Migrate resources*, pick a target ontology, and select object types, link types, action types and "workflows". A preview shows source and target side by side. Moving **connected resources together** is required. You **can't move a type into the default ontology** unless it was created there.
 - **Export / import** is under *Advanced settings*. The **export includes your unsaved working state**. **Import recreates the entire working state** from the file, and the changes then have to be saved. A file with **conditional formatting rules** can only be imported into the ontology it came from; otherwise you get `OntologyMetadata:UnreferencedRuleSets`. "You should not depend on the exported JSON schema as it may change over time."
-- **SuperRepo**, from the OSDK and Developer Console pages: Ontology definitions, functions and frontend live in one pro-code repository. The OSDK is generated locally, and the result ships as a **Marketplace product** "from your own CI system". **[Explanation]** These notes haven't read the SuperRepo pages in full, so this column is a pointer, not a recommendation.
+- **SuperRepo**, from the OSDK and Developer Console pages: Ontology definitions, functions and frontend live in one pro-code repository. The OSDK is generated locally, and the result ships as a **Marketplace product** "from your own CI system". **[Explanation]** The SuperRepo pages are now read in full in [DevTools 05-04](../../DevTools/05-development-environments/04-superrepo-and-foundry-cli.md). Two limits matter here: functions must be **TypeScript v2**, and types installed from a SuperRepo are **locked**, so they can't then be edited in Ontology Manager (unlocking lets you, but the next deployment overwrites the edits). SuperRepo is also **beta**.
 
 ## Scenario 1 — "This type is in the wrong ontology"
 
@@ -50,6 +50,9 @@ Lena's audit found that 140 money properties lack a currency in their descriptio
 ## And the shared ontology?
 
 The [12-05](../12-security-and-governance/05-shared-ontologies-and-cross-org.md#decision-3--which-types-live-where) decision log chose **not** to migrate `Shipment` into the shared ontology. Migrating would have taken its links and edits along, and exposed every property to the partner. A new, narrow `SharedShipment` was built instead. **[Explanation]** Migration moves a type's **whole identity**. When only part of a type should cross a boundary, build a new type.
+
+<!-- devtools-go-deeper -->
+**Go deeper in the DevTools area:** [08 — Product delivery](../../DevTools/08-product-delivery/README.md)
 
 ---
 [Module index](README.md) · Previous: [04 — Packaging with Marketplace](04-marketplace-packaging.md) · Next: [06 — Monitoring and cleanup](06-monitoring-and-cleanup.md)

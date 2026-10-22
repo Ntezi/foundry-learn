@@ -97,7 +97,7 @@ A brand-new widget must be **published once** before Workshop can select it; aft
 
 Use Chrome DevTools' Performance tab to record what happened.
 
-**[Example]** Kestrel candidate: a `delivery-widgets` widget set in the `Delivery Desk [Workflow]` project, holding a **shipment timeline** widget that draws a shipment's `ShipmentEvent`s on a time axis for the order panel ([04](04-custom-widgets-in-workshop.md#kestrel-the-shipment-timeline)). A shipment has a handful of events, so loading them all is fine here; the same widget pointed at all shipments would hit the last anti-pattern. *Candidate only; Phase 6 decides whether it joins the Kestrel model.*
+**[Example]** Kestrel's `delivery-widgets` widget set in the `Delivery Desk [Workflow]` project, holding a **shipment timeline** widget that draws a shipment's `ShipmentEvent`s on a time axis for the order panel ([04](04-custom-widgets-in-workshop.md#kestrel-the-shipment-timeline)). A shipment has a handful of events, so loading them all is fine here; the same widget pointed at all shipments would hit the last anti-pattern. Adopted October 21, 2026; listed in [Ontology 17-02](../../Ontology/17-case-studies/02-kestrel-reference-model.md#8-applications) and built out in [11-01](../11-kestrel-case/01-delivery-desk-queue-built-out.md).
 
 ---
 [Module index](README.md) · Previous: [02 — Inside the advanced to-do tutorial](02-advanced-to-do-tutorial.md) · Next: [04 — Custom widgets in Workshop](04-custom-widgets-in-workshop.md)

@@ -82,7 +82,7 @@ The visualization family is large; this note covers the charting, mapping and an
 - **Inline references**: `:objectreference[Alert A00150]{objectType="flight-alert" primaryKey="A00150"}` makes the text selectable as that object, with a highlight colour per object type and selection events.
 - **Annotations**: annotation objects with a start index (inclusive) and end index (exclusive) highlight text; users can create new annotations from a selection through an action.
 
-**[Example]** A shift-handover note in the Delivery Desk queue, kept in a string variable, can reference orders inline (`:objectreference[O-10442]{objectType="order" primaryKey="O-10442"}`), so an agent clicking "O-10442" selects that order. The `objectType` value is our placeholder for Order's identifier. The object type must be listed in the widget's configuration, or the reference renders as plain text.
+**[Example]** A shift-handover note in the Delivery Desk queue, kept in a string variable, can reference orders inline (`:objectreference[O-10442]{objectType="order" primaryKey="O-10442"}`), so an agent clicking *O-10442* selects that order. The `objectType` value is our placeholder for Order's identifier. The object type must be listed in the widget's configuration, or the reference renders as plain text.
 
 ---
 [Module index](README.md) · Previous: [01 — Core display widgets](01-core-display-widgets.md) · Next: [03 — Media, documents and history](03-media-documents-and-history.md)

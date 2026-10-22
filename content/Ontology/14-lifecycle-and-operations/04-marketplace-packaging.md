@@ -93,5 +93,8 @@ flowchart LR
 
 **[Explanation]** Branches handle **change within** an environment. Product versions handle **movement between** environments. Keep the two separate, and never edit an installed resource in production by hand. The next upgrade would conflict with your edit, and the installation's lockdown is there to prevent exactly that.
 
+<!-- devtools-go-deeper -->
+**Go deeper in the DevTools area:** [08 — Product delivery](../../DevTools/08-product-delivery/README.md)
+
 ---
 [Module index](README.md) · Previous: [03 — Schema evolution and breaking changes](03-schema-evolution-and-breaking-changes.md) · Next: [05 — Migration and export/import](05-migration-and-export-import.md)

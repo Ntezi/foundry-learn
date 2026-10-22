@@ -2,7 +2,7 @@
 
 *Sources: [Permissions in Workshop](https://www.palantir.com/docs/foundry/workshop/concepts-permissions/) · [Getting started](https://www.palantir.com/docs/foundry/workshop/getting-started/) · [Embed Workshop modules](https://www.palantir.com/docs/foundry/workshop/embedding-workshop-modules-overview/) · [Use Actions in Workshop](https://www.palantir.com/docs/foundry/workshop/actions-use/) · checked October 18, 2026 · Ready for Review*
 
-**[Concept]** Being allowed to **open** a module and being allowed to **use** what is inside it are separate checks. Most "the app is broken for her" reports are the second check failing while the first passes.
+**[Concept]** Being allowed to **open** a module and being allowed to **use** what is inside it are separate checks. Most *the app is broken for her* reports are the second check failing while the first passes.
 
 ## The layers
 
@@ -23,7 +23,7 @@
 
 **[Example]** Kofi opens the Delivery Desk queue and sees only his region's shipments ([Ontology 10-03](../../Ontology/10-applications/03-workshop-and-slate.md)). If he exports the shipments table, the region filter doesn't travel with the file, and a function he triggers isn't limited by what his screen showed. The full Kestrel reasoning is in [Ontology 12-04](../../Ontology/12-security-and-governance/04-security-across-actions-functions-and-apis.md).
 
-## Diagnosing "it doesn't work for her"
+## Diagnosing *it doesn't work for her*
 
 **[Docs]** The **Check access** panel in the sidebar shows, for one user, whether they meet the module's requirements and what else they need for its object types, link types, action types and functions.
 

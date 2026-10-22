@@ -74,3 +74,6 @@ Current review: lessons 25–48. The first half’s explanatory depth was accept
 Review [lessons 25–48](SECOND-HALF-REVIEW.md), focusing on the selection-to-Action path and the worked test scenarios. Then use the practical plan to verify the existing training build when access is available. Notes completion does not resolve the existing Foundry sign-in blocker.
 
 [Central progress](../../PROGRESS.md) · [Study plan](../../STUDY-PLAN.md) · [Corrections](SOURCES-AND-CORRECTIONS.md)
+
+<!-- apps-go-deeper -->
+**Go deeper in the Apps area:** [Workshop foundations](../../Apps/01-workshop-foundations/README.md) · [actions in Workshop](../../Apps/02-workshop-data-and-logic/01-actions-in-workshop.md) · [publishing](../../Apps/04-workshop-in-production/01-publishing-versions-and-branching.md)

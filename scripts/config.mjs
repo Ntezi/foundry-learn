@@ -35,7 +35,17 @@ export const collections = [
     special: { 'MAP.md': 'map', 'GLOSSARY.md': 'glossary' },
     skip: ['MIGRATION.md', 'QUALITY-REVIEW.md'],
     skipDirs: ['_templates'],
-    selfCheck: null,
+    selfCheck: '12-practice/01-review-questions-by-module.md',
+  },
+  {
+    id: 'devtools',
+    dir: 'DevTools',
+    title: 'DevTools',
+    tagline: 'The developer toolchain and product delivery: Ontology SDK, Developer Console and APIs, compute modules, MCP, development environments, branching, FoundryTS and Marketplace',
+    special: { 'MAP.md': 'map', 'GLOSSARY.md': 'glossary' },
+    skip: ['MIGRATION.md', 'QUALITY-REVIEW.md'],
+    skipDirs: ['_templates'],
+    selfCheck: '10-practice/01-review-questions-by-module.md',
   },
   // Course notes referenced from the areas above. They keep their own folder structure:
   // one area per Learn folder, one module per course.

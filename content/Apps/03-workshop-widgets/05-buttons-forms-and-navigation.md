@@ -19,7 +19,7 @@ The widgets users click to make something happen. Wiring actions to buttons is i
 | **Function-backed export** | Downloads a function's string output as CSV, TXT, JSON, XML, PDF, DOCX or XLSX | Text formats: plain string. Binary formats: base64 **without** a `data:` prefix (Python may return bytes). A `UserFacingError` message is shown to the user |
 | **Export media** | Downloads media for chosen objects | Custom file names can include the timestamp, original name and properties |
 
-**[Example]** Lena's team wants "the disputed lines as a spreadsheet, sorted by amount". A Button Group export won't keep the sort, so either use the Object Table's right-click CSV export on a table sorted by `amount`, or a function-backed export that builds the XLSX itself.
+**[Example]** Lena's team wants *the disputed lines as a spreadsheet, sorted by amount*. A Button Group export won't keep the sort, so either use the Object Table's right-click CSV export on a table sorted by `amount`, or a function-backed export that builds the XLSX itself.
 
 ## Inline Action
 
@@ -38,7 +38,7 @@ The widgets users click to make something happen. Wiring actions to buttons is i
 
 **[Docs]** The Tabs widget has **no selection state of its own**. It shows as selected the tab whose *Switch to tab* or *Switch to page* event would cause **no layout change**, so its look is derived from the layout. Adding the widget doesn't create those events; you add them. Tabs can show badges (text or number from a variable) and be disabled or hidden by a Boolean. Styles: outline, block, prominent, grouped.
 
-**[Explanation]** This is why a Tabs widget driving pages can look "stuck": if its events switch pages and something else (a *Set variable value* on the page variable) also does, the widget follows the layout, not your intent. Keep one way of switching. The page-variable caveat is in [01-02](../01-workshop-foundations/02-layouts-widgets-and-events.md#which-events-keep-a-backing-variable-in-sync).
+**[Explanation]** This is why a Tabs widget driving pages can look *stuck*: if its events switch pages and something else (a *Set variable value* on the page variable) also does, the widget follows the layout, not your intent. Keep one way of switching. The page-variable caveat is in [01-02](../01-workshop-foundations/02-layouts-widgets-and-events.md#which-events-keep-a-backing-variable-in-sync).
 
 ## Comments
 
@@ -52,7 +52,7 @@ The widgets users click to make something happen. Wiring actions to buttons is i
 - To make comments **searchable**, an action can write each comment to an **action log** (append-only, so no edit or delete later) or create a mirror object (editable, but the comment service stays the source of truth).
 - With auto-refresh on, a refresh can wipe a half-typed comment; turn auto-refresh off on tabs with comments ([04-02](../04-workshop-in-production/02-performance.md#auto-refresh)).
 
-**[Explanation]** "Comments follow the parent object" cuts both ways at Kestrel. Comments on **Order** are visible to every CS agent, because Order isn't regional. Comments on **Shipment** are visible only within the region, because of Shipment's regional policy. **[Docs]** Comments follow the object, not its **columns**: the docs' medical example needs a separate proxy object so that comments about sensitive fields stay hidden from users who can't see those fields. **[Explanation]** So an agent who pastes a customer's delivery address into an Order comment shows it to every agent who can see the order, including those that `Order.deliveryAddress`'s own PII policy hides it from ([Ontology 12-03](../../Ontology/12-security-and-governance/03-object-and-property-security.md)). Kestrel's rule: no addresses or contact details in comments.
+**[Explanation]** "Comments follow the permissions of the parent object" cuts both ways at Kestrel. Comments on **Order** are visible to every CS agent, because Order isn't regional. Comments on **Shipment** are visible only within the region, because of Shipment's regional policy. **[Docs]** Comments follow the object, not its **columns**: the docs' medical example needs a separate proxy object so that comments about sensitive fields stay hidden from users who can't see those fields. **[Explanation]** So an agent who pastes a customer's delivery address into an Order comment shows it to every agent who can see the order, including those that `Order.deliveryAddress`'s own PII policy hides it from ([Ontology 12-03](../../Ontology/12-security-and-governance/03-object-and-property-security.md)). Kestrel's rule: no addresses or contact details in comments.
 
 ## Media Uploader and Audio Recorder
 

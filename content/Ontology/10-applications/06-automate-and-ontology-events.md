@@ -94,5 +94,7 @@ Automate integrates with **Global Branching**, so automations can be built and t
 2. **Latency includes indexing.** "Within minutes" starts **after indexing**. User edits are patches and arrive faster than dataset rebuilds ([13](../13-backend-architecture/03-edits-and-materializations.md)).
 3. **History isn't in the trigger.** An automation knows that a payment *became* HIGH. It doesn't know what it was before. If the *transition* matters, model it as an event or log type. Machinery's log type is one example ([05](05-specialized-apps.md)).
 
+**Revised October 21, 2026.** The Apps area found that this automation can't be project-scoped while it has a notification effect, so its effect history was visible only to the service user. It's now two automations: the project-scoped hold and a separate *High-risk payment alert* ([Apps 08-05](../../Apps/08-automate/05-security-ownership-and-history.md#who-can-see-what-happened), [17-02](../17-case-studies/02-kestrel-reference-model.md#6-functions-automations-and-the-agent)).
+
 ---
 [Module index](README.md) · Previous: [05 — Specialized apps](05-specialized-apps.md) · Next: [07 — Searching the Ontology](07-searching-the-ontology.md)

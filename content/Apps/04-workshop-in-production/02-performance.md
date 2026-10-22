@@ -17,7 +17,7 @@ Four tools, in the order you reach for them: **measure** (Profiler), **tune what
 | Mount ↓ / Unmount → | Normal | Unmount when off-screen | Never unmount |
 |---|---|---|---|
 | **Normal** (default) | Default behaviour | — | Keep state across tab switches |
-| **Delay until on-screen** | Lazy-load below the fold | "Virtualise" a long page | ✓ |
+| **Delay until on-screen** | Lazy-load below the fold | *Virtualise* a long page | ✓ |
 | **Eagerly mount** | — | — | Preload a hidden tab or overlay |
 
 **[Docs]** The docs' scenarios: keep a **custom widget** alive across tab switches (normal + never), **preload** a tab users nearly always reach (eager + never; costs initial load time), **keep scroll and form state** (normal + never), **lazy-load** a long page (delay + normal), **virtualise** it (delay + off-screen).

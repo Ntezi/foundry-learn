@@ -1,8 +1,8 @@
 # 02 — Kestrel Commerce reference model
 
-*Sources: the notes linked in each row (no new doc pages) · assembled October 3, 2026; carrier-invoice types added October 8 from the AIP area · Ready for Review*
+*Sources: the notes linked in each row (no new doc pages) · assembled October 3, 2026; carrier-invoice types added October 8 from the AIP area; applications added October 21 from the [Apps area](../../Apps/README.md); developer resources added October 22 from the [DevTools area](../../DevTools/README.md) · Ready for Review*
 
-The running example was built up across 16 modules (and, for carrier invoices, the [AIP area](../../AIP/README.md)), one decision at a time. This page puts it in one place: **every type, link, interface, action, function, automation, security rule and environment**, with the note where it was decided. Use it to check consistency when writing new material, or to revise the whole design in one sitting. Everything here is **[Example]**: a fictional company, designed with the docs' rules.
+The running example was built up across 16 modules (and, for carrier invoices, the [AIP area](../../AIP/README.md)), one decision at a time. This page puts it in one place: **every type, link, interface, action, function, automation, application, security rule and environment**, with the note where it was decided. Use it to check consistency when writing new material, or to revise the whole design in one sitting. Everything here is **[Example]**: a fictional company, designed with the docs' rules.
 
 ## 1. The model on one page
 
@@ -58,6 +58,7 @@ erDiagram
 | `CarrierInvoiceLine` | `invoiceLineId` | — | `trackingNumber` as printed, `chargeType`, `amount`, `matchStatus` | [AIP 06-01](../../AIP/06-document-intelligence/01-extraction-strategies.md#where-the-data-goes) |
 | `DeliveryException`, `SharedShipment` | — | Shared ontology with Northwind Freight | the narrow types the partner sees | [12-05](../12-security-and-governance/05-shared-ontologies-and-cross-org.md) |
 | `[Log] …` | generated | — | action-log types | [08-07](../08-actions/07-consistency-reverts-and-logs.md) |
+| `TemperatureExcursion` (planned, added October 22) | — | — | one event per period a refrigerated van's probe stayed above 8 °C for 10 minutes, linked to `Vehicle`; found with FoundryTS `time_series_search`; where the job runs is undecided | [DevTools 07-01](../../DevTools/07-foundryts/01-foundryts.md#for-kestrel), [15-01](../15-advanced-patterns/01-events-history-and-time.md#q4--time-series) |
 
 "—" means the notes never needed to decide it. **[Recommendation]** Decide it before adding examples that depend on it.
 
@@ -116,7 +117,8 @@ erDiagram
 | `assignCase` | Staged-write function | [09-02](../09-functions/02-query-functions-and-ontology-edits.md#staged-writes-beta) |
 | `liveFraudScore` | Model function wrapper | [09-04](../09-functions/04-functions-on-models-and-llms.md#pattern-1--wrap-a-predictive-model) |
 | `draftDelayMessage` | LLM function; agent tool T4 (pinned) | [09-04](../09-functions/04-functions-on-models-and-llms.md), [16-03](../16-ai-and-agents/03-ontology-tools-for-agents.md) |
-| *High-risk payment hold* | Automation, owned by a service user | [10-06](../10-applications/06-automate-and-ontology-events.md) |
+| *High-risk payment hold* | Automation, owned by the Kestrel Pay service user; **project-scoped**, action effect *Hold order for payment* plus fallback (revised October 21). Project scope needs every resource it uses imported into `Payments [Ontology]`, including `Order` and *Hold order for payment* from `Commerce [Ontology]`; whether a fallback that notifies through an action side effect works in project scope is open (Apps RQ-12) | [10-06](../10-applications/06-automate-and-ontology-events.md), [Apps 08-05](../../Apps/08-automate/05-security-ownership-and-history.md#who-can-see-what-happened) |
+| *High-risk payment alert* | Automation on the same condition, notification to `kestrel-pay-fraud`; user-scoped because project scope can't hold notification effects (added October 21) | [Apps 08-05](../../Apps/08-automate/05-security-ownership-and-history.md#who-can-see-what-happened) |
 | Delivery Desk | AIP Chatbot; tools T1–T7; prompted tool calling | [16-03](../16-ai-and-agents/03-ontology-tools-for-agents.md) |
 
 ### Added in the AIP area
@@ -134,6 +136,16 @@ erDiagram
 | Invoice extraction | Document Intelligence transform (VLM + preprocessing, incremental) and a per-document function for disputes | [AIP 06-02](../../AIP/06-document-intelligence/02-deploying-extraction.md) |
 | Kestrel Pay model | Self-hosted registered model in compute module `kestrel-pay-llm`; fallback design `kestrel-pay-redacting-proxy` | [AIP 02-01](../../AIP/02-bring-your-own-model/01-choosing-a-byom-path.md#kestrel-pays-decision), [02-03](../../AIP/02-bring-your-own-model/03-self-hosting-and-proxy-layers.md) |
 
+### Added in the DevTools area
+
+Added October 22, 2026, from the [DevTools area](../../DevTools/README.md); the build records are in [DevTools 09](../../DevTools/09-kestrel-case/README.md).
+
+| Item | Kind | Defined in |
+|---|---|---|
+| Customer portal backend | Back-end TypeScript (Next.js) on Kestrel's infrastructure; requests `api:use-ontologies-read` explicitly; one `Shipment` page per request, no snapshot; one `Shipment` subscription per open order (filter, not pivot); retry helper with backoff and jitter; `ApiUsageDenied` pages the team | [DevTools 09-01](../../DevTools/09-kestrel-case/01-customer-portal-built-out.md) |
+| Nightly delivery-performance export | A **separate** backend-service application with its own secret and scope; snapshot paging | [DevTools 02-04](../../DevTools/02-developer-console-and-apis/04-platform-apis.md#for-kestrel) |
+| `kestrel-pay-llm` settings | A readiness probe and one scheduled daytime override, on top of AIP 02-02's minimum replica | [DevTools 03-02](../../DevTools/03-compute-modules-and-custom-endpoints/02-configuration-and-sdks.md#for-kestrel) |
+
 ## 7. Security, environments and governance
 
 - **Projects:** `Commerce [Ontology]`, `Payments [Ontology]` (datasets marked `Kestrel Pay – Financial`), `Delivery Desk [Workflow]` ([02-04](../02-foundry-data-foundations/04-projects-spaces-and-markings.md)).
@@ -146,11 +158,38 @@ erDiagram
 - **LLM data access (AIP):** enrollment allowlist `Customer PII`; the Kestrel Pay model's own policy allows `Customer PII` and `Kestrel Pay – Financial`; users with the Kestrel Pay marking use scoped sessions for other models ([AIP 08-03](../../AIP/08-security-governance-and-admin/03-llm-data-access-with-markings.md)).
 - **LLM capacity (AIP):** project limits Production 100%, Batch 40%, Sandbox 15% with a model allowlist; reserved capacity for `Delivery Desk [Workflow]`; AIP Analyst action execution limited to operations leads ([AIP 08-04](../../AIP/08-security-governance-and-admin/04-capacity-and-rate-limits.md#kestrels-design), [07-04](../../AIP/07-end-user-apps/04-aip-analyst.md#admin-switches)).
 
-## 8. Known gaps in the example
+- **Developer environments (DevTools):** functions, Kestrel Pay work and Python transforms in **VS Code workspaces** (Java transforms, if any, stay in Code Repositories); **local transforms preview off**; Code Repositories for pull request review; local Palantir MCP only for Daniel's group, commerce work, and only once the IDE provider agreement is recorded ([DevTools 09-02](../../DevTools/09-kestrel-case/02-daniels-developer-setup.md)).
+- **Branch protection (DevTools):** *automatically protect new files* on in `Commerce [Ontology]`, so new types and actions go through the two-approval policy ([DevTools 06-01](../../DevTools/06-branching-and-cross-app/01-global-branching.md#for-kestrel)).
+- **Product delivery (DevTools):** `Kestrel Platform` store requires approval for new versions; Delivery Desk v1.1 adds the Apps-area modules, widget set and Carbon workspace; core-type inputs use Source presets with custom values off; `PolicyDocument` and `PolicyChunk` are inputs (vector property); functions are packaged without their repositories; installation suffixes `TEST` and `PROD`, prod locked, environments configured in DevOps ([DevTools 09-03](../../DevTools/09-kestrel-case/03-delivery-desk-product-release.md)).
+
+## 8. Applications
+
+Added from the [Apps area](../../Apps/README.md), October 21, 2026. Before then the apps were scattered across notes.
+
+| Application | Kind | Users | Where it lives | Defined in |
+|---|---|---|---|---|
+| **Delivery Desk queue** | Workshop module: at-risk orders, *Hold order* and *Re-route shipment*, Delivery Desk chatbot drawer, saved queues | Ama's CS agents; Kofi (sees his region only) | `Delivery Desk [Workflow]` | [10-03](../10-applications/03-workshop-and-slate.md), [Apps 11-01](../../Apps/11-kestrel-case/01-delivery-desk-queue-built-out.md) |
+| **Order panel** | Workshop child module (interface variable `order`), embedded in the queue and the re-route review page | — | `Delivery Desk [Workflow]` | [Apps 02-04](../../Apps/02-workshop-data-and-logic/04-embedding-modules.md) |
+| **Re-route review page** | Workshop module listing `RerouteProposal`s, with the reviewer chatbot (map commands) | Kofi, operations leads | `Delivery Desk [Workflow]` | [AIP 05-02](../../AIP/05-chatbot-studio/02-commands-as-tools.md) |
+| **Warehouse floor** | Mobile Workshop module: barcode scan on `trackingNumber`, shipment detail, *Re-route shipment*, today's shipments at Accra | Kofi's warehouse staff | `Delivery Desk [Workflow]` | [Apps 04-05](../../Apps/04-workshop-in-production/05-mobile.md), [Apps 11-02](../../Apps/11-kestrel-case/02-warehouse-floor-mobile.md) |
+| **`delivery-widgets`** | Custom widget set; one widget, *shipment timeline* (parameters `events`, `selectedEventId`; event `selectEvent`), in the Order panel | — | `Delivery Desk [Workflow]` | [Apps 06-03](../../Apps/06-osdk-react-and-custom-widgets/03-custom-widget-sets.md), [06-04](../../Apps/06-osdk-react-and-custom-widgets/04-custom-widgets-in-workshop.md#kestrel-the-shipment-timeline) |
+| **Delivery Desk workspace** | Carbon workspace: the queue anchored, search on Order, Shipment, Customer; default for CS agents; navigation out disabled | CS agents | `Delivery Desk [Workflow]` | [Apps 09-01](../../Apps/09-carbon-workspaces/01-carbon-workspaces.md#kestrel-a-delivery-desk-workspace), [Apps 11-03](../../Apps/11-kestrel-case/03-delivery-desk-workspace.md) |
+| **Invoice review** | Workshop module: unmatched `CarrierInvoiceLine`s with the invoice PDF beside them, jumping to the printed line; disputed lines exported | Lena's team | Not yet decided | [AIP 10-02](../../AIP/10-kestrel-case/02-carrier-invoices.md), [Apps 03-03](../../Apps/03-workshop-widgets/03-media-documents-and-history.md) |
+| **Configured Object Views** | Order, Shipment, Payment; auto-publish off | Everyone, by permissions | Ontology | [10-02](../10-applications/02-object-views-and-object-explorer.md), [14-01](../14-lifecycle-and-operations/01-saving-reviewing-and-restoring.md) |
+| **Customer delivery-status portal** | Backend outside Foundry with Kestrel's own customer login; backend-service app, client credentials, service user | Kestrel's customers (not Foundry users) | Developer Console | [10-04](../10-applications/04-osdk-and-apis.md), [DevTools 09-01](../../DevTools/09-kestrel-case/01-customer-portal-built-out.md) |
+| **Support portal** | External app calling `lateOrdersForRegion` through the API gateway | Support staff | Outside Foundry | [09-02](../09-functions/02-query-functions-and-ontology-edits.md) |
+
+**Considered, not adopted** (October 21): a public Slate delivery-feedback form ([Apps 05-01](../../Apps/05-slate/01-slate-apps.md#integrated-and-public-apps)); an OSDK React app for internal users ([Apps 06-01](../../Apps/06-osdk-react-and-custom-widgets/01-osdk-react-apps.md)); Lena's Pilot-built invoice line matcher and a *Match line to shipment* action ([Apps 07-01](../../Apps/07-pilot/01-what-pilot-is.md#steering-it)); an invoice-lines-ready dataset automation ([Apps 08-02](../../Apps/08-automate/02-conditions.md#dataset-conditions)); Autopilot order-lifecycle boards ([Apps 10-02](../../Apps/10-workflow-tools/02-autopilot.md#kestrel-the-order-lifecycle)); a Solution Designer diagram of the invoice flow ([Apps 10-03](../../Apps/10-workflow-tools/03-solution-designer-and-workflow-builder.md#solution-designer)).
+
+**Considered, not adopted** (DevTools, October 22): an offline dock checklist on the embedded Ontology ([DevTools 02-02](../../DevTools/02-developer-console-and-apis/02-bootstrapping-and-hosting.md#for-kestrel)); a custom endpoint for the support portal ([03-04](../../DevTools/03-compute-modules-and-custom-endpoints/04-custom-endpoints.md)); a Copilot Studio agent over Ontology MCP ([04-01](../../DevTools/04-mcp-and-pro-code-agents/01-ontology-mcp.md)); a build-fixing pro-code agent ([04-03](../../DevTools/04-mcp-and-pro-code-agents/03-pro-code-agents.md#for-kestrel)); delay-risk modelling in JupyterLab ([05-01](../../DevTools/05-development-environments/01-code-workspaces.md#for-kestrel)); the Delivery Desk as a SuperRepo ([05-04](../../DevTools/05-development-environments/04-superrepo-and-foundry-cli.md#for-kestrel)); App Pairing on Kofi's re-route page ([06-02](../../DevTools/06-branching-and-cross-app/02-cross-application-interactivity.md#for-kestrel)); folder tracking of `Delivery Desk [Workflow]` and a separate core Ontology product ([09-03](../../DevTools/09-kestrel-case/03-delivery-desk-product-release.md#considered-not-adopted)).
+
+## 9. Known gaps in the example
 
 - Keys and projects for several supporting types are undecided ("—" above).
 - `Product`, `Supplier`, `Category`, `Purchase Order` and `Inventory Position` appear in the original target model ([00-04](../00-orientation/04-running-example.md#where-the-model-is-heading)) but no note needed them; question 3 there (supplier risk) is still unanswered.
+- Whether Kestrel's three projects should be grouped in a **Portfolio** (the replacement for Use Cases, [Apps 10-04](../../Apps/10-workflow-tools/04-use-cases-sunset.md)) hasn't been decided.
 - *Hold shipment*, mentioned in [16-05](../16-ai-and-agents/05-designing-the-ontology-for-agents.md), isn't designed anywhere.
+- From the DevTools area: whether `RerouteProposal` has a backing datasource (and so whether it ships in the Delivery Desk product); the language of Priya's transforms; Kestrel's agreement with Daniel's IDE model provider; the key and the pipeline host for `TemperatureExcursion` ([DevTools 09](../../DevTools/09-kestrel-case/README.md)).
 
 ---
 [Module index](README.md) · Previous: [01 — Applied to our courses](01-course-ontologies-reviewed.md) · Next module: [18 — Practice](../18-practice/README.md)

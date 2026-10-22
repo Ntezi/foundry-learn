@@ -269,6 +269,119 @@ All 96 pages read in full in the built-in browser (same extraction; loaded in pa
 | [Deploy a custom widget](https://www.palantir.com/docs/foundry/pilot/deploy-a-widget/) (Pilot › How-to guides) | [07-02](07-pilot/02-building-and-shipping.md) |
 | [Troubleshooting](https://www.palantir.com/docs/foundry/pilot/troubleshooting/) (Pilot) | [07-02](07-pilot/02-building-and-shipping.md) |
 
+### Phase 5: modules 08–10 (read in full, October 21, 2026)
+
+95 pages, read in full in the built-in browser. The two Carbon YAML pages were read for structure and their prose; the YAML listings themselves were *surveyed*.
+
+| Page | Note |
+|---|---|
+| [Overview](https://www.palantir.com/docs/foundry/automate/overview/) (Automate) | [08-01](08-automate/01-automate-concepts.md) |
+| [Getting started](https://www.palantir.com/docs/foundry/automate/getting-started/) (Automate) | [08-01](08-automate/01-automate-concepts.md) |
+| [Manual executions](https://www.palantir.com/docs/foundry/automate/manual-execution/) (Automate) | [08-01](08-automate/01-automate-concepts.md) |
+| [Integrations](https://www.palantir.com/docs/foundry/automate/integrations/) (Automate) | [08-01](08-automate/01-automate-concepts.md) |
+| [Time condition](https://www.palantir.com/docs/foundry/automate/condition-time/) (Automate › Condition) | [08-02](08-automate/02-conditions.md) |
+| [Object set conditions](https://www.palantir.com/docs/foundry/automate/condition-objects/) (Automate › Condition) | [08-02](08-automate/02-conditions.md) |
+| [Dataset condition](https://www.palantir.com/docs/foundry/automate/condition-dataset/) (Automate › Condition) | [08-02](08-automate/02-conditions.md) |
+| [Condition settings](https://www.palantir.com/docs/foundry/automate/condition-settings/) (Automate › Condition) | [08-02](08-automate/02-conditions.md) |
+| [Automation dependencies](https://www.palantir.com/docs/foundry/automate/automation-dependencies/) (Automate › Condition) | [08-02](08-automate/02-conditions.md) |
+| [Streaming](https://www.palantir.com/docs/foundry/automate/streaming/) (Automate › Condition) | [08-02](08-automate/02-conditions.md) |
+| [Overview](https://www.palantir.com/docs/foundry/automate/effects/) (Automate › Effects) | [08-03](08-automate/03-effects.md) |
+| [Action effects](https://www.palantir.com/docs/foundry/automate/effect-actions/) (Automate › Effects) | [08-03](08-automate/03-effects.md) |
+| [Logic effects](https://www.palantir.com/docs/foundry/automate/effect-logic/) (Automate › Effects) | [08-03](08-automate/03-effects.md) |
+| [Function effects](https://www.palantir.com/docs/foundry/automate/effect-function/) (Automate › Effects) | [08-03](08-automate/03-effects.md) |
+| [Notification effects](https://www.palantir.com/docs/foundry/automate/effect-notification/) (Automate › Effects) | [08-03](08-automate/03-effects.md) |
+| [Fallback effects](https://www.palantir.com/docs/foundry/automate/effect-fallback/) (Automate › Effects) | [08-03](08-automate/03-effects.md) |
+| [Effect settings](https://www.palantir.com/docs/foundry/automate/effect-settings/) (Automate › Effects) | [08-03](08-automate/03-effects.md) |
+| [Automation administrators](https://www.palantir.com/docs/foundry/automate/automation-administrators/) (Automate › Settings) | [08-04](08-automate/04-execution-settings.md) |
+| [Execution settings](https://www.palantir.com/docs/foundry/automate/execution-settings/) (Automate › Settings) | [08-04](08-automate/04-execution-settings.md) |
+| [Evaluation frequency](https://www.palantir.com/docs/foundry/automate/evaluation-frequency/) (Automate › Settings) | [08-04](08-automate/04-execution-settings.md) |
+| [Manual and automatic retries](https://www.palantir.com/docs/foundry/automate/retries/) (Automate › Settings) | [08-04](08-automate/04-execution-settings.md) |
+| [Muting, pausing, and expiration](https://www.palantir.com/docs/foundry/automate/muting-pausing-expiration/) (Automate › Settings) | [08-04](08-automate/04-execution-settings.md) |
+| [Notification settings](https://www.palantir.com/docs/foundry/automate/notification-settings/) (Automate › Settings) | [08-04](08-automate/04-execution-settings.md) |
+| [Security](https://www.palantir.com/docs/foundry/automate/security/) (Automate › Security and permissions) | [08-05](08-automate/05-security-ownership-and-history.md) |
+| [Permissions](https://www.palantir.com/docs/foundry/automate/permissions/) (Automate › Security and permissions) | [08-05](08-automate/05-security-ownership-and-history.md) |
+| [Third-party application ownership](https://www.palantir.com/docs/foundry/automate/third-party-app-ownership/) (Automate › Security and permissions) | [08-05](08-automate/05-security-ownership-and-history.md) |
+| [Automation history](https://www.palantir.com/docs/foundry/automate/history/) (Automate › Security and permissions) | [08-05](08-automate/05-security-ownership-and-history.md) |
+| [History visibility and scope](https://www.palantir.com/docs/foundry/automate/history-visibility-and-scope/) (Automate › Security and permissions) | [08-05](08-automate/05-security-ownership-and-history.md) |
+| [Performance best practices](https://www.palantir.com/docs/foundry/automate/performance-best-practices/) (Automate › Performance and troubleshooting) | [08-06](08-automate/06-operating-automations.md) |
+| [Troubleshooting performance](https://www.palantir.com/docs/foundry/automate/troubleshooting-performance/) (Automate › Performance and troubleshooting) | [08-06](08-automate/06-operating-automations.md) |
+| [Limits](https://www.palantir.com/docs/foundry/automate/limits/) (Automate) | [08-06](08-automate/06-operating-automations.md) |
+| [Error reference](https://www.palantir.com/docs/foundry/automate/errors/) (Automate) | [08-06](08-automate/06-operating-automations.md) |
+| [Branching automations](https://www.palantir.com/docs/foundry/automate/branching-automations/) (Automate) | [08-06](08-automate/06-operating-automations.md) |
+| [Automations on Ontology scenarios](https://www.palantir.com/docs/foundry/automate/automations-on-ontology-scenarios/) (Automate) | [08-06](08-automate/06-operating-automations.md) |
+| [Add an automation to a Marketplace product](https://www.palantir.com/docs/foundry/automate/marketplace-automate/) (Automate) | [08-06](08-automate/06-operating-automations.md) |
+| [Send a weekly report](https://www.palantir.com/docs/foundry/automate/example-weekly-report/) (Automate › Examples) | [08-06](08-automate/06-operating-automations.md) |
+| [Close tickets after a specified time](https://www.palantir.com/docs/foundry/automate/example-relative-time-condition/) (Automate › Examples) | [08-06](08-automate/06-operating-automations.md) |
+| [Notify contract owner when status changes](https://www.palantir.com/docs/foundry/automate/example-dynamic-contract-owner/) (Automate › Examples) | [08-06](08-automate/06-operating-automations.md) |
+| [Overview](https://www.palantir.com/docs/foundry/carbon/overview/) (Carbon) | [09-01](09-carbon-workspaces/01-carbon-workspaces.md) |
+| [Getting started](https://www.palantir.com/docs/foundry/carbon/getting-started/) (Carbon) | [09-01](09-carbon-workspaces/01-carbon-workspaces.md) |
+| [Example workspaces](https://www.palantir.com/docs/foundry/carbon/example-workspaces/) (Carbon) | [09-01](09-carbon-workspaces/01-carbon-workspaces.md) |
+| [Overview](https://www.palantir.com/docs/foundry/carbon/workspaces-overview/) (Carbon › Workspaces) | [09-01](09-carbon-workspaces/01-carbon-workspaces.md) |
+| [Create a workspace](https://www.palantir.com/docs/foundry/carbon/workspaces-create/) (Carbon › Workspaces) | [09-01](09-carbon-workspaces/01-carbon-workspaces.md) |
+| [Edit a workspace](https://www.palantir.com/docs/foundry/carbon/workspaces-edit/) (Carbon › Workspaces) | [09-01](09-carbon-workspaces/01-carbon-workspaces.md) |
+| [Configure workspace updates](https://www.palantir.com/docs/foundry/carbon/workspaces-updates/) (Carbon › Workspaces) | [09-01](09-carbon-workspaces/01-carbon-workspaces.md) |
+| [View version history](https://www.palantir.com/docs/foundry/carbon/workspaces-history/) (Carbon › Workspaces) | [09-01](09-carbon-workspaces/01-carbon-workspaces.md) |
+| [Add Carbon workspace to a Marketplace product](https://www.palantir.com/docs/foundry/carbon/marketplace-carbon-workspace/) (Carbon) | [09-01](09-carbon-workspaces/01-carbon-workspaces.md) |
+| [Overview](https://www.palantir.com/docs/foundry/carbon/modules-overview/) (Carbon › Modules) | [09-02](09-carbon-workspaces/02-modules-and-navigation.md) |
+| [Configure module discovery](https://www.palantir.com/docs/foundry/carbon/modules-discovery/) (Carbon › Modules) | [09-02](09-carbon-workspaces/02-modules-and-navigation.md) |
+| [Configure navigation between modules](https://www.palantir.com/docs/foundry/carbon/modules-navigation/) (Carbon › Modules) | [09-02](09-carbon-workspaces/02-modules-and-navigation.md) |
+| [Configure navigation between workspaces](https://www.palantir.com/docs/foundry/carbon/workspaces-navigation/) (Carbon › Workspaces) | [09-02](09-carbon-workspaces/02-modules-and-navigation.md) |
+| [Restrict navigation out of a workspace](https://www.palantir.com/docs/foundry/carbon/restrict-workspace-nav/) (Carbon › Workspaces) | [09-02](09-carbon-workspaces/02-modules-and-navigation.md) |
+| [Curating apps in Applications Portal](https://www.palantir.com/docs/foundry/app-building/curating-apps/) () | [09-02](09-carbon-workspaces/02-modules-and-navigation.md) |
+| [Configure permissions](https://www.palantir.com/docs/foundry/carbon/permissions-configure/) (Carbon › Permissions and access) | [09-03](09-carbon-workspaces/03-configuration-and-permissions.md) |
+| [Set a default workspace](https://www.palantir.com/docs/foundry/carbon/permissions-default-workspace/) (Carbon › Permissions and access) | [09-03](09-carbon-workspaces/03-configuration-and-permissions.md) |
+| [Set Carbon as the Foundry landing page](https://www.palantir.com/docs/foundry/carbon/permissions-landing-page/) (Carbon › Permissions and access) | [09-03](09-carbon-workspaces/03-configuration-and-permissions.md) |
+| [General configuration](https://www.palantir.com/docs/foundry/carbon/configuration-general/) (Carbon › Configuration reference) | [09-03](09-carbon-workspaces/03-configuration-and-permissions.md) |
+| [Home configuration](https://www.palantir.com/docs/foundry/carbon/configuration-home/) (Carbon › Configuration reference) | [09-03](09-carbon-workspaces/03-configuration-and-permissions.md) |
+| [Menu bar configuration](https://www.palantir.com/docs/foundry/carbon/configuration-menu-bar/) (Carbon › Configuration reference) | [09-03](09-carbon-workspaces/03-configuration-and-permissions.md) |
+| [Access configuration](https://www.palantir.com/docs/foundry/carbon/configuration-access/) (Carbon › Configuration reference) | [09-03](09-carbon-workspaces/03-configuration-and-permissions.md) |
+| [YAML configuration example](https://www.palantir.com/docs/foundry/carbon/code-example/) (Carbon › Editing with code) | [09-03](09-carbon-workspaces/03-configuration-and-permissions.md) |
+| [YAML configuration reference](https://www.palantir.com/docs/foundry/carbon/code-reference/) (Carbon › Editing with code) | [09-03](09-carbon-workspaces/03-configuration-and-permissions.md) |
+| [Enable dark mode for an organization](https://www.palantir.com/docs/foundry/carbon/dark-mode/) (Carbon) | [09-03](09-carbon-workspaces/03-configuration-and-permissions.md) |
+| [Overview](https://www.palantir.com/docs/foundry/workflow-lineage/overview/) (Workflow Lineage) | [10-01](10-workflow-tools/01-workflow-lineage.md) |
+| [Getting started](https://www.palantir.com/docs/foundry/workflow-lineage/getting-started/) (Workflow Lineage) | [10-01](10-workflow-tools/01-workflow-lineage.md) |
+| [Perform refactors and understand your workflows](https://www.palantir.com/docs/foundry/workflow-lineage/refactor-and-understand-workflows/) (Workflow Lineage) | [10-01](10-workflow-tools/01-workflow-lineage.md) |
+| [AIP usage metrics and observability](https://www.palantir.com/docs/foundry/workflow-lineage/aip-usage-observability/) (Workflow Lineage) | [10-01](10-workflow-tools/01-workflow-lineage.md) |
+| [Manage security](https://www.palantir.com/docs/foundry/workflow-lineage/manage-security/) (Workflow Lineage) | [10-01](10-workflow-tools/01-workflow-lineage.md) |
+| [Branching support](https://www.palantir.com/docs/foundry/workflow-lineage/branching-workflow-lineage/) (Workflow Lineage) | [10-01](10-workflow-tools/01-workflow-lineage.md) |
+| [Keyboard shortcuts](https://www.palantir.com/docs/foundry/workflow-lineage/keyboard-shortcuts/) (Workflow Lineage) | [10-01](10-workflow-tools/01-workflow-lineage.md) |
+| [Overview](https://www.palantir.com/docs/foundry/autopilot/overview/) (Autopilot) | [10-02](10-workflow-tools/02-autopilot.md) |
+| [Getting started](https://www.palantir.com/docs/foundry/autopilot/getting-started/) (Autopilot) | [10-02](10-workflow-tools/02-autopilot.md) |
+| [Workbench](https://www.palantir.com/docs/foundry/autopilot/workbench/) (Autopilot) | [10-02](10-workflow-tools/02-autopilot.md) |
+| [Kanban board view](https://www.palantir.com/docs/foundry/autopilot/workbench-kanban/) (Autopilot) | [10-02](10-workflow-tools/02-autopilot.md) |
+| [Dependency graph view](https://www.palantir.com/docs/foundry/autopilot/workbench-graph/) (Autopilot) | [10-02](10-workflow-tools/02-autopilot.md) |
+| [Object timeline](https://www.palantir.com/docs/foundry/autopilot/object-timeline/) (Autopilot) | [10-02](10-workflow-tools/02-autopilot.md) |
+| [Automation events](https://www.palantir.com/docs/foundry/autopilot/automation-events/) (Autopilot) | [10-02](10-workflow-tools/02-autopilot.md) |
+| [Integrations](https://www.palantir.com/docs/foundry/autopilot/integrations/) (Autopilot) | [10-02](10-workflow-tools/02-autopilot.md) |
+| [Overview](https://www.palantir.com/docs/foundry/solution-designer/overview/) (Solution Designer) | [10-03](10-workflow-tools/03-solution-designer-and-workflow-builder.md) |
+| [Navigation](https://www.palantir.com/docs/foundry/solution-designer/navigation/) (Solution Designer) | [10-03](10-workflow-tools/03-solution-designer-and-workflow-builder.md) |
+| [Diagrams](https://www.palantir.com/docs/foundry/solution-designer/diagrams/) (Solution Designer) | [10-03](10-workflow-tools/03-solution-designer-and-workflow-builder.md) |
+| [AIP Architect](https://www.palantir.com/docs/foundry/solution-designer/aip-architect/) (Solution Designer) | [10-03](10-workflow-tools/03-solution-designer-and-workflow-builder.md) |
+| [AIP Critic](https://www.palantir.com/docs/foundry/solution-designer/aip-critic/) (Solution Designer) | [10-03](10-workflow-tools/03-solution-designer-and-workflow-builder.md) |
+| [Tutorial: Create your first diagram](https://www.palantir.com/docs/foundry/solution-designer/tutorial-create-your-first-diagram/) (Solution Designer) | [10-03](10-workflow-tools/03-solution-designer-and-workflow-builder.md) |
+| [Troubleshooting](https://www.palantir.com/docs/foundry/solution-designer/troubleshooting/) (Solution Designer) | [10-03](10-workflow-tools/03-solution-designer-and-workflow-builder.md) |
+| [Overview](https://www.palantir.com/docs/foundry/workflow-builder/overview/) (Workflow Builder) | [10-03](10-workflow-tools/03-solution-designer-and-workflow-builder.md) |
+| [Core concepts](https://www.palantir.com/docs/foundry/workflow-builder/core-concepts/) (Workflow Builder) | [10-03](10-workflow-tools/03-solution-designer-and-workflow-builder.md) |
+| [Overview](https://www.palantir.com/docs/foundry/use-cases/use-case-overview/) (Use Cases [Sunset]) | [10-04](10-workflow-tools/04-use-cases-sunset.md) |
+| [Navigation](https://www.palantir.com/docs/foundry/use-cases/navigation/) (Use Cases [Sunset]) | [10-04](10-workflow-tools/04-use-cases-sunset.md) |
+| [Getting started](https://www.palantir.com/docs/foundry/use-cases/getting-started/) (Use Cases [Sunset]) | [10-04](10-workflow-tools/04-use-cases-sunset.md) |
+| [Migrate an existing Project](https://www.palantir.com/docs/foundry/use-cases/migrate-existing-project/) (Use Cases [Sunset]) | [10-04](10-workflow-tools/04-use-cases-sunset.md) |
+| [View resources](https://www.palantir.com/docs/foundry/use-cases/view-resources/) (Use Cases [Sunset] › Resources) | [10-04](10-workflow-tools/04-use-cases-sunset.md) |
+| [Add application resources](https://www.palantir.com/docs/foundry/use-cases/add-application-resources/) (Use Cases [Sunset] › Resources) | [10-04](10-workflow-tools/04-use-cases-sunset.md) |
+| [Edit metadata](https://www.palantir.com/docs/foundry/use-cases/edit-metadata/) (Use Cases [Sunset]) | [10-04](10-workflow-tools/04-use-cases-sunset.md) |
+| [Permission a use case](https://www.palantir.com/docs/foundry/use-cases/permission-use-case/) (Use Cases [Sunset]) | [10-04](10-workflow-tools/04-use-cases-sunset.md) |
+
+### Phase 6: module 00 (read in full, October 21, 2026)
+
+The four top-level pages, read in full in the built-in browser. Modules 11, 12 and 99 cite no new pages: they assemble the earlier notes.
+
+| Page | Note |
+|---|---|
+| [Overview](https://www.palantir.com/docs/foundry/app-building/overview/) (Use case development) | [00-01](00-orientation/01-operational-applications.md) |
+| [What is an operational application?](https://www.palantir.com/docs/foundry/app-building/operational-apps/) (Use case development) | [00-01](00-orientation/01-operational-applications.md) |
+| [Connecting analytics to operations](https://www.palantir.com/docs/foundry/app-building/analytics-operations/) (Use case development) | [00-01](00-orientation/01-operational-applications.md) |
+| [Conduct sentiment analysis with AIP](https://www.palantir.com/docs/foundry/app-building/sentiment-analysis/) (Use case development) | [00-01](00-orientation/01-operational-applications.md) |
+
 ## Corrections log
 
 | Date | Where | Correction |
@@ -279,6 +392,11 @@ All 96 pages read in full in the built-in browser (same extraction; loaded in pa
 | Oct 18, 2026 | Batch 2 self-review | 04-03 shared-link example: auto-selection caveat added (untested); 03-05 action table: per-row failure no longer asserted (RQ-05); 03-01 column layout kept only when a state is saved; 03-03 Data Freshness example no longer overclaims; 01-03 link retargeted to 04-03. Pending: 03-06 "06-03" link goes to module 06 README until that note exists |
 | Oct 18, 2026 | Phase 4 writing | 03-06 iframe link now points to 06-04 (was the module 06 README). Two phrases in 05-04 and 07-02 were in quote marks without being doc wording; quotes removed |
 | Oct 18, 2026 | Phase 4 self-review | 07-01/07-02 Lena example aligned with AIP 10-02 (*Match line to shipment* for unmatched lines, not *Mark line disputed*); RQ-08 opened (markings and Pilot). 05-04 Hold click opens the dialog directly (a `.changed` chain fails on a repeat click). 05-02 object-set refresh after the action marked untested; `ff_atRiskOrders` marked sketch-only. 06-02 user-lookup parallel uses action logs (`Agent` is an object type). 06-04 refresh example uses *Re-route shipment*; auto-refresh claim marked untested. 06-01 PR-preview permissions reworded. 05-04 notes both `slate.`/`Slate.getMessage` spellings |
+| Oct 21, 2026 | Phase 5 writing | Phrases in quote marks that weren't doc wording (15 in modules 08–10) changed to italics before review |
+| Oct 21, 2026 | Phase 5 self-review | 10-02 Autopilot example now the fraud on-call team's (Payment is marked `Kestrel Pay – Financial`), with an Order-only board for operations leads; 10-01 bulk-change advice says which changes offer a branch; 08-03 auto-mute risk toned down; 09-02 notification-link caveat added; 10-04 names Portfolios and the Phase 6 check |
+| Oct 21, 2026 | Phase 6 | Adopted into Ontology 17-02 §8 (new Applications section; Known gaps renumbered §9): Delivery Desk workspace, `delivery-widgets`, Warehouse floor module, invoice review module, and *High-risk payment hold* split into hold + *High-risk payment alert* (Ontology 10-06 notes the revision). Notes 04-05, 05-01, 06-03/04, 07-01, 08-02, 08-05, 09-01–03, 10-02/03/04 relabelled *adopted* or *considered, not adopted*. Module 11 note 03 retitled *The Delivery Desk workspace* (was a candidate operations-leads workspace) |
+| Oct 21, 2026 | Phase 6 self-review | 00-03 Tomás row matches the split automations; 17-02 and 08-05 note the cross-project imports project scope needs, and RQ-12 opened; three practice questions added (Q30–Q32); limits row on function-backed column sorting split out; decision guide adds a Pilot branch |
+| Oct 21, 2026 | Phase 7 quality review | All doc quotes in 56 notes rechecked against the 315 pages; non-doc phrases in 01–04 moved from quotes to italics ("Delivery Desk queue (TEST)" to code); 05-04 "Comments follow the parent object" corrected to the doc wording "Comments follow the permissions of the parent object"; a code span in 03-02 restored after the bulk edit. Bold and unit numbers checked against each note's cited pages: 05-03 now cites the Slate FAQ for 2,000,000 bytes; 02-04's 10,000 is "ten thousand" on Loop layouts; 05-02's 50 rows is a Kestrel choice. 01-03 and 02-02 now say *Ontology* RQ-25 and RQ-19. Kestrel variables, *Hold order*/*Re-route shipment*, statuses and people match Ontology 17-02. Links 632 files, 0 problems; Mermaid 12/12. |
 
 ## Open research questions
 
@@ -292,5 +410,9 @@ All 96 pages read in full in the built-in browser (same extraction; loaded in pa
 | RQ-06 | **Doc conflict.** *Use OSDK in a widget set* says widgets don't support object set subscriptions; *Parameters and events* says the `@osdk/react` hooks used with `OsdkProvider2` offer real-time updates. Does a widget's `useObjectSet` update live, or only when the host refreshes the parameter? | Open. [06-04](06-osdk-react-and-custom-widgets/04-custom-widgets-in-workshop.md#kestrel-the-shipment-timeline) |
 | RQ-07 | When Pilot creates new Ontology entities, which project do they land in (the save location?), and so which approval policy governs the Global Branching proposal? The tutorial shows automatic approvals; Kestrel's protected `Commerce [Ontology]` needs two. | Open. [07-02](07-pilot/02-building-and-shipping.md#shipping-an-application) |
 | RQ-08 | Do the marking-based LLM data access rules (AIP 08-03) apply to Pilot's agents, including the production-data viewer? The Pilot pages don't mention markings. It matters for users whose sessions carry `Kestrel Pay – Financial`. | Open. [07-01](07-pilot/01-what-pilot-is.md#steering-it) |
+| RQ-09 | **Doc conflict.** *Muting, pausing, and expiration* says the longest permitted expiration date is six months from now, yet the wizard offers *Indefinitely* and the worked examples set automations to never expire. Can an automation run with no expiry? | Open. [08-04](08-automate/04-execution-settings.md#muting-pausing-and-expiration) |
+| RQ-10 | **Doc conflict.** *Function effects* describes retry strategies for failed functions; *Manual and automatic retries* says per-effect retries can only be configured on action and Logic effects. Do function effects support per-effect retries? | Open. [08-03](08-automate/03-effects.md) |
+| RQ-11 | **Doc conflict.** The sidebar's *Workflow Builder → Overview* page is the Workflow Lineage overview ("previously known as Workflow Builder"), while *Workflow Builder → Core concepts* describes a different, node-based workflow builder. Is Workflow Builder a separate product, and is it generally available? | Open. [10-03](10-workflow-tools/03-solution-designer-and-workflow-builder.md#workflow-builder) |
+| RQ-12 | Project-scoped automations don't support notification **effects**. Is a fallback **action** whose side effect sends a notification allowed in project scope? Kestrel's revised *High-risk payment hold* relies on it. | Open. [08-05](08-automate/05-security-ownership-and-history.md#who-can-see-what-happened) |
 ---
 [Apps home](README.md) · [Topic map](MAP.md) · [Glossary](GLOSSARY.md)

@@ -24,13 +24,13 @@ flowchart LR
 
 **[Docs]** A URL with `/dev/` instead of `/latest/` opens the last **saved** version ([02-04](../02-workshop-data-and-logic/04-embedding-modules.md#the-module-interface)), and embedded modules always use the child's **published** version.
 
-**[Recommendation]** Turn auto-publish **off** for any module people work in. Then "save" means "save my work" and "publish" means "ship it", and a half-finished edit can't reach Ama's team mid-shift.
+**[Recommendation]** Turn auto-publish **off** for any module people work in. Then *save* means *save my work* and *publish* means *ship it*, and a half-finished edit can't reach Ama's team mid-shift.
 
 ## The Changelog panel
 
 **[Docs]** Compares versions, either a **range** (start to end) or a **single** version against the one before. Each node is one of five change types: **changed**, **addition**, **deletion**, **moved**, or **made unused** (a widget taken off the canvas but kept in *Unused widgets*). Nodes open to a JSON diff, and a hierarchy shows which section contains which changed widget.
 
-**[Recommendation]** When a module "broke yesterday", pick a range from the last good published version to today's, and read the *made unused* and *deletion* nodes first: a removed widget's output variable is often what something else was reading.
+**[Recommendation]** When a module *broke yesterday*, pick a range from the last good published version to today's, and read the *made unused* and *deletion* nodes first: a removed widget's output variable is often what something else was reading.
 
 ## Branching
 
@@ -44,7 +44,7 @@ flowchart LR
 
 **[Docs]** Workshop merges edits to **different** fields automatically (main changes a section title, the branch its colour: both kept). It flags a **conflict** when the same field, variable definition or layout position changed on both, for example the same widget edited twice, a section deleted on main but edited on the branch, or a widget moved to different places. For each conflict, switch between **Latest main**, **Current branch** and **Current session** (your combined edit), then **Resolve**. Saving finishes the rebase.
 
-**[Example]** Daniel adds the Delivery Desk drawer ([03-06](../03-workshop-widgets/06-ai-observability-and-embedding.md#aip-chatbot)) on a branch. Meanwhile a colleague adds an "On hold" metric to the queue's Metric Card on main. Daniel's branch added a "Due today" metric to the same card, so the rebase flags a conflict on that widget. He picks **Latest main**, adds his metric back by hand (the comparison switches to **Current session**), resolves, saves, and merges. Both metrics survive.
+**[Example]** Daniel adds the Delivery Desk drawer ([03-06](../03-workshop-widgets/06-ai-observability-and-embedding.md#aip-chatbot)) on a branch. Meanwhile a colleague adds an *On hold* metric to the queue's Metric Card on main. Daniel's branch added a *Due today* metric to the same card, so the rebase flags a conflict on that widget. He picks **Latest main**, adds his metric back by hand (the comparison switches to **Current session**), resolves, saves, and merges. Both metrics survive.
 
 ## Packaging with Marketplace
 
@@ -53,7 +53,7 @@ flowchart LR
 - the **packaging linter** (errors appear top right after about 5–10 seconds): unresolved object-type properties on variables (fix: set the type through the variable's module interface setting), deleted or renamed properties and primary keys, custom widgets not set up for packaging, and **Resource List** widgets, whose Compass resources must be added as dependencies by hand;
 - **installation parameters**: strings (for example a title with the installer's organisation name) and Booleans (show or hide content), connected to variables.
 
-**[Example]** Kestrel ships the Delivery Desk queue from `kestrel-dev` to `kestrel-test` and `kestrel` as a product, adding the app first as the furthest-downstream resource ([Ontology 14-04](../../Ontology/14-lifecycle-and-operations/04-marketplace-packaging.md)). A string installation parameter sets the header title ("Delivery Desk queue (TEST)" in test), so nobody mistakes the test install for production.
+**[Example]** Kestrel ships the Delivery Desk queue from `kestrel-dev` to `kestrel-test` and `kestrel` as a product, adding the app first as the furthest-downstream resource ([Ontology 14-04](../../Ontology/14-lifecycle-and-operations/04-marketplace-packaging.md)). A string installation parameter sets the header title (`Delivery Desk queue (TEST)` in test), so nobody mistakes the test install for production.
 
 ---
 [Module index](README.md) · Next: [02 — Performance](02-performance.md)

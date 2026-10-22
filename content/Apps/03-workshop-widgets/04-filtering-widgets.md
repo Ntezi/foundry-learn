@@ -31,7 +31,7 @@
 - **Linked filters** filter on properties of linked objects, plus a *Has link* filter; on Object Storage v1 the linked filter limit is **100,000** objects.
 - **Keyword** is the only option for string properties without exact-match support; regex search appears for properties with regex enabled in Ontology Manager. **Advanced syntax** allows bracketed Boolean searches (precedence: quotes, parentheses, NOT, AND, OR).
 
-**[Example]** Ama's team needs "orders whose shipment is with DHL". On the queue's Filter List: a linked filter on Order → Shipment (via `Shipment.orderId`), carrier property, multi-select. Kestrel is on Object Storage v2 ([Ontology 14-06](../../Ontology/14-lifecycle-and-operations/06-monitoring-and-cleanup.md)), so the 100,000 cap doesn't apply. The base set for the Filter List is its **own** variable, not the filtered one ([01-01](../01-workshop-foundations/01-workshop-at-a-glance.md#the-tutorial-read-against-kestrels-queue)).
+**[Example]** Ama's team needs *orders whose shipment is with DHL*. On the queue's Filter List: a linked filter on Order → Shipment (via `Shipment.orderId`), carrier property, multi-select. Kestrel is on Object Storage v2 ([Ontology 14-06](../../Ontology/14-lifecycle-and-operations/06-monitoring-and-cleanup.md)), so the 100,000 cap doesn't apply. The base set for the Filter List is its **own** variable, not the filtered one ([01-01](../01-workshop-foundations/01-workshop-at-a-glance.md#the-tutorial-read-against-kestrels-queue)).
 
 ## The exploration widgets
 
@@ -50,7 +50,7 @@
 - **Numeric Input**: grouping, prefix and suffix; a **%** suffix divides the output by 100; min and max **clamp** the value; up to 10 decimal places.
 - **User Select**: single or multiple; filtering to Multipass groups requires viewers to hold *View group membership* on the group's organization, or they see an error.
 
-**[Example]** Kofi picks a cut-off ("due before 18:00") to list shipments that won't make today's last truck. Bind the Date and Time Picker's time zone to a string variable set to `Africa/Accra`, so 18:00 means 18:00 at the warehouse whichever office the user sits in. The picker outputs a timestamp, which compares correctly with `Shipment.eta`, stored in UTC ([Ontology 17-02](../../Ontology/17-case-studies/02-kestrel-reference-model.md)).
+**[Example]** Kofi picks a cut-off (*due before 18:00*) to list shipments that won't make today's last truck. Bind the Date and Time Picker's time zone to a string variable set to `Africa/Accra`, so 18:00 means 18:00 at the warehouse whichever office the user sits in. The picker outputs a timestamp, which compares correctly with `Shipment.eta`, stored in UTC ([Ontology 17-02](../../Ontology/17-case-studies/02-kestrel-reference-model.md)).
 
 ---
 [Module index](README.md) · Previous: [03 — Media, documents and history](03-media-documents-and-history.md) · Next: [05 — Buttons, forms and navigation](05-buttons-forms-and-navigation.md)

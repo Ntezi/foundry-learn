@@ -33,3 +33,6 @@ The authenticated Palantir Learn course was registered and all 20 required text 
 Foundry execution began after the user approved the course practical work. The course folder and Marketplace installation were created, and the `Shipment Operations Center` Workshop was built and published as `v0.2.0` through the filtered-shipment chart and filter-list lessons. The remaining product-shipment chart, details table, Gantt analysis, ontology actions, Functions repository, release, and action tests are not yet implemented because the authenticated Foundry browser session expired and now redirects to the Palantir sign-in page.
 
 **Go deeper in the Ontology area:** [10 — Applications on the Ontology](../../Ontology/10-applications/README.md)
+
+<!-- apps-go-deeper -->
+**Go deeper in the Apps area:** [Workshop foundations](../../Apps/01-workshop-foundations/README.md) · [Workshop in production](../../Apps/04-workshop-in-production/README.md)

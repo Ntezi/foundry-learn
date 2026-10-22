@@ -36,10 +36,15 @@ Find a note by task. Rows link to the module until the note is written, then to 
 | Add my own widget to Workshop | [06-03 Custom widget sets](06-osdk-react-and-custom-widgets/03-custom-widget-sets.md) · [06-04 In Workshop](06-osdk-react-and-custom-widgets/04-custom-widgets-in-workshop.md) |
 | Generate an app or widget with AI | [07-01 What Pilot is](07-pilot/01-what-pilot-is.md) |
 | Ship what Pilot built | [07-02 Building and shipping](07-pilot/02-building-and-shipping.md) |
-| Run something when data changes or on a schedule | [08 — Automate](08-automate/README.md) |
-| Fix an automation that fired twice or not at all | [08 — Automate](08-automate/README.md) |
-| Give a team one place to find their apps | [09 — Carbon workspaces](09-carbon-workspaces/README.md) |
-| See everything a workflow depends on | [10 — Workflow tools](10-workflow-tools/README.md) |
+| Run something when data changes or on a schedule | [08-01 Automate concepts](08-automate/01-automate-concepts.md) · [08-02 Conditions](08-automate/02-conditions.md) |
+| Decide whose permissions an automation uses, and who sees its history | [08-05 Security, ownership and history](08-automate/05-security-ownership-and-history.md) |
+| Fix an automation that fired twice or not at all | [08-03 Execution guarantees](08-automate/03-effects.md#effect-settings) · [08-04 Retries and pausing](08-automate/04-execution-settings.md) |
+| Stop an automation from costing too much | [08-06 Performance](08-automate/06-operating-automations.md#performance-three-levers) |
+| Give a team one place to find their apps | [09-01 Carbon workspaces](09-carbon-workspaces/01-carbon-workspaces.md) · [09-02 Applications Portal](09-carbon-workspaces/02-modules-and-navigation.md#applications-portal) |
+| Keep operational users inside a workspace | [09-02 Navigation](09-carbon-workspaces/02-modules-and-navigation.md#between-workspaces-and-out-of-carbon) |
+| See everything a workflow depends on | [10-01 Workflow Lineage](10-workflow-tools/01-workflow-lineage.md) |
+| Watch automations and agents move objects through a process | [10-02 Autopilot](10-workflow-tools/02-autopilot.md) |
+| Sketch or review a solution architecture | [10-03 Solution Designer](10-workflow-tools/03-solution-designer-and-workflow-builder.md) |
 | Look up a documented limit | [99 — Reference](99-reference/README.md) |
 
 ---

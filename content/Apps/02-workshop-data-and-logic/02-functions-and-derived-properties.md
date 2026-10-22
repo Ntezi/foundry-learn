@@ -68,7 +68,7 @@ export default async function openOrdersForCustomer(
 | Saved states | Not supported for object sets that reference them |
 | Cost | Computed at query time, so they can slow the module |
 
-The Kestrel tier column and the RQ-19 discussion of static filters are in [Ontology 10-03](../../Ontology/10-applications/03-workshop-and-slate.md#built-in-workshop).
+The Kestrel tier column and the Ontology RQ-19 discussion of static filters are in [Ontology 10-03](../../Ontology/10-applications/03-workshop-and-slate.md#built-in-workshop).
 
 ## Choosing how to compute a value
 

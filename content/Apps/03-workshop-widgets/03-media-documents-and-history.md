@@ -47,9 +47,9 @@ Two groups: widgets that **show files** (documents, images, audio, video), and w
 | **Action Log Timeline** | An object type's **action log** entries over time | An action log object type | One object type per widget |
 | **Linked Compass Resources** | Compass resources linked to objects; upload and link | — | Upload and link buttons can be hidden |
 
-**[Example]** The Delivery Desk queue's header carries a Data Freshness widget for Order and Shipment. When Ama's team asks "is this ETA current?", the answer starts on screen: the shipment data was indexed 2 hours ago. A carrier update that reached Kestrel's source data before that is in; one that arrived since isn't yet.
+**[Example]** The Delivery Desk queue's header carries a Data Freshness widget for Order and Shipment. When Ama's team asks *is this ETA current?*, the answer starts on screen: the shipment data was indexed 2 hours ago. A carrier update that reached Kestrel's source data before that is in; one that arrived since isn't yet.
 
-**[Explanation]** Edit History and the Action Log Timeline answer different questions. Edit History is "which properties changed, from what to what, by whom". The action log is "which **actions** ran", with whatever the action logged. For *Hold order*, the action log shows the hold and its reason; Edit History shows `status` going from PAID to ON_HOLD.
+**[Explanation]** Edit History and the Action Log Timeline answer different questions. Edit History is *which properties changed, from what to what, by whom*. The action log is *which actions ran*, with whatever the action logged. For *Hold order*, the action log shows the hold and its reason; Edit History shows `status` going from PAID to ON_HOLD.
 
 ---
 [Module index](README.md) · Previous: [02 — Charts and maps](02-charts-and-maps.md) · Next: [04 — Filtering widgets](04-filtering-widgets.md)

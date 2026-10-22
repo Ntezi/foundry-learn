@@ -283,6 +283,7 @@ Same method. Grouped rows cover the sibling pages named.
 
 ## Corrections log
 New corrections are added here. Earlier corrections from the design compilation are in its section above.
+| Oct 22, 2026 | [14-05](14-lifecycle-and-operations/05-migration-and-export-import.md)'s SuperRepo column, and [17-02](17-case-studies/02-kestrel-reference-model.md) | 14-05 called SuperRepo a pointer because its pages weren't read; the DevTools area has now read them. 17-02 lacked the developer-resource decisions made in DevTools | 14-05 now links [DevTools 05-04](../DevTools/05-development-environments/04-superrepo-and-foundry-cli.md) with its limits. 17-02 gains a `TemperatureExcursion` row, an *Added in the DevTools area* table, three section-7 bullets, the portal's build-record link, a DevTools *considered, not adopted* list and four known gaps |
 
 | Date | Earlier material | Issue | Treatment |
 |---|---|---|---|

@@ -45,7 +45,7 @@ Modules 03–09 built a model. This module is about the people who use it. The f
 | "Late shipments on a map over delivery zones" | Kofi | Geospatial | **Map** ([05](05-specialized-apps.md)) | Walk-up usable |
 | "Fraud ring: payments sharing card fingerprints" | Tomás | Analysis (graph) | **Vertex** ([05](05-specialized-apps.md)) | Graph exploration is its job |
 | "Alert me when a high-risk payment arrives" | Tomás | Automation | **Automate** ([06](06-automate-and-ontology-events.md)) | Nobody should have to watch a screen |
-| "One home page for the Delivery Desk team" | Ama's team | Workspace | **Carbon** | Combines what already exists |
+| "One home page for the Delivery Desk team" | Ama's team | Workspace | **Carbon** | Combines what already exists; built in [Apps 11-03](../../Apps/11-kestrel-case/03-delivery-desk-workspace.md) |
 
 ## The rule of thumb this table suggests
 

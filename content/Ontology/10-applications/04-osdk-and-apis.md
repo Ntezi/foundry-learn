@@ -120,5 +120,8 @@ Approved, with three conditions:
 2. The app restricted to three object types.
 3. TypeScript only, until Python struct support is GA.
 
+<!-- devtools-go-deeper -->
+**Go deeper in the DevTools area:** [01 — Ontology SDK](../../DevTools/01-ontology-sdk/README.md) · [02 — Developer Console and platform APIs](../../DevTools/02-developer-console-and-apis/README.md)
+
 ---
 [Module index](README.md) · Previous: [03 — Workshop and Slate](03-workshop-and-slate.md) · Next: [05 — Specialized apps](05-specialized-apps.md)

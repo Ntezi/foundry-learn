@@ -72,7 +72,7 @@ The widgets that show objects. Most modules are built from the first two; the Ob
 - **Object View**: full or panel form factor; standard or configured view. The full form shows only the **first** object; the panel can show one object, a set, or adapt (*Adaptive*: one object → object view, zero or many → set view). Tabs can be hidden, and an initial tab set. *Interface configuration* maps module variables to a configured view tab's module interface (not supported for legacy tabs).
 - **Property List**: properties of the first object; stacked or side-by-side labels; columns; can load from a scenario. Inline editing works when the property has an **inline action** configured in Ontology Manager.
 - **Links**: all link types, or chosen ones with label overrides and sorts; buttons to open a link type or a linked object in Object Explorer; hover previews.
-- **Object Set Title**: one object's title, or "type name + count". *Enable drag* makes it a drag source (fewer than **500** objects); it can render a placeholder or nothing when empty.
+- **Object Set Title**: one object's title, or *type name + count*. *Enable drag* makes it a drag source (fewer than **500** objects); it can render a placeholder or nothing when empty.
 
 ## Formatting
 

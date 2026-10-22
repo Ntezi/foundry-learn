@@ -21,7 +21,7 @@ Ways to share and present a module: put its state in the **URL**, let users **sa
 
 **[Docs]** To route an unsupported type, route a supported one and derive from it: for example, a routed string variable sets the default of an object set filter variable.
 
-**[Example]** An agent shares "look at this order" with a supervisor. With routing on and `selectedOrder` in the module interface set to *always*, the link carries the order's RID, and the supervisor's queue opens with that order selected. **[Explanation]** Untested: the Object Table makes its first row the active object on load by default ([03-01](../03-workshop-widgets/01-core-display-widgets.md#selection-and-display)), which could overwrite the value from the link. Turn on *Disable active object auto-selection* for this table, and check the behaviour before relying on shared links.
+**[Example]** An agent shares *look at this order* with a supervisor. With routing on and `selectedOrder` in the module interface set to *always*, the link carries the order's RID, and the supervisor's queue opens with that order selected. **[Explanation]** Untested: the Object Table makes its first row the active object on load by default ([03-01](../03-workshop-widgets/01-core-display-widgets.md#selection-and-display)), which could overwrite the value from the link. Turn on *Disable active object auto-selection* for this table, and check the behaviour before relying on shared links.
 
 ## State saving
 
@@ -31,7 +31,7 @@ Ways to share and present a module: put its state in the **URL**, let users **sa
 
 **[Docs]** Requirements and limits: the module **header must be visible**; users need **platform access**; it isn't inherited by embedded modules; derived-property object sets can't be saved ([02-02](../02-workshop-data-and-logic/02-functions-and-derived-properties.md#workshop-derived-properties)). It doesn't remember anything **automatically**: per-user preferences that should just persist belong in an Ontology object.
 
-**[Example]** Ama's team saves states called *queues*: "DHL at risk", "Due today". Each stores the Filter List's output variable (`orderFilters`) and the column layout array ([03-01](../03-workshop-widgets/01-core-display-widgets.md#columns)). States are saved under a shortcut to `Delivery Desk [Workflow]/Saved queues`, so they're shared, not scattered across home folders.
+**[Example]** Ama's team saves states called *queues*: *DHL at risk*, *Due today*. Each stores the Filter List's output variable (`orderFilters`) and the column layout array ([03-01](../03-workshop-widgets/01-core-display-widgets.md#columns)). States are saved under a shortcut to `Delivery Desk [Workflow]/Saved queues`, so they're shared, not scattered across home folders.
 
 ## Translations and colours
 

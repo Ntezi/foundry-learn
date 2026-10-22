@@ -34,7 +34,7 @@ Panels open over the canvas for queries, functions, object sets, object context,
 
 **[Docs]** Unpublishing hides a public app from unauthenticated users; authenticated users with permissions can still open it.
 
-**[Example]** A Kestrel public app could collect delivery feedback from customers, since they have no Foundry accounts. It couldn't look up the customer's order to check it: a public app can't read objects. It could only check the format of what was typed and write the submission to a dataset for a pipeline to match later. *Candidate only; not part of the Kestrel model.* Customers who want to **see** their order status use the separate portal designed in [Ontology 10-04](../../Ontology/10-applications/04-osdk-and-apis.md).
+**[Example]** A Kestrel public app could collect delivery feedback from customers, since they have no Foundry accounts. It couldn't look up the customer's order to check it: a public app can't read objects. It could only check the format of what was typed and write the submission to a dataset for a pipeline to match later. *Considered, not adopted* ([Ontology 17-02](../../Ontology/17-case-studies/02-kestrel-reference-model.md#8-applications)). Customers who want to **see** their order status use the separate portal designed in [Ontology 10-04](../../Ontology/10-applications/04-osdk-and-apis.md).
 
 ## Pages and state
 

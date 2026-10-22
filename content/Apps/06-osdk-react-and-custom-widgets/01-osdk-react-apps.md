@@ -61,5 +61,8 @@ The component handles three states: loading with no data yet, an error, and no r
 - `E401 Incorrect or missing password` means npmjs.com is unreachable from the workspace.
 - First steps for other npm errors: delete `package-lock.json` and `node_modules/` and rerun, or pause and resume the workspace.
 
+<!-- devtools-go-deeper -->
+**Go deeper in the DevTools area:** [01 — Ontology SDK](../../DevTools/01-ontology-sdk/README.md) · [02 — Developer Console and platform APIs](../../DevTools/02-developer-console-and-apis/README.md)
+
 ---
 [Module index](README.md) · Next: [02 — Inside the advanced to-do tutorial](02-advanced-to-do-tutorial.md)

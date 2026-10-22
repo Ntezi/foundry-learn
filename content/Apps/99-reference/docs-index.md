@@ -6,11 +6,11 @@ Every page of the docs' *Use case development* sidebar, in sidebar order, with t
 
 | Section | Page | Note |
 |---|---|---|
-| Use case development | [Overview](https://www.palantir.com/docs/foundry/app-building/overview/) | [00-01 Operational applications](../00-orientation/README.md) (planned) |
-| Use case development | [What is an operational application?](https://www.palantir.com/docs/foundry/app-building/operational-apps/) | [00-01 Operational applications](../00-orientation/README.md) (planned) |
-| Use case development | [Connecting analytics to operations](https://www.palantir.com/docs/foundry/app-building/analytics-operations/) | [00-01 Operational applications](../00-orientation/README.md) (planned) |
-| Use case development | [Conduct sentiment analysis with AIP](https://www.palantir.com/docs/foundry/app-building/sentiment-analysis/) | [00-01 Operational applications](../00-orientation/README.md) (planned) |
-| Use case development | [Curating apps in Applications Portal](https://www.palantir.com/docs/foundry/app-building/curating-apps/) | [09-02 Modules and navigation](../09-carbon-workspaces/README.md) (planned) |
+| Use case development | [Overview](https://www.palantir.com/docs/foundry/app-building/overview/) | [00-01 Operational applications](../00-orientation/01-operational-applications.md) |
+| Use case development | [What is an operational application?](https://www.palantir.com/docs/foundry/app-building/operational-apps/) | [00-01 Operational applications](../00-orientation/01-operational-applications.md) |
+| Use case development | [Connecting analytics to operations](https://www.palantir.com/docs/foundry/app-building/analytics-operations/) | [00-01 Operational applications](../00-orientation/01-operational-applications.md) |
+| Use case development | [Conduct sentiment analysis with AIP](https://www.palantir.com/docs/foundry/app-building/sentiment-analysis/) | [00-01 Operational applications](../00-orientation/01-operational-applications.md) |
+| Use case development | [Curating apps in Applications Portal](https://www.palantir.com/docs/foundry/app-building/curating-apps/) | [09-02 Modules and navigation](../09-carbon-workspaces/02-modules-and-navigation.md) |
 | Use case development | [Release notes](https://www.palantir.com/docs/foundry/announcements/release-notes/?filters=app-building) | Out of scope (release notes) |
 | Workshop | [Overview](https://www.palantir.com/docs/foundry/workshop/overview/) | [01-01 Workshop at a glance](../01-workshop-foundations/01-workshop-at-a-glance.md) |
 | Workshop | [Getting started](https://www.palantir.com/docs/foundry/workshop/getting-started/) | [01-01 Workshop at a glance](../01-workshop-foundations/01-workshop-at-a-glance.md) |
@@ -228,100 +228,100 @@ Every page of the docs' *Use case development* sidebar, in sidebar order, with t
 | Pilot › How-to guides | [Deploy an application](https://www.palantir.com/docs/foundry/pilot/deploy-an-application/) | [07-02 Building and shipping with Pilot](../07-pilot/02-building-and-shipping.md) |
 | Pilot › How-to guides | [Deploy a custom widget](https://www.palantir.com/docs/foundry/pilot/deploy-a-widget/) | [07-02 Building and shipping with Pilot](../07-pilot/02-building-and-shipping.md) |
 | Pilot | [Troubleshooting](https://www.palantir.com/docs/foundry/pilot/troubleshooting/) | [07-02 Building and shipping with Pilot](../07-pilot/02-building-and-shipping.md) |
-| Automate | [Overview](https://www.palantir.com/docs/foundry/automate/overview/) | [08-01 Automate concepts](../08-automate/README.md) (planned) |
-| Automate | [Getting started](https://www.palantir.com/docs/foundry/automate/getting-started/) | [08-01 Automate concepts](../08-automate/README.md) (planned) |
-| Automate › Condition | [Time condition](https://www.palantir.com/docs/foundry/automate/condition-time/) | [08-02 Conditions](../08-automate/README.md) (planned) |
-| Automate › Condition | [Object set conditions](https://www.palantir.com/docs/foundry/automate/condition-objects/) | [08-02 Conditions](../08-automate/README.md) (planned) |
-| Automate › Condition | [Dataset condition](https://www.palantir.com/docs/foundry/automate/condition-dataset/) | [08-02 Conditions](../08-automate/README.md) (planned) |
-| Automate › Condition | [Condition settings](https://www.palantir.com/docs/foundry/automate/condition-settings/) | [08-02 Conditions](../08-automate/README.md) (planned) |
-| Automate › Condition | [Automation dependencies](https://www.palantir.com/docs/foundry/automate/automation-dependencies/) | [08-02 Conditions](../08-automate/README.md) (planned) |
-| Automate › Condition | [Streaming](https://www.palantir.com/docs/foundry/automate/streaming/) | [08-02 Conditions](../08-automate/README.md) (planned) |
-| Automate › Effects | [Overview](https://www.palantir.com/docs/foundry/automate/effects/) | [08-03 Effects](../08-automate/README.md) (planned) |
-| Automate › Effects | [Action effects](https://www.palantir.com/docs/foundry/automate/effect-actions/) | [08-03 Effects](../08-automate/README.md) (planned) |
-| Automate › Effects | [Logic effects](https://www.palantir.com/docs/foundry/automate/effect-logic/) | [08-03 Effects](../08-automate/README.md) (planned) |
-| Automate › Effects | [Function effects](https://www.palantir.com/docs/foundry/automate/effect-function/) | [08-03 Effects](../08-automate/README.md) (planned) |
-| Automate › Effects | [Notification effects](https://www.palantir.com/docs/foundry/automate/effect-notification/) | [08-03 Effects](../08-automate/README.md) (planned) |
-| Automate › Effects | [Fallback effects](https://www.palantir.com/docs/foundry/automate/effect-fallback/) | [08-03 Effects](../08-automate/README.md) (planned) |
-| Automate › Effects | [Effect settings](https://www.palantir.com/docs/foundry/automate/effect-settings/) | [08-03 Effects](../08-automate/README.md) (planned) |
-| Automate | [Manual executions](https://www.palantir.com/docs/foundry/automate/manual-execution/) | [08-01 Automate concepts](../08-automate/README.md) (planned) |
-| Automate › Settings | [Automation administrators](https://www.palantir.com/docs/foundry/automate/automation-administrators/) | [08-04 Execution settings](../08-automate/README.md) (planned) |
-| Automate › Settings | [Execution settings](https://www.palantir.com/docs/foundry/automate/execution-settings/) | [08-04 Execution settings](../08-automate/README.md) (planned) |
-| Automate › Settings | [Evaluation frequency](https://www.palantir.com/docs/foundry/automate/evaluation-frequency/) | [08-04 Execution settings](../08-automate/README.md) (planned) |
-| Automate › Settings | [Manual and automatic retries](https://www.palantir.com/docs/foundry/automate/retries/) | [08-04 Execution settings](../08-automate/README.md) (planned) |
-| Automate › Settings | [Muting, pausing, and expiration](https://www.palantir.com/docs/foundry/automate/muting-pausing-expiration/) | [08-04 Execution settings](../08-automate/README.md) (planned) |
-| Automate › Settings | [Notification settings](https://www.palantir.com/docs/foundry/automate/notification-settings/) | [08-04 Execution settings](../08-automate/README.md) (planned) |
-| Automate › Security and permissions | [Security](https://www.palantir.com/docs/foundry/automate/security/) | [08-05 Security, ownership and history](../08-automate/README.md) (planned) |
-| Automate › Security and permissions | [Automation history](https://www.palantir.com/docs/foundry/automate/history/) | [08-05 Security, ownership and history](../08-automate/README.md) (planned) |
-| Automate › Security and permissions | [History visibility and scope](https://www.palantir.com/docs/foundry/automate/history-visibility-and-scope/) | [08-05 Security, ownership and history](../08-automate/README.md) (planned) |
-| Automate › Security and permissions | [Permissions](https://www.palantir.com/docs/foundry/automate/permissions/) | [08-05 Security, ownership and history](../08-automate/README.md) (planned) |
-| Automate › Security and permissions | [Third-party application ownership](https://www.palantir.com/docs/foundry/automate/third-party-app-ownership/) | [08-05 Security, ownership and history](../08-automate/README.md) (planned) |
-| Automate › Performance and troubleshooting | [Performance best practices](https://www.palantir.com/docs/foundry/automate/performance-best-practices/) | [08-06 Operating automations](../08-automate/README.md) (planned) |
-| Automate › Performance and troubleshooting | [Troubleshooting performance](https://www.palantir.com/docs/foundry/automate/troubleshooting-performance/) | [08-06 Operating automations](../08-automate/README.md) (planned) |
-| Automate | [Integrations](https://www.palantir.com/docs/foundry/automate/integrations/) | [08-01 Automate concepts](../08-automate/README.md) (planned) |
-| Automate | [Branching automations](https://www.palantir.com/docs/foundry/automate/branching-automations/) | [08-06 Operating automations](../08-automate/README.md) (planned) |
-| Automate | [Automations on Ontology scenarios](https://www.palantir.com/docs/foundry/automate/automations-on-ontology-scenarios/) | [08-06 Operating automations](../08-automate/README.md) (planned) |
-| Automate › Examples | [Send a weekly report](https://www.palantir.com/docs/foundry/automate/example-weekly-report/) | [08-06 Operating automations](../08-automate/README.md) (planned) |
-| Automate › Examples | [Close tickets after a specified time](https://www.palantir.com/docs/foundry/automate/example-relative-time-condition/) | [08-06 Operating automations](../08-automate/README.md) (planned) |
-| Automate › Examples | [Notify contract owner when status changes](https://www.palantir.com/docs/foundry/automate/example-dynamic-contract-owner/) | [08-06 Operating automations](../08-automate/README.md) (planned) |
-| Automate | [Limits](https://www.palantir.com/docs/foundry/automate/limits/) | [08-06 Operating automations](../08-automate/README.md) (planned) |
-| Automate | [Error reference](https://www.palantir.com/docs/foundry/automate/errors/) | [08-06 Operating automations](../08-automate/README.md) (planned) |
-| Automate | [Add an automation to a Marketplace product](https://www.palantir.com/docs/foundry/automate/marketplace-automate/) | [08-06 Operating automations](../08-automate/README.md) (planned) |
-| Autopilot | [Overview](https://www.palantir.com/docs/foundry/autopilot/overview/) | [10-02 Autopilot](../10-workflow-tools/README.md) (planned) |
-| Autopilot | [Getting started](https://www.palantir.com/docs/foundry/autopilot/getting-started/) | [10-02 Autopilot](../10-workflow-tools/README.md) (planned) |
-| Autopilot | [Workbench](https://www.palantir.com/docs/foundry/autopilot/workbench/) | [10-02 Autopilot](../10-workflow-tools/README.md) (planned) |
-| Autopilot | [Kanban board view](https://www.palantir.com/docs/foundry/autopilot/workbench-kanban/) | [10-02 Autopilot](../10-workflow-tools/README.md) (planned) |
-| Autopilot | [Dependency graph view](https://www.palantir.com/docs/foundry/autopilot/workbench-graph/) | [10-02 Autopilot](../10-workflow-tools/README.md) (planned) |
-| Autopilot | [Object timeline](https://www.palantir.com/docs/foundry/autopilot/object-timeline/) | [10-02 Autopilot](../10-workflow-tools/README.md) (planned) |
-| Autopilot | [Automation events](https://www.palantir.com/docs/foundry/autopilot/automation-events/) | [10-02 Autopilot](../10-workflow-tools/README.md) (planned) |
-| Autopilot | [Integrations](https://www.palantir.com/docs/foundry/autopilot/integrations/) | [10-02 Autopilot](../10-workflow-tools/README.md) (planned) |
-| Carbon | [Overview](https://www.palantir.com/docs/foundry/carbon/overview/) | [09-01 Carbon workspaces](../09-carbon-workspaces/README.md) (planned) |
-| Carbon | [Getting started](https://www.palantir.com/docs/foundry/carbon/getting-started/) | [09-01 Carbon workspaces](../09-carbon-workspaces/README.md) (planned) |
-| Carbon | [Example workspaces](https://www.palantir.com/docs/foundry/carbon/example-workspaces/) | [09-01 Carbon workspaces](../09-carbon-workspaces/README.md) (planned) |
-| Carbon › Workspaces | [Overview](https://www.palantir.com/docs/foundry/carbon/workspaces-overview/) | [09-01 Carbon workspaces](../09-carbon-workspaces/README.md) (planned) |
-| Carbon › Workspaces | [Create a workspace](https://www.palantir.com/docs/foundry/carbon/workspaces-create/) | [09-01 Carbon workspaces](../09-carbon-workspaces/README.md) (planned) |
-| Carbon › Workspaces | [Edit a workspace](https://www.palantir.com/docs/foundry/carbon/workspaces-edit/) | [09-01 Carbon workspaces](../09-carbon-workspaces/README.md) (planned) |
-| Carbon › Workspaces | [Configure workspace updates](https://www.palantir.com/docs/foundry/carbon/workspaces-updates/) | [09-01 Carbon workspaces](../09-carbon-workspaces/README.md) (planned) |
-| Carbon › Workspaces | [View version history](https://www.palantir.com/docs/foundry/carbon/workspaces-history/) | [09-01 Carbon workspaces](../09-carbon-workspaces/README.md) (planned) |
-| Carbon › Workspaces | [Configure navigation between workspaces](https://www.palantir.com/docs/foundry/carbon/workspaces-navigation/) | [09-02 Modules and navigation](../09-carbon-workspaces/README.md) (planned) |
-| Carbon › Workspaces | [Restrict navigation out of a workspace](https://www.palantir.com/docs/foundry/carbon/restrict-workspace-nav/) | [09-02 Modules and navigation](../09-carbon-workspaces/README.md) (planned) |
-| Carbon › Modules | [Overview](https://www.palantir.com/docs/foundry/carbon/modules-overview/) | [09-02 Modules and navigation](../09-carbon-workspaces/README.md) (planned) |
-| Carbon › Modules | [Configure module discovery](https://www.palantir.com/docs/foundry/carbon/modules-discovery/) | [09-02 Modules and navigation](../09-carbon-workspaces/README.md) (planned) |
-| Carbon › Modules | [Configure navigation between modules](https://www.palantir.com/docs/foundry/carbon/modules-navigation/) | [09-02 Modules and navigation](../09-carbon-workspaces/README.md) (planned) |
-| Carbon › Permissions and access | [Configure permissions](https://www.palantir.com/docs/foundry/carbon/permissions-configure/) | [09-03 Configuration and permissions](../09-carbon-workspaces/README.md) (planned) |
-| Carbon › Permissions and access | [Set a default workspace](https://www.palantir.com/docs/foundry/carbon/permissions-default-workspace/) | [09-03 Configuration and permissions](../09-carbon-workspaces/README.md) (planned) |
-| Carbon › Permissions and access | [Set Carbon as the Foundry landing page](https://www.palantir.com/docs/foundry/carbon/permissions-landing-page/) | [09-03 Configuration and permissions](../09-carbon-workspaces/README.md) (planned) |
-| Carbon › Configuration reference | [General configuration](https://www.palantir.com/docs/foundry/carbon/configuration-general/) | [09-03 Configuration and permissions](../09-carbon-workspaces/README.md) (planned) |
-| Carbon › Configuration reference | [Home configuration](https://www.palantir.com/docs/foundry/carbon/configuration-home/) | [09-03 Configuration and permissions](../09-carbon-workspaces/README.md) (planned) |
-| Carbon › Configuration reference | [Menu bar configuration](https://www.palantir.com/docs/foundry/carbon/configuration-menu-bar/) | [09-03 Configuration and permissions](../09-carbon-workspaces/README.md) (planned) |
-| Carbon › Configuration reference | [Access configuration](https://www.palantir.com/docs/foundry/carbon/configuration-access/) | [09-03 Configuration and permissions](../09-carbon-workspaces/README.md) (planned) |
-| Carbon › Editing with code | [YAML configuration example](https://www.palantir.com/docs/foundry/carbon/code-example/) | [09-03 Configuration and permissions](../09-carbon-workspaces/README.md) (planned) |
-| Carbon › Editing with code | [YAML configuration reference](https://www.palantir.com/docs/foundry/carbon/code-reference/) | [09-03 Configuration and permissions](../09-carbon-workspaces/README.md) (planned) |
-| Carbon | [Enable dark mode for an organization](https://www.palantir.com/docs/foundry/carbon/dark-mode/) | [09-03 Configuration and permissions](../09-carbon-workspaces/README.md) (planned) |
-| Carbon | [Add Carbon workspace to a Marketplace product](https://www.palantir.com/docs/foundry/carbon/marketplace-carbon-workspace/) | [09-01 Carbon workspaces](../09-carbon-workspaces/README.md) (planned) |
-| Solution Designer | [Overview](https://www.palantir.com/docs/foundry/solution-designer/overview/) | [10-03 Solution Designer and Workflow Builder](../10-workflow-tools/README.md) (planned) |
-| Solution Designer | [Navigation](https://www.palantir.com/docs/foundry/solution-designer/navigation/) | [10-03 Solution Designer and Workflow Builder](../10-workflow-tools/README.md) (planned) |
-| Solution Designer | [Diagrams](https://www.palantir.com/docs/foundry/solution-designer/diagrams/) | [10-03 Solution Designer and Workflow Builder](../10-workflow-tools/README.md) (planned) |
-| Solution Designer | [AIP Architect](https://www.palantir.com/docs/foundry/solution-designer/aip-architect/) | [10-03 Solution Designer and Workflow Builder](../10-workflow-tools/README.md) (planned) |
-| Solution Designer | [AIP Critic](https://www.palantir.com/docs/foundry/solution-designer/aip-critic/) | [10-03 Solution Designer and Workflow Builder](../10-workflow-tools/README.md) (planned) |
-| Solution Designer | [Tutorial: Create your first diagram](https://www.palantir.com/docs/foundry/solution-designer/tutorial-create-your-first-diagram/) | [10-03 Solution Designer and Workflow Builder](../10-workflow-tools/README.md) (planned) |
-| Solution Designer | [Troubleshooting](https://www.palantir.com/docs/foundry/solution-designer/troubleshooting/) | [10-03 Solution Designer and Workflow Builder](../10-workflow-tools/README.md) (planned) |
-| Workflow Builder | [Overview](https://www.palantir.com/docs/foundry/workflow-builder/overview/) | [10-03 Solution Designer and Workflow Builder](../10-workflow-tools/README.md) (planned) |
-| Workflow Builder | [Core concepts](https://www.palantir.com/docs/foundry/workflow-builder/core-concepts/) | [10-03 Solution Designer and Workflow Builder](../10-workflow-tools/README.md) (planned) |
-| Workflow Lineage | [Overview](https://www.palantir.com/docs/foundry/workflow-lineage/overview/) | [10-01 Workflow Lineage](../10-workflow-tools/README.md) (planned) |
-| Workflow Lineage | [Getting started](https://www.palantir.com/docs/foundry/workflow-lineage/getting-started/) | [10-01 Workflow Lineage](../10-workflow-tools/README.md) (planned) |
-| Workflow Lineage | [Perform refactors and understand your workflows](https://www.palantir.com/docs/foundry/workflow-lineage/refactor-and-understand-workflows/) | [10-01 Workflow Lineage](../10-workflow-tools/README.md) (planned) |
-| Workflow Lineage | [AIP usage metrics and observability](https://www.palantir.com/docs/foundry/workflow-lineage/aip-usage-observability/) | [10-01 Workflow Lineage](../10-workflow-tools/README.md) (planned) |
-| Workflow Lineage | [Manage security](https://www.palantir.com/docs/foundry/workflow-lineage/manage-security/) | [10-01 Workflow Lineage](../10-workflow-tools/README.md) (planned) |
-| Workflow Lineage | [Branching support](https://www.palantir.com/docs/foundry/workflow-lineage/branching-workflow-lineage/) | [10-01 Workflow Lineage](../10-workflow-tools/README.md) (planned) |
-| Workflow Lineage | [Keyboard shortcuts](https://www.palantir.com/docs/foundry/workflow-lineage/keyboard-shortcuts/) | [10-01 Workflow Lineage](../10-workflow-tools/README.md) (planned) |
-| Use Cases [Sunset] | [Overview](https://www.palantir.com/docs/foundry/use-cases/use-case-overview/) | [10-04 Use Cases [Sunset]](../10-workflow-tools/README.md) (planned) |
-| Use Cases [Sunset] | [Navigation](https://www.palantir.com/docs/foundry/use-cases/navigation/) | [10-04 Use Cases [Sunset]](../10-workflow-tools/README.md) (planned) |
-| Use Cases [Sunset] | [Getting started](https://www.palantir.com/docs/foundry/use-cases/getting-started/) | [10-04 Use Cases [Sunset]](../10-workflow-tools/README.md) (planned) |
-| Use Cases [Sunset] | [Migrate an existing Project](https://www.palantir.com/docs/foundry/use-cases/migrate-existing-project/) | [10-04 Use Cases [Sunset]](../10-workflow-tools/README.md) (planned) |
-| Use Cases [Sunset] › Resources | [View resources](https://www.palantir.com/docs/foundry/use-cases/view-resources/) | [10-04 Use Cases [Sunset]](../10-workflow-tools/README.md) (planned) |
-| Use Cases [Sunset] › Resources | [Add application resources](https://www.palantir.com/docs/foundry/use-cases/add-application-resources/) | [10-04 Use Cases [Sunset]](../10-workflow-tools/README.md) (planned) |
-| Use Cases [Sunset] | [Edit metadata](https://www.palantir.com/docs/foundry/use-cases/edit-metadata/) | [10-04 Use Cases [Sunset]](../10-workflow-tools/README.md) (planned) |
-| Use Cases [Sunset] | [Permission a use case](https://www.palantir.com/docs/foundry/use-cases/permission-use-case/) | [10-04 Use Cases [Sunset]](../10-workflow-tools/README.md) (planned) |
+| Automate | [Overview](https://www.palantir.com/docs/foundry/automate/overview/) | [08-01 Automate concepts](../08-automate/01-automate-concepts.md) |
+| Automate | [Getting started](https://www.palantir.com/docs/foundry/automate/getting-started/) | [08-01 Automate concepts](../08-automate/01-automate-concepts.md) |
+| Automate › Condition | [Time condition](https://www.palantir.com/docs/foundry/automate/condition-time/) | [08-02 Conditions](../08-automate/02-conditions.md) |
+| Automate › Condition | [Object set conditions](https://www.palantir.com/docs/foundry/automate/condition-objects/) | [08-02 Conditions](../08-automate/02-conditions.md) |
+| Automate › Condition | [Dataset condition](https://www.palantir.com/docs/foundry/automate/condition-dataset/) | [08-02 Conditions](../08-automate/02-conditions.md) |
+| Automate › Condition | [Condition settings](https://www.palantir.com/docs/foundry/automate/condition-settings/) | [08-02 Conditions](../08-automate/02-conditions.md) |
+| Automate › Condition | [Automation dependencies](https://www.palantir.com/docs/foundry/automate/automation-dependencies/) | [08-02 Conditions](../08-automate/02-conditions.md) |
+| Automate › Condition | [Streaming](https://www.palantir.com/docs/foundry/automate/streaming/) | [08-02 Conditions](../08-automate/02-conditions.md) |
+| Automate › Effects | [Overview](https://www.palantir.com/docs/foundry/automate/effects/) | [08-03 Effects](../08-automate/03-effects.md) |
+| Automate › Effects | [Action effects](https://www.palantir.com/docs/foundry/automate/effect-actions/) | [08-03 Effects](../08-automate/03-effects.md) |
+| Automate › Effects | [Logic effects](https://www.palantir.com/docs/foundry/automate/effect-logic/) | [08-03 Effects](../08-automate/03-effects.md) |
+| Automate › Effects | [Function effects](https://www.palantir.com/docs/foundry/automate/effect-function/) | [08-03 Effects](../08-automate/03-effects.md) |
+| Automate › Effects | [Notification effects](https://www.palantir.com/docs/foundry/automate/effect-notification/) | [08-03 Effects](../08-automate/03-effects.md) |
+| Automate › Effects | [Fallback effects](https://www.palantir.com/docs/foundry/automate/effect-fallback/) | [08-03 Effects](../08-automate/03-effects.md) |
+| Automate › Effects | [Effect settings](https://www.palantir.com/docs/foundry/automate/effect-settings/) | [08-03 Effects](../08-automate/03-effects.md) |
+| Automate | [Manual executions](https://www.palantir.com/docs/foundry/automate/manual-execution/) | [08-01 Automate concepts](../08-automate/01-automate-concepts.md) |
+| Automate › Settings | [Automation administrators](https://www.palantir.com/docs/foundry/automate/automation-administrators/) | [08-04 Execution settings](../08-automate/04-execution-settings.md) |
+| Automate › Settings | [Execution settings](https://www.palantir.com/docs/foundry/automate/execution-settings/) | [08-04 Execution settings](../08-automate/04-execution-settings.md) |
+| Automate › Settings | [Evaluation frequency](https://www.palantir.com/docs/foundry/automate/evaluation-frequency/) | [08-04 Execution settings](../08-automate/04-execution-settings.md) |
+| Automate › Settings | [Manual and automatic retries](https://www.palantir.com/docs/foundry/automate/retries/) | [08-04 Execution settings](../08-automate/04-execution-settings.md) |
+| Automate › Settings | [Muting, pausing, and expiration](https://www.palantir.com/docs/foundry/automate/muting-pausing-expiration/) | [08-04 Execution settings](../08-automate/04-execution-settings.md) |
+| Automate › Settings | [Notification settings](https://www.palantir.com/docs/foundry/automate/notification-settings/) | [08-04 Execution settings](../08-automate/04-execution-settings.md) |
+| Automate › Security and permissions | [Security](https://www.palantir.com/docs/foundry/automate/security/) | [08-05 Security, ownership and history](../08-automate/05-security-ownership-and-history.md) |
+| Automate › Security and permissions | [Automation history](https://www.palantir.com/docs/foundry/automate/history/) | [08-05 Security, ownership and history](../08-automate/05-security-ownership-and-history.md) |
+| Automate › Security and permissions | [History visibility and scope](https://www.palantir.com/docs/foundry/automate/history-visibility-and-scope/) | [08-05 Security, ownership and history](../08-automate/05-security-ownership-and-history.md) |
+| Automate › Security and permissions | [Permissions](https://www.palantir.com/docs/foundry/automate/permissions/) | [08-05 Security, ownership and history](../08-automate/05-security-ownership-and-history.md) |
+| Automate › Security and permissions | [Third-party application ownership](https://www.palantir.com/docs/foundry/automate/third-party-app-ownership/) | [08-05 Security, ownership and history](../08-automate/05-security-ownership-and-history.md) |
+| Automate › Performance and troubleshooting | [Performance best practices](https://www.palantir.com/docs/foundry/automate/performance-best-practices/) | [08-06 Operating automations](../08-automate/06-operating-automations.md) |
+| Automate › Performance and troubleshooting | [Troubleshooting performance](https://www.palantir.com/docs/foundry/automate/troubleshooting-performance/) | [08-06 Operating automations](../08-automate/06-operating-automations.md) |
+| Automate | [Integrations](https://www.palantir.com/docs/foundry/automate/integrations/) | [08-01 Automate concepts](../08-automate/01-automate-concepts.md) |
+| Automate | [Branching automations](https://www.palantir.com/docs/foundry/automate/branching-automations/) | [08-06 Operating automations](../08-automate/06-operating-automations.md) |
+| Automate | [Automations on Ontology scenarios](https://www.palantir.com/docs/foundry/automate/automations-on-ontology-scenarios/) | [08-06 Operating automations](../08-automate/06-operating-automations.md) |
+| Automate › Examples | [Send a weekly report](https://www.palantir.com/docs/foundry/automate/example-weekly-report/) | [08-06 Operating automations](../08-automate/06-operating-automations.md) |
+| Automate › Examples | [Close tickets after a specified time](https://www.palantir.com/docs/foundry/automate/example-relative-time-condition/) | [08-06 Operating automations](../08-automate/06-operating-automations.md) |
+| Automate › Examples | [Notify contract owner when status changes](https://www.palantir.com/docs/foundry/automate/example-dynamic-contract-owner/) | [08-06 Operating automations](../08-automate/06-operating-automations.md) |
+| Automate | [Limits](https://www.palantir.com/docs/foundry/automate/limits/) | [08-06 Operating automations](../08-automate/06-operating-automations.md) |
+| Automate | [Error reference](https://www.palantir.com/docs/foundry/automate/errors/) | [08-06 Operating automations](../08-automate/06-operating-automations.md) |
+| Automate | [Add an automation to a Marketplace product](https://www.palantir.com/docs/foundry/automate/marketplace-automate/) | [08-06 Operating automations](../08-automate/06-operating-automations.md) |
+| Autopilot | [Overview](https://www.palantir.com/docs/foundry/autopilot/overview/) | [10-02 Autopilot](../10-workflow-tools/02-autopilot.md) |
+| Autopilot | [Getting started](https://www.palantir.com/docs/foundry/autopilot/getting-started/) | [10-02 Autopilot](../10-workflow-tools/02-autopilot.md) |
+| Autopilot | [Workbench](https://www.palantir.com/docs/foundry/autopilot/workbench/) | [10-02 Autopilot](../10-workflow-tools/02-autopilot.md) |
+| Autopilot | [Kanban board view](https://www.palantir.com/docs/foundry/autopilot/workbench-kanban/) | [10-02 Autopilot](../10-workflow-tools/02-autopilot.md) |
+| Autopilot | [Dependency graph view](https://www.palantir.com/docs/foundry/autopilot/workbench-graph/) | [10-02 Autopilot](../10-workflow-tools/02-autopilot.md) |
+| Autopilot | [Object timeline](https://www.palantir.com/docs/foundry/autopilot/object-timeline/) | [10-02 Autopilot](../10-workflow-tools/02-autopilot.md) |
+| Autopilot | [Automation events](https://www.palantir.com/docs/foundry/autopilot/automation-events/) | [10-02 Autopilot](../10-workflow-tools/02-autopilot.md) |
+| Autopilot | [Integrations](https://www.palantir.com/docs/foundry/autopilot/integrations/) | [10-02 Autopilot](../10-workflow-tools/02-autopilot.md) |
+| Carbon | [Overview](https://www.palantir.com/docs/foundry/carbon/overview/) | [09-01 Carbon workspaces](../09-carbon-workspaces/01-carbon-workspaces.md) |
+| Carbon | [Getting started](https://www.palantir.com/docs/foundry/carbon/getting-started/) | [09-01 Carbon workspaces](../09-carbon-workspaces/01-carbon-workspaces.md) |
+| Carbon | [Example workspaces](https://www.palantir.com/docs/foundry/carbon/example-workspaces/) | [09-01 Carbon workspaces](../09-carbon-workspaces/01-carbon-workspaces.md) |
+| Carbon › Workspaces | [Overview](https://www.palantir.com/docs/foundry/carbon/workspaces-overview/) | [09-01 Carbon workspaces](../09-carbon-workspaces/01-carbon-workspaces.md) |
+| Carbon › Workspaces | [Create a workspace](https://www.palantir.com/docs/foundry/carbon/workspaces-create/) | [09-01 Carbon workspaces](../09-carbon-workspaces/01-carbon-workspaces.md) |
+| Carbon › Workspaces | [Edit a workspace](https://www.palantir.com/docs/foundry/carbon/workspaces-edit/) | [09-01 Carbon workspaces](../09-carbon-workspaces/01-carbon-workspaces.md) |
+| Carbon › Workspaces | [Configure workspace updates](https://www.palantir.com/docs/foundry/carbon/workspaces-updates/) | [09-01 Carbon workspaces](../09-carbon-workspaces/01-carbon-workspaces.md) |
+| Carbon › Workspaces | [View version history](https://www.palantir.com/docs/foundry/carbon/workspaces-history/) | [09-01 Carbon workspaces](../09-carbon-workspaces/01-carbon-workspaces.md) |
+| Carbon › Workspaces | [Configure navigation between workspaces](https://www.palantir.com/docs/foundry/carbon/workspaces-navigation/) | [09-02 Modules and navigation](../09-carbon-workspaces/02-modules-and-navigation.md) |
+| Carbon › Workspaces | [Restrict navigation out of a workspace](https://www.palantir.com/docs/foundry/carbon/restrict-workspace-nav/) | [09-02 Modules and navigation](../09-carbon-workspaces/02-modules-and-navigation.md) |
+| Carbon › Modules | [Overview](https://www.palantir.com/docs/foundry/carbon/modules-overview/) | [09-02 Modules and navigation](../09-carbon-workspaces/02-modules-and-navigation.md) |
+| Carbon › Modules | [Configure module discovery](https://www.palantir.com/docs/foundry/carbon/modules-discovery/) | [09-02 Modules and navigation](../09-carbon-workspaces/02-modules-and-navigation.md) |
+| Carbon › Modules | [Configure navigation between modules](https://www.palantir.com/docs/foundry/carbon/modules-navigation/) | [09-02 Modules and navigation](../09-carbon-workspaces/02-modules-and-navigation.md) |
+| Carbon › Permissions and access | [Configure permissions](https://www.palantir.com/docs/foundry/carbon/permissions-configure/) | [09-03 Configuration and permissions](../09-carbon-workspaces/03-configuration-and-permissions.md) |
+| Carbon › Permissions and access | [Set a default workspace](https://www.palantir.com/docs/foundry/carbon/permissions-default-workspace/) | [09-03 Configuration and permissions](../09-carbon-workspaces/03-configuration-and-permissions.md) |
+| Carbon › Permissions and access | [Set Carbon as the Foundry landing page](https://www.palantir.com/docs/foundry/carbon/permissions-landing-page/) | [09-03 Configuration and permissions](../09-carbon-workspaces/03-configuration-and-permissions.md) |
+| Carbon › Configuration reference | [General configuration](https://www.palantir.com/docs/foundry/carbon/configuration-general/) | [09-03 Configuration and permissions](../09-carbon-workspaces/03-configuration-and-permissions.md) |
+| Carbon › Configuration reference | [Home configuration](https://www.palantir.com/docs/foundry/carbon/configuration-home/) | [09-03 Configuration and permissions](../09-carbon-workspaces/03-configuration-and-permissions.md) |
+| Carbon › Configuration reference | [Menu bar configuration](https://www.palantir.com/docs/foundry/carbon/configuration-menu-bar/) | [09-03 Configuration and permissions](../09-carbon-workspaces/03-configuration-and-permissions.md) |
+| Carbon › Configuration reference | [Access configuration](https://www.palantir.com/docs/foundry/carbon/configuration-access/) | [09-03 Configuration and permissions](../09-carbon-workspaces/03-configuration-and-permissions.md) |
+| Carbon › Editing with code | [YAML configuration example](https://www.palantir.com/docs/foundry/carbon/code-example/) | [09-03 Configuration and permissions](../09-carbon-workspaces/03-configuration-and-permissions.md) |
+| Carbon › Editing with code | [YAML configuration reference](https://www.palantir.com/docs/foundry/carbon/code-reference/) | [09-03 Configuration and permissions](../09-carbon-workspaces/03-configuration-and-permissions.md) |
+| Carbon | [Enable dark mode for an organization](https://www.palantir.com/docs/foundry/carbon/dark-mode/) | [09-03 Configuration and permissions](../09-carbon-workspaces/03-configuration-and-permissions.md) |
+| Carbon | [Add Carbon workspace to a Marketplace product](https://www.palantir.com/docs/foundry/carbon/marketplace-carbon-workspace/) | [09-01 Carbon workspaces](../09-carbon-workspaces/01-carbon-workspaces.md) |
+| Solution Designer | [Overview](https://www.palantir.com/docs/foundry/solution-designer/overview/) | [10-03 Solution Designer and Workflow Builder](../10-workflow-tools/03-solution-designer-and-workflow-builder.md) |
+| Solution Designer | [Navigation](https://www.palantir.com/docs/foundry/solution-designer/navigation/) | [10-03 Solution Designer and Workflow Builder](../10-workflow-tools/03-solution-designer-and-workflow-builder.md) |
+| Solution Designer | [Diagrams](https://www.palantir.com/docs/foundry/solution-designer/diagrams/) | [10-03 Solution Designer and Workflow Builder](../10-workflow-tools/03-solution-designer-and-workflow-builder.md) |
+| Solution Designer | [AIP Architect](https://www.palantir.com/docs/foundry/solution-designer/aip-architect/) | [10-03 Solution Designer and Workflow Builder](../10-workflow-tools/03-solution-designer-and-workflow-builder.md) |
+| Solution Designer | [AIP Critic](https://www.palantir.com/docs/foundry/solution-designer/aip-critic/) | [10-03 Solution Designer and Workflow Builder](../10-workflow-tools/03-solution-designer-and-workflow-builder.md) |
+| Solution Designer | [Tutorial: Create your first diagram](https://www.palantir.com/docs/foundry/solution-designer/tutorial-create-your-first-diagram/) | [10-03 Solution Designer and Workflow Builder](../10-workflow-tools/03-solution-designer-and-workflow-builder.md) |
+| Solution Designer | [Troubleshooting](https://www.palantir.com/docs/foundry/solution-designer/troubleshooting/) | [10-03 Solution Designer and Workflow Builder](../10-workflow-tools/03-solution-designer-and-workflow-builder.md) |
+| Workflow Builder | [Overview](https://www.palantir.com/docs/foundry/workflow-builder/overview/) | [10-03 Solution Designer and Workflow Builder](../10-workflow-tools/03-solution-designer-and-workflow-builder.md) |
+| Workflow Builder | [Core concepts](https://www.palantir.com/docs/foundry/workflow-builder/core-concepts/) | [10-03 Solution Designer and Workflow Builder](../10-workflow-tools/03-solution-designer-and-workflow-builder.md) |
+| Workflow Lineage | [Overview](https://www.palantir.com/docs/foundry/workflow-lineage/overview/) | [10-01 Workflow Lineage](../10-workflow-tools/01-workflow-lineage.md) |
+| Workflow Lineage | [Getting started](https://www.palantir.com/docs/foundry/workflow-lineage/getting-started/) | [10-01 Workflow Lineage](../10-workflow-tools/01-workflow-lineage.md) |
+| Workflow Lineage | [Perform refactors and understand your workflows](https://www.palantir.com/docs/foundry/workflow-lineage/refactor-and-understand-workflows/) | [10-01 Workflow Lineage](../10-workflow-tools/01-workflow-lineage.md) |
+| Workflow Lineage | [AIP usage metrics and observability](https://www.palantir.com/docs/foundry/workflow-lineage/aip-usage-observability/) | [10-01 Workflow Lineage](../10-workflow-tools/01-workflow-lineage.md) |
+| Workflow Lineage | [Manage security](https://www.palantir.com/docs/foundry/workflow-lineage/manage-security/) | [10-01 Workflow Lineage](../10-workflow-tools/01-workflow-lineage.md) |
+| Workflow Lineage | [Branching support](https://www.palantir.com/docs/foundry/workflow-lineage/branching-workflow-lineage/) | [10-01 Workflow Lineage](../10-workflow-tools/01-workflow-lineage.md) |
+| Workflow Lineage | [Keyboard shortcuts](https://www.palantir.com/docs/foundry/workflow-lineage/keyboard-shortcuts/) | [10-01 Workflow Lineage](../10-workflow-tools/01-workflow-lineage.md) |
+| Use Cases [Sunset] | [Overview](https://www.palantir.com/docs/foundry/use-cases/use-case-overview/) | [10-04 Use Cases [Sunset]](../10-workflow-tools/04-use-cases-sunset.md) |
+| Use Cases [Sunset] | [Navigation](https://www.palantir.com/docs/foundry/use-cases/navigation/) | [10-04 Use Cases [Sunset]](../10-workflow-tools/04-use-cases-sunset.md) |
+| Use Cases [Sunset] | [Getting started](https://www.palantir.com/docs/foundry/use-cases/getting-started/) | [10-04 Use Cases [Sunset]](../10-workflow-tools/04-use-cases-sunset.md) |
+| Use Cases [Sunset] | [Migrate an existing Project](https://www.palantir.com/docs/foundry/use-cases/migrate-existing-project/) | [10-04 Use Cases [Sunset]](../10-workflow-tools/04-use-cases-sunset.md) |
+| Use Cases [Sunset] › Resources | [View resources](https://www.palantir.com/docs/foundry/use-cases/view-resources/) | [10-04 Use Cases [Sunset]](../10-workflow-tools/04-use-cases-sunset.md) |
+| Use Cases [Sunset] › Resources | [Add application resources](https://www.palantir.com/docs/foundry/use-cases/add-application-resources/) | [10-04 Use Cases [Sunset]](../10-workflow-tools/04-use-cases-sunset.md) |
+| Use Cases [Sunset] | [Edit metadata](https://www.palantir.com/docs/foundry/use-cases/edit-metadata/) | [10-04 Use Cases [Sunset]](../10-workflow-tools/04-use-cases-sunset.md) |
+| Use Cases [Sunset] | [Permission a use case](https://www.palantir.com/docs/foundry/use-cases/permission-use-case/) | [10-04 Use Cases [Sunset]](../10-workflow-tools/04-use-cases-sunset.md) |
 
 ---
-[Module index](README.md) · [Apps home](../README.md)
+[Module index](README.md) · Previous: [Decision guide](decision-guide.md) · [Apps home](../README.md)

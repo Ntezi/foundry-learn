@@ -2,7 +2,7 @@
 
 *Sources: [Variables](https://www.palantir.com/docs/foundry/workshop/concepts-variables/) · [Use ontology interfaces in Workshop](https://www.palantir.com/docs/foundry/workshop/ontology-interfaces/) · checked October 18, 2026 · Ready for Review*
 
-**[Concept]** Variables are a module's state. Widgets read them as inputs and write them as outputs; events change them; other variables are computed from them. Nearly every Workshop question ("why didn't this update?", "why is this slow?") is a question about a variable.
+**[Concept]** Variables are a module's state. Widgets read them as inputs and write them as outputs; events change them; other variables are computed from them. Nearly every Workshop question (*why didn't this update?*, *why is this slow?*) is a question about a variable.
 
 ## Two choices per variable: type and definition
 
@@ -63,7 +63,7 @@ As the queue grows more pages, the prefix convention would turn these into `$pag
 - **Show pages and overlays** tags nodes with where they are used.
 - **Show computation time** shows when each value was last computed in the app, not when the data last changed. Slow variables are candidates for splitting or for event-only recompute.
 
-**[Recommendation]** Open the graph before changing a variable that more than one page uses. It answers "what breaks if I change this?" faster than clicking through widgets.
+**[Recommendation]** Open the graph before changing a variable that more than one page uses. It answers *what breaks if I change this?* faster than clicking through widgets.
 
 ## Interfaces: one widget for several object types
 
@@ -73,7 +73,7 @@ As the queue grows more pages, the prefix convention would turn these into `$pag
 
 **[Docs]** **Cast as** switches a set between an interface and a compatible object type. Casting a type-based set to an interface keeps the same objects; casting an interface set to one type narrows it. An object set definition allows **one** type-changing step: one cast *or* one traversal.
 
-**[Explanation]** The Cases tab on the Delivery Desk queue is the worked example, including the open question about traversing interface links ([RQ-25](../../Ontology/SOURCES.md#open-research-questions)): see [Ontology 10-03](../../Ontology/10-applications/03-workshop-and-slate.md). Don't confuse **ontology interfaces** with the **module interface**, which is the set of variables a module exposes to its parent or URL ([02-04](../02-workshop-data-and-logic/04-embedding-modules.md#the-module-interface)).
+**[Explanation]** The Cases tab on the Delivery Desk queue is the worked example, including the open question about traversing interface links ([Ontology RQ-25](../../Ontology/SOURCES.md#open-research-questions)): see [Ontology 10-03](../../Ontology/10-applications/03-workshop-and-slate.md). Don't confuse **ontology interfaces** with the **module interface**, which is the set of variables a module exposes to its parent or URL ([02-04](../02-workshop-data-and-logic/04-embedding-modules.md#the-module-interface)).
 
 ---
 [Module index](README.md) · Previous: [02 — Layouts, widgets and events](02-layouts-widgets-and-events.md) · Next: [04 — Permissions](04-permissions.md)

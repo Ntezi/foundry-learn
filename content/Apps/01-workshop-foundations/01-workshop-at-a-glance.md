@@ -14,7 +14,7 @@ Workshop is Foundry's low-code builder for **operational** applications: screens
 | **Consistent design** | Every widget follows one design system, so modules look and behave alike. |
 | **Interactivity and complexity** | Layouts and an events system aim for apps "as user-friendly and high-quality as custom React applications". |
 
-**[Explanation]** The first principle is the one with consequences. Workshop has no direct connection to a dataset; if data isn't in the Ontology, a module can't show it. That is why the Ontology area comes first in this course, and why "can Workshop do X?" usually turns into "does the Ontology have X?".
+**[Explanation]** The first principle is the one with consequences. Workshop has no direct connection to a dataset; if data isn't in the Ontology, a module can't show it. That is why the Ontology area comes first in this course, and why *can Workshop do X?* usually turns into *does the Ontology have X?*.
 
 ## The shapes it is known for
 

@@ -33,3 +33,6 @@ Slate is Palantir's older application-building tool (predecessor-era to Workshop
 - Worth checking with your team/admin whether Slate is still used in your Foundry environment before investing full time here.
 
 **Go deeper in the Ontology area:** [10 — Applications on the Ontology](../Ontology/10-applications/README.md)
+
+<!-- apps-go-deeper -->
+**Go deeper in the Apps area:** [05 — Slate](../Apps/05-slate/README.md)

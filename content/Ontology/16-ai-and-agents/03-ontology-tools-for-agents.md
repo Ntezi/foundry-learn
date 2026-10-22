@@ -57,5 +57,8 @@ What is **not** on the sheet, on purpose:
 
 **[Docs]** Chatbots are built on "the same rigorous security model" as the rest of the platform, granting the LLM "access only to what is necessary". **[Explanation]** In an interactive chatbot the tools act **as the user**: reads are filtered by the user's access ([01](01-ontology-as-ai-context.md#security-read-time-only)), and actions check criteria against the user ([archived AIP reference](../../study-backups/2026-10-07/aip-from-scratch/AIP-old/applications/09-aip-chatbot-studio.md)). So T5 succeeds for Ama only if Ama could send the update herself. Headless runs are different: an automation runs **as its owner** ([10-06](../10-applications/06-automate-and-ontology-events.md#why-each-choice)), and an OMCP client is limited by its application's restrictions. Decide "who is acting" before deciding what the agent may do.
 
+<!-- devtools-go-deeper -->
+**Go deeper in the DevTools area:** [04 — MCP and pro-code agents](../../DevTools/04-mcp-and-pro-code-agents/README.md)
+
 ---
 [Module index](README.md) · Previous: [02 — Semantic search and embeddings](02-semantic-search-and-embeddings.md) · Next: [04 — Human-in-the-loop and staged writes](04-human-in-the-loop-and-staged-writes.md)

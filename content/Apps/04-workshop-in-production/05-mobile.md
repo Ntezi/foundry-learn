@@ -2,7 +2,7 @@
 
 *Sources: [Workshop mobile](https://www.palantir.com/docs/foundry/workshop/mobile-overview/) · [Getting started](https://www.palantir.com/docs/foundry/workshop/mobile-getting-started/) · [Mobile application launcher](https://www.palantir.com/docs/foundry/workshop/mobile-app-launcher/) · [Design best practices](https://www.palantir.com/docs/foundry/workshop/mobile-design/) · [Network access and authentication](https://www.palantir.com/docs/foundry/workshop/mobile-access/) · [Mobile Navigation Bar](https://www.palantir.com/docs/foundry/workshop/widgets-mobile-navbar/) · [QR Code Reader](https://www.palantir.com/docs/foundry/workshop/widgets-qr-reader/) · [Current Location Manager](https://www.palantir.com/docs/foundry/workshop/widgets-current-location/) · checked October 18, 2026 · Ready for Review*
 
-Written as a build for one user: **Kofi's warehouse-floor module**, a phone app for the Accra warehouse team to scan a parcel and act on it. This is a candidate for the Kestrel case ([module 11](../11-kestrel-case/README.md)); the doc rules it relies on are labelled as usual.
+Written as a build for one user: **Kofi's warehouse-floor module**, a phone app for the Accra warehouse team to scan a parcel and act on it. It was adopted into the Kestrel model on October 21, 2026 and is assembled in [11-02](../11-kestrel-case/02-warehouse-floor-mobile.md); the doc rules it relies on are labelled as usual.
 
 ## Before building: can we?
 
@@ -15,13 +15,13 @@ Written as a build for one user: **Kofi's warehouse-floor module**, a phone app 
 | **Network access** from phones | An MDM-managed enterprise browser; a mobile VPN; an allowlisted IP region (Control Panel network ingress) | MDM browsers can render differently and exclude unmanaged devices; VPNs add a step every time; region allowlisting widens who can reach the enrollment |
 | **Authentication** | Every user needs an account and goes through SSO and MFA; session length is set by your identity provider | Shared devices (a tablet on the floor) need a decision: individual logins, or a dedicated account per workstation (through your Palantir representative) |
 
-**[Explanation]** At Kestrel the workstation-account option has a cost: Shipment's regional policy compares the **user's** region with `Shipment.region` ([Ontology 12-03](../../Ontology/12-security-and-governance/03-object-and-property-security.md)). A shared "Accra floor tablet" account would need its own region attribute, and every action would be logged against the tablet, not the person. Personal logins on company phones keep both the policy and the audit trail as they are.
+**[Explanation]** At Kestrel the workstation-account option has a cost: Shipment's regional policy compares the **user's** region with `Shipment.region` ([Ontology 12-03](../../Ontology/12-security-and-governance/03-object-and-property-security.md)). A shared *Accra floor tablet* account would need its own region attribute, and every action would be logged against the tablet, not the person. Personal logins on company phones keep both the policy and the audit trail as they are.
 
 ## What changes in a mobile module
 
 **[Docs]** Set the device type to **Mobile** in **Settings**: the editor switches to phone dimensions and a single column. Many widgets adapt (touch-friendly inputs); **Object Table, Chart and Map are disabled**; mobile-only widgets appear. Action forms open in a **full-page drawer**. Users reach mobile apps through the **launcher** at `https://<your-foundry-url>/workspace/m/`, which loads fast and makes the browser's Back and Forward (and Android's back button or iOS swipes) move between pages.
 
-**[Explanation]** "Map disabled" means the Map widget; Map [Legacy] supports mobile ([03-02](../03-workshop-widgets/02-charts-and-maps.md#map-and-when-to-use-the-legacy-one)). Embedded modules inside a mobile module must also be mobile modules ([02-04](../02-workshop-data-and-logic/04-embedding-modules.md#limits-of-embedding)).
+**[Explanation]** *Map disabled* means the Map widget; Map [Legacy] supports mobile ([03-02](../03-workshop-widgets/02-charts-and-maps.md#map-and-when-to-use-the-legacy-one)). Embedded modules inside a mobile module must also be mobile modules ([02-04](../02-workshop-data-and-logic/04-embedding-modules.md#limits-of-embedding)).
 
 ## The build
 

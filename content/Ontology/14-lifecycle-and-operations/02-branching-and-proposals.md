@@ -110,5 +110,8 @@ Reactivating a branch may need a **no-op change** to re-index Ontology resources
 
 **[Explanation]** The self-approval rule is the main governance gap. On a legacy enrollment, Kestrel would limit editor roles instead of relying on reviewers.
 
+<!-- devtools-go-deeper -->
+**Go deeper in the DevTools area:** [06 — Branching and cross-app interactivity](../../DevTools/06-branching-and-cross-app/README.md)
+
 ---
 [Module index](README.md) · Previous: [01 — Saving, reviewing and restoring](01-saving-reviewing-and-restoring.md) · Next: [03 — Schema evolution and breaking changes](03-schema-evolution-and-breaking-changes.md)

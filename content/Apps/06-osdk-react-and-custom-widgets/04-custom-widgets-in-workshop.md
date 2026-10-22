@@ -61,7 +61,7 @@ Object set filters and structs aren't supported as parameter types yet.
 
 ## Kestrel: the shipment timeline
 
-**[Example]** The candidate widget from [03](03-custom-widget-sets.md#when-a-widget-crashes-the-page), placed in the order panel child module (interface variable `order`, [02-04](../02-workshop-data-and-logic/04-embedding-modules.md)):
+**[Example]** The widget from [03](03-custom-widget-sets.md#when-a-widget-crashes-the-page), placed in the order panel child module (interface variable `order`, [02-04](../02-workshop-data-and-logic/04-embedding-modules.md)):
 
 | Contract item | Definition | Bound in Workshop to |
 |---|---|---|

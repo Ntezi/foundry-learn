@@ -59,7 +59,7 @@ The docs' design guidance, turned into a checklist to run before showing a modul
 **[Example]** Run against the checklist, the queue from [Ontology 10-03](../../Ontology/10-applications/03-workshop-and-slate.md) needs three changes:
 
 1. The two buttons, *Hold order* and *Re-route shipment*, are both coloured. *Hold order* is the common action, so it becomes the primary (first, coloured); *Re-route shipment* moves to a de-emphasised style.
-2. The table has no count. A Metric Card in Tag style ("23 at risk") goes in its section header.
+2. The table has no count. A Metric Card in Tag style (*23 at risk*) goes in its section header.
 3. The *Hold order* form opens in a **modal**, which is right for an action form. The order panel stays a collapsible section, not a drawer, so agents can scan the list while reading it.
 
 ---
