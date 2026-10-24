@@ -113,7 +113,7 @@ window.addEventListener('hashchange', () => {
 function currentCollection() {
   const cs = state.index.collections;
   const first = (state.route?.path || '').split('/')[0];
-  const byRoute = cs.find((c) => c.id === first);
+  const byRoute = cs.find((c) => c.id === (first === 'lab' ? 'ontology' : first));
   if (byRoute) { store.set('col', byRoute.id); return byRoute; }
   return cs.find((c) => c.id === store.get('col', null)) || cs[0];
 }
@@ -132,6 +132,7 @@ function renderSidebar() {
     check: icon('<path d="M4 10l4 4 8-8"/>'),
     src: icon('<circle cx="10" cy="10" r="7"/><path d="M10 6v4l3 2"/>'),
     cards: icon('<rect x="3" y="6" width="11" height="11" rx="1.5"/><path d="M6 3h11v11"/>'),
+    lab: icon('<path d="M7 3h6M8 3v5l-4.5 7.5A1.5 1.5 0 0 0 4.8 18h10.4a1.5 1.5 0 0 0 1.3-2.5L12 8V3"/><path d="M6 13h8"/>'),
   };
   const link = (id, label, svg) => `<a class="side-link ${cur === id ? 'active' : ''}" href="#/${id}">${svg}<span>${esc(label)}</span></a>`;
   const prog = collectionProgress(c);
@@ -143,6 +144,7 @@ function renderSidebar() {
     ${pageId(c, 'glossary') ? link(pageId(c, 'glossary'), 'Glossary', ic.book) : ''}
     ${c.selfCheck ? link(c.selfCheck, 'Self-check by module', ic.check) : ''}
     ${pageId(c, 'glossary') || c.map?.questions ? link(c.id + '/cards', 'Flashcards', ic.cards) : ''}
+    ${c.id === 'ontology' ? link('lab', 'Ontology Lab · build it', ic.lab) : ''}
     ${c.pages.filter((p) => !p.special).map((p) => link(p.id, p.title, ic.src)).join('')}
   </div>
   <div class="side-section">
@@ -192,6 +194,7 @@ function renderTopnav() {
     ...(pageId(c, 'glossary') ? [[pageId(c, 'glossary'), 'Glossary']] : []),
     ...(c.selfCheck ? [[c.selfCheck, 'Self-check']] : []),
     ...(pageId(c, 'glossary') || c.map?.questions ? [[c.id + '/cards', 'Flashcards']] : []),
+    ...(c.id === 'ontology' ? [['lab', 'Lab']] : []),
   ];
   $('#topnav').innerHTML = items.map(([id, l]) => `<a href="#/${id}" class="${cur === id ? 'active' : ''}">${l}</a>`).join('');
 }
@@ -214,6 +217,7 @@ async function render(r) {
     const col = state.index.collections.find((c) => c.id === path);
     if (!path) await (state.index.collections.length > 1 ? viewLanding() : viewHome(state.index.collections[0]));
     else if (col) await viewHome(col);
+    else if (path === 'lab') { document.body.classList.add('lab-mode'); onLeave(() => document.body.classList.remove('lab-mode')); const { viewLab } = await import('./lab.js'); await viewLab(main, r, { store, toast, onLeave }); }
     else if (/\/cards$/.test(path) && state.index.collections.find((c) => c.id === path.replace(/\/cards$/, ''))) await viewCards(state.index.collections.find((c) => c.id === path.replace(/\/cards$/, '')), r);
     else {
       let meta = findNoteMeta(path);
@@ -250,7 +254,8 @@ async function viewLanding() {
         <p class="lead">Your Foundry study notes as a site: ${cs.length} areas, ${total} notes, about ${Math.round(cs.reduce((a, c) => a + c.totals.minutes, 0) / 60)} hours of reading. Search spans every area.</p>
         <div class="quick">
           <button class="btn primary" id="home-search">Search all notes <kbd style="margin-left:4px">⌘K</kbd></button>
-          <span class="small muted" style="align-self:center">Each area below has its own topic map, glossary, flashcards and self-check.</span>
+          <a class="btn lab-btn" href="#/lab">🧪 Ontology Lab: learn by building</a>
+          <span class="small muted" style="align-self:center">Each area below also has a topic map, glossary, flashcards and self-check.</span>
         </div>
       </div>
       <div class="card">
@@ -303,6 +308,7 @@ async function viewHome(c) {
           ${c.map?.concepts ? `<a class="btn" href="#/${pageId(c, 'map')}?tab=concepts">By concept</a>` : ''}
           ${pageId(c, 'glossary') ? `<a class="btn" href="#/${pageId(c, 'glossary')}">Glossary</a>` : ''}
           ${pageId(c, 'glossary') || c.map?.questions ? `<a class="btn" href="#/${c.id}/cards">Flashcards</a>` : ''}
+          ${c.id === 'ontology' ? `<a class="btn lab-btn" href="#/lab">🧪 Ontology Lab: build it yourself</a>` : ''}
         </div>
       </div>
       <div class="card">

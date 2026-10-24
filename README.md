@@ -4,6 +4,10 @@ A reading app on top of the study notes in `Learn/`. It turns the markdown notes
 
 Live site: see the **Deploy to GitHub Pages** workflow in the Actions tab (the URL is `https://<user>.github.io/foundry-learn/`).
 
+## The Ontology Lab
+
+`#/lab` is a hands-on simulator (`src/lab.js`, data in `src/lab-data.js`): you build Kestrel's Ontology from seven small, deliberately imperfect source tables, station by station: object types (keys, titles, naming), links (cardinality inferred from the data, many-to-many through a join table, search around), interfaces (define, implement, the shared view), actions (rule, parameter, criteria, permissions; run as a user, read the log, revert) and an explorer with export. Every mission step is checked against the model you build; "try the trap" steps make you see the failure. Progress lives in the browser.
+
 ## How it fits together
 
 ```
