@@ -514,7 +514,9 @@ function bindSide() {
       if (ui.form.key !== '__composite' && !keyCheck(DATASETS[ui.form.ds], ui.form.key).ok) M.seen.badKey = true;
     };
     tf.addEventListener('input', (e) => { read(); if (e.target.name !== 'name') { renderSide(); } else { const adv = nameAdvice(ui.form.name); const box = tf.querySelector('.advice'); box.className = `advice ${adv.ok ? (adv.warn ? 'warn' : 'ok') : 'bad'}`; box.textContent = adv.ok ? (adv.warn || `API name will be ${apiName(ui.form.name)}. Plural: ${ui.form.name}s.`) : adv.msg; tf.querySelector('button.primary').disabled = !adv.ok; } });
-    tf.addEventListener('change', () => { read(); renderSide(); renderMission(); });
+    // Text inputs fire `change` on blur, which happens between mousedown and mouseup on the Create
+    // button; re-rendering then would swallow the click. Only selects and checkboxes re-render.
+    tf.addEventListener('change', (e) => { read(); if (e.target.tagName === 'INPUT' && e.target.type === 'text') return; renderSide(); renderMission(); });
     tf.addEventListener('submit', (e) => {
       e.preventDefault(); read();
       const f = ui.form, d = DATASETS[f.ds];
