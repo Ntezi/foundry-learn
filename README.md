@@ -1,17 +1,17 @@
 # Foundry Learn
 
-A reading app on top of the study notes in `Learn/`. It turns the markdown notes into a site with a learning path, module and note navigation, instant search, the "I need to…" finder, the glossary, Mermaid diagrams, label focus (Docs / Explanation / …) and reading progress saved in the browser.
+A reading app on top of the study notes in `Learn/`. It turns the markdown notes into a site with a learning path, module and note navigation, instant search, the "I need to…" finder, the glossary (with term definitions on hover inside every note), flashcards with a simple spaced-repetition box per card, "referenced by" backlinks, Mermaid diagrams you can enlarge, claim callouts and label focus (Docs / Explanation / Example / …), and reading progress saved in the browser.
 
 Live site: see the **Deploy to GitHub Pages** workflow in the Actions tab (the URL is `https://<user>.github.io/foundry-learn/`).
 
 ## How it fits together
 
 ```
-Learn/Ontology/**.md   --npm run sync-->   content/Ontology/**.md   --npm run build-->   dist/
+Learn/Capabilities/*/**.md   --npm run sync-->   content/Capabilities/*/**.md   --npm run build-->   dist/
    (your notes)                              (copy, committed)                        (static site)
 ```
 
-- `scripts/config.mjs` lists which note folders are included: the three areas (`Ontology`, `AIP`, `Apps`) and the course-note folders they link to (`Courses`, `Speedrun`, `Deep Dive`, `Application Developer`), each keeping its own folder structure. `only` limits a folder to the listed courses; `pages` limits its root files.
+- `scripts/config.mjs` lists which note folders are included: the `Capabilities/` areas (Ontology, AIP, Apps, DevTools, Security, Observability, Model integration). The Learn `Tracks/` (course notes) are left out on purpose; links to them say so when clicked.
 - `scripts/sync.mjs` copies those folders from `../Learn` (or `$LEARN_DIR`) into `content/`.
 - `scripts/build.mjs` renders the markdown into JSON (`dist/data/`): one file per note, a navigation index, a search index, and the parsed topic map and glossary.
 - `scripts/bundle.mjs` bundles the app (`src/app.js`) with esbuild; Mermaid loads on demand.

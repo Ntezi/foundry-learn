@@ -128,7 +128,10 @@ function resolveLink(fromNote, href) {
   const list = missingLinks.get(label) || [];
   list.push(fromNote.id);
   missingLinks.set(label, list);
-  return { kind: 'missing', label, anchor: anchor || null };
+  // Why it is missing: a course note (Tracks are left out on purpose), a note that is planned
+  // but not written, or a file that is not a note at all.
+  const why = /^Tracks\//.test(label) ? 'track' : /^Capabilities\//.test(label) ? 'planned' : 'file';
+  return { kind: 'missing', label, why, anchor: anchor || null };
 }
 
 // ---------- markdown renderer ----------
@@ -195,11 +198,19 @@ md.renderer.rules.link_open = (tokens, idx, options, env, self) => {
     t.attrSet('href', `#/${r.id}${r.anchor ? '#' + r.anchor : ''}`);
     t.attrJoin('class', 'to-note');
     t.attrSet('data-note', r.id);
+    const targetCol = r.id.split('/')[0];
+    if (targetCol !== env.note.collection) {
+      const cc = collections.find((x) => x.id === targetCol);
+      t.attrJoin('class', 'x-area');
+      t.attrSet('data-area', cc ? cc.title : targetCol);
+    }
   } else {
+    const msg = r.why === 'track' ? 'Course note (Learn Tracks are not included in this app)' : r.why === 'planned' ? 'Not written yet' : 'Not a note in this app';
     t.attrSet('href', '#');
-    t.attrJoin('class', 'missing-link');
-    t.attrSet('title', `Learn note not in the app yet: ${r.label}`);
+    t.attrJoin('class', `missing-link missing-${r.why}`);
+    t.attrSet('title', `${msg}: ${r.label}`);
     t.attrSet('data-missing', r.label);
+    t.attrSet('data-why', r.why);
   }
   return self.renderToken(tokens, idx, options);
 };
@@ -268,7 +279,7 @@ function parseNote(n) {
   // Module README metadata table: | Purpose | … |, | Status | … |, | Prerequisites | … |
   const meta = {};
   if (n.kind === 'module' || n.kind === 'collection') {
-    for (const key of ['Purpose', 'Status', 'Prerequisites', 'Structure', 'Next', 'Why it matters']) {
+    for (const key of ['Purpose', 'Status', 'Prerequisites', 'Structure', 'Next', 'Why it matters', 'Notes written']) {
       const mm = src.match(new RegExp(`^\\|\\s*${key}\\s*\\|\\s*(.+?)\\s*\\|\\s*$`, 'm'));
       if (mm) meta[key] = mm[1];
     }
@@ -281,7 +292,11 @@ function parseNote(n) {
   const env = { note: n };
   const html0 = md.render(src, env);
   const counts = {};
-  const html = labelize(html0, counts);
+  let html = labelize(html0, counts);
+  // Paragraphs and list items that open with a label become callouts (styled by label kind).
+  html = html.replace(/<(p|li)>(\s*)<span class="lbl lbl-([a-z]+)"/g, '<$1 class="co co-$3">$2<span class="lbl lbl-$3"');
+  // Glossary terms: wrap the first occurrence of each term in the note so the app can show its definition.
+  html = wrapTerms(html, n);
 
   // Section records for search
   const sections = [];
@@ -341,8 +356,67 @@ function parseNote(n) {
   };
 }
 
+// Glossaries are parsed first so term tooltips can be added while rendering the notes.
+const glossaries = new Map(); // collection id → { intro, terms }
+for (const c of collections) {
+  const g = [...notes.values()].find((n) => n.collection === c.id && n.special === 'glossary');
+  if (g) glossaries.set(c.id, parseGlossary(g));
+}
+const termMatchers = new Map(); // collection id → { re, lookup }
+function termsFor(cid) {
+  if (termMatchers.has(cid)) return termMatchers.get(cid);
+  // The note's own area first, then Ontology (every area builds on it). Other areas' terms are
+  // left out: generic words like "group" or "event" would match in the wrong sense.
+  const order = [cid, 'ontology'].filter((x, i, a) => glossaries.has(x) && a.indexOf(x) === i);
+  const lookup = new Map(); // lowercased term → key
+  for (const col of order) {
+    glossaries.get(col).terms.forEach((t, i) => {
+      const base = t.term.replace(/\s*\([^)]*\)\s*$/, '').trim();
+      if (base.length < 3) return;
+      const k = base.toLowerCase();
+      if (!lookup.has(k)) lookup.set(k, `${col}:${i}`);
+    });
+  }
+  const alts = [...lookup.keys()].sort((a, b) => b.length - a.length).map((t) => md.utils.escapeHtml(t).replace(/[.*+?^${}()|[\]\\]/g, '\\$&'));
+  const re = new RegExp(`(?<![\\w-])(${alts.join('|')})(s|es)?(?![\\w-])`, 'gi');
+  const m = { re, lookup };
+  termMatchers.set(cid, m);
+  return m;
+}
+const SKIP_TAGS = new Set(['a', 'code', 'pre', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'abbr', 'span', 'th', 'summary']);
+function wrapTerms(html, n) {
+  const { re, lookup } = termsFor(n.collection);
+  const seen = new Set();
+  let depth = 0;
+  return html.split(/(<[^>]+>)/).map((part) => {
+    if (part.startsWith('<')) {
+      const m = part.match(/^<(\/?)([a-zA-Z0-9]+)/);
+      if (m && SKIP_TAGS.has(m[2].toLowerCase()) && !part.endsWith('/>')) depth += m[1] ? -1 : 1;
+      return part;
+    }
+    if (depth > 0 || !part.trim()) return part;
+    return part.replace(re, (whole, term, plural) => {
+      const key = lookup.get(term.toLowerCase().replace(/&amp;/g, '&'));
+      if (!key || seen.has(key)) return whole;
+      seen.add(key);
+      return `<abbr class="term" data-t="${key}">${whole}</abbr>`;
+    });
+  }).join('');
+}
+
 const parsed = new Map();
 for (const n of notes.values()) parsed.set(n.id, parseNote(n));
+// Backlinks: which notes link to each note (special pages like the map and glossary excluded).
+const backlinks = new Map();
+for (const p of parsed.values()) {
+  if (p.special) continue;
+  for (const id of new Set(p.links)) {
+    if (id === p.id) continue;
+    if (!backlinks.has(id)) backlinks.set(id, []);
+    backlinks.get(id).push(p.id);
+  }
+}
+for (const p of parsed.values()) p.backlinks = (backlinks.get(p.id) || []).sort().slice(0, 40);
 
 // ---------- navigation index ----------
 
@@ -428,6 +502,7 @@ for (const c of collections) {
     selfCheck: c.selfCheck ? noteIdFor(c, c.selfCheck) : null,
     hasReadme: !!col,
     kind: c.kind || 'area',
+    written: (() => { const m = col?.meta?.['Notes written']?.match(/(\d+)\s+of\s+(\d+)/); return m ? { done: Number(m[1]), planned: Number(m[2]) } : null; })(),
     modules,
     pages,
     learningPath,
@@ -463,8 +538,7 @@ for (const c of collections) {
     writeFileSync(join(outDir, `${c.id}.map.json`), JSON.stringify(map));
     index.collections.at(-1).map = { concepts: map.concepts.length, tasks: map.tasks.length, questions: map.questions.length };
   }
-  const glossNote = [...notes.values()].find((n) => n.collection === c.id && n.special === 'glossary');
-  if (glossNote) writeFileSync(join(outDir, `${c.id}.glossary.json`), JSON.stringify(parseGlossary(glossNote)));
+  if (glossaries.has(c.id)) writeFileSync(join(outDir, `${c.id}.glossary.json`), JSON.stringify(glossaries.get(c.id)));
 }
 
 // Parse a markdown table into rows of cells (raw markdown per cell).

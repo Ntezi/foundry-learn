@@ -131,6 +131,7 @@ function renderSidebar() {
     book: icon('<path d="M4 3h5a2 2 0 0 1 2 2v12a1.5 1.5 0 0 0-1.5-1.5H4z"/><path d="M16 3h-5a2 2 0 0 0-2 2v12a1.5 1.5 0 0 1 1.5-1.5H16z"/>'),
     check: icon('<path d="M4 10l4 4 8-8"/>'),
     src: icon('<circle cx="10" cy="10" r="7"/><path d="M10 6v4l3 2"/>'),
+    cards: icon('<rect x="3" y="6" width="11" height="11" rx="1.5"/><path d="M6 3h11v11"/>'),
   };
   const link = (id, label, svg) => `<a class="side-link ${cur === id ? 'active' : ''}" href="#/${id}">${svg}<span>${esc(label)}</span></a>`;
   const prog = collectionProgress(c);
@@ -141,6 +142,7 @@ function renderSidebar() {
     ${pageId(c, 'map') ? link(pageId(c, 'map'), 'Topic map · I need to…', ic.map) : ''}
     ${pageId(c, 'glossary') ? link(pageId(c, 'glossary'), 'Glossary', ic.book) : ''}
     ${c.selfCheck ? link(c.selfCheck, 'Self-check by module', ic.check) : ''}
+    ${pageId(c, 'glossary') || c.map?.questions ? link(c.id + '/cards', 'Flashcards', ic.cards) : ''}
     ${c.pages.filter((p) => !p.special).map((p) => link(p.id, p.title, ic.src)).join('')}
   </div>
   <div class="side-section">
@@ -189,6 +191,7 @@ function renderTopnav() {
     ...(pageId(c, 'map') ? [[pageId(c, 'map'), 'Topic map']] : []),
     ...(pageId(c, 'glossary') ? [[pageId(c, 'glossary'), 'Glossary']] : []),
     ...(c.selfCheck ? [[c.selfCheck, 'Self-check']] : []),
+    ...(pageId(c, 'glossary') || c.map?.questions ? [[c.id + '/cards', 'Flashcards']] : []),
   ];
   $('#topnav').innerHTML = items.map(([id, l]) => `<a href="#/${id}" class="${cur === id ? 'active' : ''}">${l}</a>`).join('');
 }
@@ -211,8 +214,10 @@ async function render(r) {
     const col = state.index.collections.find((c) => c.id === path);
     if (!path) await (state.index.collections.length > 1 ? viewLanding() : viewHome(state.index.collections[0]));
     else if (col) await viewHome(col);
+    else if (/\/cards$/.test(path) && state.index.collections.find((c) => c.id === path.replace(/\/cards$/, ''))) await viewCards(state.index.collections.find((c) => c.id === path.replace(/\/cards$/, '')), r);
     else {
-      const meta = findNoteMeta(path);
+      let meta = findNoteMeta(path);
+      if (!meta && path !== path.toLowerCase() && findNoteMeta(path.toLowerCase())) { location.replace(`#/${path.toLowerCase()}${r.anchor ? '#' + r.anchor : ''}`); return; } // old links used MAP / GLOSSARY
       if (!meta) return viewNotFound(path);
       if (meta.kind === 'page' && meta.page.special === 'map') await viewMap(meta, r);
       else if (meta.kind === 'page' && meta.page.special === 'glossary') await viewGlossary(meta, r);
@@ -245,7 +250,7 @@ async function viewLanding() {
         <p class="lead">Your Foundry study notes as a site: ${cs.length} areas, ${total} notes, about ${Math.round(cs.reduce((a, c) => a + c.totals.minutes, 0) / 60)} hours of reading. Search spans every area.</p>
         <div class="quick">
           <button class="btn primary" id="home-search">Search all notes <kbd style="margin-left:4px">⌘K</kbd></button>
-          ${cs.filter((c) => c.map?.tasks).map((c) => `<a class="btn" href="#/${pageId(c, 'map')}?tab=tasks">${esc(c.title)}: I need to…</a>`).join('')}
+          <span class="small muted" style="align-self:center">Each area below has its own topic map, glossary, flashcards and self-check.</span>
         </div>
       </div>
       <div class="card">
@@ -262,7 +267,7 @@ async function viewLanding() {
       ${list.map((c) => {
         const p = collectionProgress(c);
         return `<a class="acard" href="#/${c.id}">
-          <div class="top"><span class="ttl">${esc(c.title)}</span>${p.done === p.total && p.total ? '<span class="chip ok">done</span>' : ''}</div>
+          <div class="top"><span class="ttl">${esc(c.title)}</span>${p.done === p.total && p.total ? '<span class="chip ok">done</span>' : c.written && c.written.done < c.written.planned ? `<span class="chip warn">${c.written.done} of ${c.written.planned} written</span>` : ''}</div>
           <div class="desc">${esc(c.tagline)}.</div>
           <div class="foot"><span>${c.modules.length} ${c.kind === 'courses' ? (c.modules.length === 1 ? 'course' : 'courses') : 'modules'} · ${c.totals.notes} notes · ${Math.round(c.totals.minutes / 60 * 10) / 10} h</span><div class="progress"><i style="width:${p.pct}%"></i></div><span>${p.done}/${p.total}</span></div>
           ${pageId(c, 'map') || pageId(c, 'glossary') || c.selfCheck ? `<div class="links">${pageId(c, 'map') ? '<span class="chipl">Topic map</span>' : ''}${pageId(c, 'glossary') ? '<span class="chipl">Glossary</span>' : ''}${c.selfCheck ? '<span class="chipl">Self-check</span>' : ''}</div>` : ''}
@@ -290,13 +295,14 @@ async function viewHome(c) {
       <div>
         ${state.index.collections.length > 1 ? `<div class="crumbs"><a href="#/">All areas</a><span class="sep">/</span><span>${esc(c.title)}</span></div>` : ''}
         <h1>${esc(c.title)}</h1>
-        <p class="lead">${esc(c.tagline)}. ${c.totals.notes} notes in ${c.modules.length} ${c.kind === 'courses' ? (c.modules.length === 1 ? 'course' : 'courses') : 'modules'}, about ${Math.round(c.totals.minutes / 60)} hour${Math.round(c.totals.minutes / 60) === 1 ? '' : 's'} of reading.</p>
+        <p class="lead">${esc(c.tagline)}. ${c.written && c.written.done < c.written.planned ? `<span class="chip warn">in progress: ${c.written.done} of ${c.written.planned} notes written</span> ` : ''}${c.totals.notes} notes in ${c.modules.length} ${c.kind === 'courses' ? (c.modules.length === 1 ? 'course' : 'courses') : 'modules'}, about ${Math.round(c.totals.minutes / 60)} hour${Math.round(c.totals.minutes / 60) === 1 ? '' : 's'} of reading.</p>
         <div class="quick">
           <button class="btn primary" id="home-search">Search the notes <kbd style="margin-left:4px">⌘K</kbd></button>
           ${c.map?.tasks ? `<a class="btn" href="#/${pageId(c, 'map')}?tab=tasks">I need to…</a>` : ''}
           ${c.map?.questions ? `<a class="btn" href="#/${pageId(c, 'map')}?tab=questions">Design questions</a>` : ''}
           ${c.map?.concepts ? `<a class="btn" href="#/${pageId(c, 'map')}?tab=concepts">By concept</a>` : ''}
           ${pageId(c, 'glossary') ? `<a class="btn" href="#/${pageId(c, 'glossary')}">Glossary</a>` : ''}
+          ${pageId(c, 'glossary') || c.map?.questions ? `<a class="btn" href="#/${c.id}/cards">Flashcards</a>` : ''}
         </div>
       </div>
       <div class="card">
@@ -457,6 +463,7 @@ async function viewNote(meta, r) {
         <span class="txt" id="read-txt">${isRead ? 'You have read this note.' : 'Finished? Mark it read to track your progress.'}</span>
         <button class="btn ${isRead ? 'ok' : 'primary'}" id="read-btn">${isRead ? '✓ Read · mark unread' : 'Mark as read'}</button>
       </div>
+      ${backlinksHtml(n, c)}
       ${pager(n)}
     </div>
     <aside class="toc" id="toc">${tocHtml(n)}</aside>
@@ -518,6 +525,15 @@ async function viewNote(meta, r) {
   spy(art, $('#toc'));
 }
 
+// "Referenced by": notes that link here, grouped so other areas stand out.
+function backlinksHtml(n, c) {
+  const refs = (n.backlinks || []).map((id) => ({ id, meta: findNoteMeta(id) })).filter((x) => x.meta);
+  if (!refs.length) return '';
+  const row = (x) => `<a href="#/${x.id}">${x.meta.collection.id !== c.id ? `<span class="area-chip">${esc(x.meta.collection.title)}</span>` : ''}${esc(x.meta.title)}</a>`;
+  const own = refs.filter((x) => x.meta.collection.id === c.id), other = refs.filter((x) => x.meta.collection.id !== c.id);
+  return `<details class="backlinks"><summary>Referenced by ${refs.length} note${refs.length > 1 ? 's' : ''}${other.length ? ` · ${other.length} from other areas` : ''}</summary><div class="bl-list">${[...other, ...own].map(row).join('')}</div></details>`;
+}
+
 function tocHtml(n) {
   const items = (n.toc || []).filter((t) => t.text);
   const isRead = state.read.has(n.id);
@@ -565,8 +581,17 @@ function enhanceArticle(art, n) {
   // Links to notes not in the app yet
   art.querySelectorAll('a.missing-link').forEach((a) => a.addEventListener('click', (e) => {
     e.preventDefault();
-    toast(`That Learn note isn't in the app yet: ${a.dataset.missing}`);
+    const why = a.dataset.why;
+    toast(why === 'track' ? `Course note (Learn Tracks aren't included in this app): ${a.dataset.missing}` : why === 'planned' ? `That note isn't written yet: ${a.dataset.missing}` : `Not a note in this app: ${a.dataset.missing}`);
   }));
+  // Glossary terms: a definition on hover or tap
+  art.querySelectorAll('abbr.term').forEach((el) => {
+    el.addEventListener('mouseenter', () => showTerm(el));
+    el.addEventListener('mouseleave', () => hideTerm(300));
+    el.addEventListener('click', (e) => { e.preventDefault(); showTerm(el, true); });
+  });
+  // Diagrams: click to enlarge
+  art.querySelectorAll('.diagram').forEach((d) => d.addEventListener('click', (e) => { if (e.target.closest('a')) return; const svg = d.querySelector('svg'); if (svg) lightbox(svg); }));
   // Task checkboxes persist per note
   const saved = state.tasks[n.id] || {};
   art.querySelectorAll('input.task-box').forEach((cb) => {
@@ -618,6 +643,150 @@ function rerenderDiagrams() {
   // (so scroll position, filter text and timers survive). The home page re-draws its path itself.
   if (state.onTheme) state.onTheme();
   renderDiagrams(main, null, { skipPath: true });
+}
+
+// ---------- glossary term popover ----------
+let termPop = null, termHideT = null, termPinned = false;
+async function showTerm(el, pin = false) {
+  clearTimeout(termHideT);
+  const [cid, idx] = el.dataset.t.split(':');
+  const g = await getGlossary(cid);
+  const t = g.terms[Number(idx)];
+  if (!t) return;
+  if (!termPop) {
+    termPop = document.createElement('div');
+    termPop.className = 'term-pop';
+    termPop.addEventListener('mouseenter', () => clearTimeout(termHideT));
+    termPop.addEventListener('mouseleave', () => hideTerm(200));
+    document.body.appendChild(termPop);
+  }
+  termPinned = pin;
+  const col = state.index.collections.find((c) => c.id === cid);
+  termPop.innerHTML = `<div class="tp-term">${esc(t.term)}${col && col.id !== currentCollection().id ? ` <span class="area-chip">${esc(col.title)}</span>` : ''}</div><div class="tp-def">${t.definition}</div><div class="tp-links">${t.note?.href ? `<a href="${esc(t.note.href)}">Explained in ${esc(t.note.text)}</a>` : ''}<a href="#/${pageId(col, 'glossary')}#t-${esc(t.term.toLowerCase().replace(/[^a-z0-9]+/g, '-'))}">Glossary</a></div>`;
+  termPop.querySelectorAll('a').forEach((a) => a.addEventListener('click', () => hideTerm(0)));
+  termPop.style.display = 'block';
+  const r = el.getBoundingClientRect();
+  const w = Math.min(360, window.innerWidth - 24);
+  termPop.style.width = w + 'px';
+  let left = Math.max(12, Math.min(r.left, window.innerWidth - w - 12));
+  const ph = termPop.offsetHeight;
+  const below = r.bottom + 8 + ph < window.innerHeight;
+  termPop.style.left = left + 'px';
+  termPop.style.top = (below ? r.bottom + 8 : r.top - ph - 8) + window.scrollY + 'px';
+}
+function hideTerm(delay) {
+  clearTimeout(termHideT);
+  termHideT = setTimeout(() => { if (termPop && !(termPinned && delay)) { termPop.style.display = 'none'; termPinned = false; } }, delay);
+}
+document.addEventListener('click', (e) => { if (termPop && termPop.style.display === 'block' && !e.target.closest('.term-pop, abbr.term')) { termPop.style.display = 'none'; termPinned = false; } });
+
+// ---------- diagram lightbox ----------
+function lightbox(svg) {
+  const box = document.createElement('div');
+  box.className = 'lightbox';
+  const clone = svg.cloneNode(true);
+  clone.removeAttribute('style'); clone.removeAttribute('width'); clone.removeAttribute('height');
+  box.innerHTML = '<div class="lb-hint">Scroll to zoom · drag to pan · Esc to close</div>';
+  const inner = document.createElement('div'); inner.className = 'lb-inner'; inner.appendChild(clone); box.appendChild(inner);
+  let scale = 1, x = 0, y = 0, drag = null;
+  const apply = () => (inner.style.transform = `translate(${x}px, ${y}px) scale(${scale})`);
+  box.addEventListener('wheel', (e) => { e.preventDefault(); scale = Math.min(6, Math.max(.3, scale * (e.deltaY < 0 ? 1.1 : 0.9))); apply(); }, { passive: false });
+  box.addEventListener('mousedown', (e) => { drag = { x: e.clientX - x, y: e.clientY - y }; });
+  box.addEventListener('mousemove', (e) => { if (drag) { x = e.clientX - drag.x; y = e.clientY - drag.y; apply(); } });
+  box.addEventListener('mouseup', () => (drag = null));
+  box.addEventListener('click', (e) => { if (e.target === box || e.target === inner) close(); });
+  const onKey = (e) => { if (e.key === 'Escape') close(); };
+  const close = () => { box.remove(); document.removeEventListener('keydown', onKey); };
+  document.addEventListener('keydown', onKey);
+  document.body.appendChild(box);
+  const vb = clone.getAttribute('viewBox')?.split(/\s+/).map(Number);
+  if (vb) { const fit = Math.min((window.innerWidth - 80) / vb[2], (window.innerHeight - 120) / vb[3], 2.5); clone.style.width = Math.round(vb[2] * fit) + 'px'; clone.style.height = 'auto'; }
+}
+
+// ---------- flashcards ----------
+// Cards come from the area's glossary (term → definition) and its design questions (question → answer).
+// A simple Leitner box per card (0–3) is kept in localStorage: "Again" sends a card back to box 0.
+async function viewCards(c, r) {
+  setTitle(`${c.title} flashcards`);
+  const gl = pageId(c, 'glossary') ? await getGlossary(c.id) : { terms: [] };
+  const map = c.map?.questions ? (state.map[c.id] = state.map[c.id] || (await getJSON(`${c.id}.map.json`))) : null;
+  const deck = [
+    ...gl.terms.map((t, i) => ({ id: `${c.id}:t:${i}`, kind: 'term', front: t.term, back: t.definition, links: [t.note?.href ? { text: 'Explained in ' + t.note.text, href: t.note.href } : null].filter(Boolean), module: t.note?.text?.match(/^\d{2}/)?.[0] || '' })),
+    ...(map ? map.questions.map((q, i) => ({ id: `${c.id}:q:${i}`, kind: 'question', front: q.question, back: q.answer, links: q.links.filter((l) => l.href), module: '' })) : []),
+  ];
+  const boxes = store.get('cards', {});
+  let kind = r.query.get('kind') || 'all';
+  let queue = [], i = 0, flipped = false;
+  const BOX_NAMES = ['new or again', 'seen once', 'getting there', 'known'];
+  const build = () => {
+    const pool = deck.filter((d) => kind === 'all' || d.kind === kind);
+    // lowest box first, then shuffle within a box
+    const by = (d) => boxes[d.id]?.box || 0;
+    queue = pool.map((d) => [d, by(d), Math.random()]).sort((a, b) => a[1] - b[1] || a[2] - b[2]).map((x) => x[0]);
+    i = 0; flipped = false;
+  };
+  const stats = () => {
+    const pool = deck.filter((d) => kind === 'all' || d.kind === kind);
+    const counts = [0, 0, 0, 0];
+    pool.forEach((d) => counts[boxes[d.id]?.box || 0]++);
+    return { pool: pool.length, counts };
+  };
+  main.innerHTML = `<div class="page">
+    <div class="crumbs"><a href="#/${c.id}">${esc(c.title)}</a><span class="sep">/</span><span>Flashcards</span></div>
+    <h1 class="title">${esc(c.title)} flashcards</h1>
+    <p class="muted" style="margin:0 0 14px">${gl.terms.length} glossary terms${map ? ` and ${map.questions.length} design questions` : ''}. Flip a card, then say whether you knew it; cards you miss come back first. Keys: <kbd>space</kbd> flip · <kbd>1</kbd> again · <kbd>2</kbd> got it · <kbd>s</kbd> skip.</p>
+    <div class="tabs" id="ctabs">
+      <button data-kind="all">All <span class="muted">${deck.length}</span></button>
+      ${gl.terms.length ? `<button data-kind="term">Terms <span class="muted">${gl.terms.length}</span></button>` : ''}
+      ${map ? `<button data-kind="question">Design questions <span class="muted">${map.questions.length}</span></button>` : ''}
+    </div>
+    <div class="card-stage" id="stage"></div>
+    <div class="card-stats" id="cstats"></div>
+  </div>`;
+  const draw = () => {
+    const st = stats();
+    $('#ctabs').querySelectorAll('button').forEach((b) => b.classList.toggle('active', b.dataset.kind === kind));
+    $('#cstats').innerHTML = `<div class="boxes">${st.counts.map((n, b) => `<div class="box b${b}"><span class="n">${n}</span><span class="l">${BOX_NAMES[b]}</span></div>`).join('')}</div><button class="btn sm" id="creset">Reset progress for this deck</button>`;
+    $('#creset').addEventListener('click', () => { if (confirm('Forget what you know about these cards?')) { deck.forEach((d) => delete boxes[d.id]); store.set('cards', boxes); build(); draw(); } });
+    const stage = $('#stage');
+    if (!queue.length) { stage.innerHTML = '<div class="empty">No cards here.</div>'; return; }
+    if (i >= queue.length) { stage.innerHTML = `<div class="card-done"><div class="big">Round done</div><p class="muted">${queue.length} cards reviewed. Cards you marked "again" come first next round.</p><button class="btn primary" id="cagain">Start another round</button></div>`; $('#cagain').addEventListener('click', () => { build(); draw(); }); return; }
+    const d = queue[i];
+    const box = boxes[d.id]?.box || 0;
+    stage.innerHTML = `<div class="card-pos muted small">${i + 1} / ${queue.length} · <span class="chip">${d.kind === 'term' ? 'term' : 'design question'}</span> · box ${box}</div>
+      <div class="flashcard ${flipped ? 'flipped' : ''}" id="fc" tabindex="0" role="button" aria-label="Flip card">
+        <div class="face front"><div class="q">${esc(d.front)}</div><div class="hint">${d.kind === 'term' ? 'What does this mean?' : 'What would you answer?'} · click to flip</div></div>
+        <div class="face back"><div class="q small-q">${esc(d.front)}</div><div class="a">${d.back}</div>${d.links.length ? `<div class="links">${d.links.map((l) => `<a class="chipl" href="${esc(l.href)}">${esc(l.text)}</a>`).join('')}</div>` : ''}</div>
+      </div>
+      <div class="card-actions">
+        ${flipped ? `<button class="btn" id="c-again">Again <kbd>1</kbd></button><button class="btn primary" id="c-got">Got it <kbd>2</kbd></button>` : `<button class="btn primary" id="c-flip">Flip <kbd>space</kbd></button>`}
+        <button class="btn sm" id="c-skip">Skip <kbd>s</kbd></button>
+      </div>`;
+    $('#fc').addEventListener('click', (e) => { if (!e.target.closest('a')) flip(); });
+    $('#c-flip')?.addEventListener('click', flip);
+    $('#c-again')?.addEventListener('click', () => grade(false));
+    $('#c-got')?.addEventListener('click', () => grade(true));
+    $('#c-skip').addEventListener('click', () => { i++; flipped = false; draw(); });
+  };
+  const flip = () => { flipped = !flipped; draw(); };
+  const grade = (ok) => {
+    const d = queue[i];
+    const cur = boxes[d.id]?.box || 0;
+    boxes[d.id] = { box: ok ? Math.min(3, cur + 1) : 0, at: Date.now() };
+    store.set('cards', boxes);
+    i++; flipped = false; draw();
+  };
+  const onKey = (e) => {
+    if (/^(INPUT|TEXTAREA)$/.test(e.target.tagName) || !modal.hidden) return;
+    if (e.key === ' ') { e.preventDefault(); flip(); }
+    else if (e.key === '1' && flipped) grade(false);
+    else if (e.key === '2' && flipped) grade(true);
+    else if (e.key === 's') { i++; flipped = false; draw(); }
+  };
+  document.addEventListener('keydown', onKey);
+  onLeave(() => document.removeEventListener('keydown', onKey));
+  $('#ctabs').addEventListener('click', (e) => { const b = e.target.closest('button'); if (!b) return; kind = b.dataset.kind; history.replaceState(null, '', `#/${c.id}/cards?kind=${kind}`); build(); draw(); });
+  build(); draw();
 }
 
 // ---------- toast ----------
