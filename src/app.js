@@ -184,6 +184,9 @@ function closeNav() { document.body.classList.remove('nav-open'); $('#menu-btn')
 $('#menu-btn').addEventListener('click', () => (document.body.classList.contains('nav-open') ? closeNav() : openNav()));
 $('#backdrop').addEventListener('click', closeNav);
 
+// The companion mock-exam site, published from the foundry-practice repository.
+const PRACTICE_URL = 'https://ntezi.github.io/foundry-practice/';
+
 function renderTopnav() {
   const c = currentCollection();
   const cur = state.route?.path || '';
@@ -196,7 +199,8 @@ function renderTopnav() {
     ...(pageId(c, 'glossary') || c.map?.questions ? [[c.id + '/cards', 'Flashcards']] : []),
     ...(c.id === 'ontology' ? [['lab', 'Lab']] : []),
   ];
-  $('#topnav').innerHTML = items.map(([id, l]) => `<a href="#/${id}" class="${cur === id ? 'active' : ''}">${l}</a>`).join('');
+  $('#topnav').innerHTML = items.map(([id, l]) => `<a href="#/${id}" class="${cur === id ? 'active' : ''}">${l}</a>`).join('')
+    + `<a href="${PRACTICE_URL}" title="Mock exams and practice questions (separate site)">Practice ↗</a>`;
 }
 
 // ---------- views ----------
